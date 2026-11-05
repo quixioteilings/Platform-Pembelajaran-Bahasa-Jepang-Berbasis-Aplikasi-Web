@@ -157,14 +157,13 @@ class AuthController extends Controller
         return redirect($redirectUrl)->with('success', 'Masuk sebagai akun demo: ' . $user->name);
     }
 
-    // Register Akun Baru (Multi-role: Siswa & Guru)
+    // Register Akun Baru (Khusus Siswa Belajar)
     public function register(Request $request)
     {
         $rules = [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:6'],
-            'role' => ['nullable', 'string', 'in:siswa,guru'],
             'avatar' => ['nullable', 'string'],
             'reg_no' => ['nullable', 'string', 'max:50'],
             'class_room' => ['nullable', 'string', 'max:50'],
@@ -184,12 +183,13 @@ class AuthController extends Controller
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok. Silakan ulangi pengetikan kata sandi.',
         ]);
 
-        $role = $validated['role'] ?? 'siswa';
-        $defaultAvatar = $role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg';
+        // Pendaftaran mandiri dikhususkan 100% untuk Siswa Belajar
+        $role = 'siswa';
+        $defaultAvatar = 'img/avatar_anggata.svg';
 
         $regNo = !empty($validated['reg_no']) 
             ? trim($validated['reg_no']) 
-            : ($role === 'guru' ? 'SIJ-2026-GURU' . rand(100, 999) : 'JFT-2026-' . rand(10000, 99999));
+            : ('JFT-2026-' . rand(10000, 99999));
 
         $user = User::create([
             'name' => trim($validated['name']),
@@ -198,7 +198,7 @@ class AuthController extends Controller
             'role' => $role,
             'avatar' => $validated['avatar'] ?? $defaultAvatar,
             'reg_no' => $regNo,
-            'class_room' => $validated['class_room'] ?? ($role === 'guru' ? 'Pengajar' : 'Siswa Umum'),
+            'class_room' => $validated['class_room'] ?? 'Siswa Umum',
             'score' => 0,
             'completed_lessons' => [],
         ]);
@@ -206,18 +206,18 @@ class AuthController extends Controller
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        $redirectUrl = $user->isGuru() ? route('guru.dashboard') : route('home');
+        $redirectUrl = route('home');
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Pendaftaran akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil!',
+                'message' => 'Pendaftaran akun Siswa berhasil!',
                 'user' => $user,
                 'redirect' => $redirectUrl
             ]);
         }
 
-        return redirect($redirectUrl)->with('success', 'Akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil dibuat. Selamat belajar!');
+        return redirect($redirectUrl)->with('success', 'Akun Siswa ' . $user->name . ' berhasil dibuat. Selamat belajar!');
     }
 
     // Logout

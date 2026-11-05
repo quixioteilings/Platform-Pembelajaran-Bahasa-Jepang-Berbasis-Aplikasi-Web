@@ -381,8 +381,8 @@
             <line x1="22" y1="11" x2="16" y2="11"/>
           </svg>
         </div>
-        <h1>Pendaftaran Akun Baru</h1>
-        <p>Bergabung ke platform pembelajaran bahasa Jepang SIJapanese</p>
+        <h1>Pendaftaran Akun Siswa</h1>
+        <p>Bergabung ke portal belajar bahasa Jepang interaktif SIJapanese</p>
       </div>
 
       <!-- Flash Error Box (STRICT ZERO EMOJI) -->
@@ -395,33 +395,10 @@
 
       <form action="{{ route('register.post') }}" method="POST" id="main-reg-form">
         @csrf
-
-        <!-- Pilihan Peran Akun -->
-        <div class="form-group">
-          <label>Daftar Sebagai:</label>
-          <div class="role-selector-wrap">
-            <label class="role-option">
-              <input type="radio" name="role" value="siswa" checked onchange="toggleRoleFields('siswa')" />
-              <div class="role-card-inner">
-                <span class="role-badge-pill">Peran Murid</span>
-                <span class="role-name">Siswa Belajar</span>
-                <span class="role-desc">Akses modul materi, kuis &amp; mini games</span>
-              </div>
-            </label>
-
-            <label class="role-option role-guru">
-              <input type="radio" name="role" value="guru" onchange="toggleRoleFields('guru')" />
-              <div class="role-card-inner">
-                <span class="role-badge-pill">Peran Guru</span>
-                <span class="role-name">Guru Pengajar</span>
-                <span class="role-desc">Akses dashboard master materi &amp; penilaian</span>
-              </div>
-            </label>
-          </div>
-        </div>
+        <input type="hidden" name="role" value="siswa" />
 
         <div class="form-group">
-          <label for="reg-name">Nama Lengkap</label>
+          <label for="reg-name">Nama Lengkap Siswa</label>
           <input type="text" name="name" id="reg-name" placeholder="contoh: Anggata Ramadhan" value="{{ old('name') }}" required autocomplete="name" />
         </div>
 
@@ -449,16 +426,16 @@
           <input type="email" name="email" id="reg-email" placeholder="contoh: siswa@sekolah.sch.id" value="{{ old('email') }}" required autocomplete="email" />
         </div>
 
-        <!-- Pilihan Avatar Interaktif -->
+        <!-- Pilihan Avatar Interaktif Siswa -->
         <div class="form-group">
-          <label>Pilihan Karakter Avatar Belajar:</label>
-          <div class="avatar-cards-grid">
+          <label>Pilihan Karakter Avatar Belajar Siswa:</label>
+          <div class="avatar-cards-grid" style="grid-template-columns: 1fr 1fr;">
             <label class="avatar-card-item">
               <input type="radio" name="avatar" value="img/avatar_anggata.svg" checked />
               <div class="avatar-card-inner">
                 <img src="{{ asset('img/avatar_anggata.svg') }}" alt="Anggata" />
                 <span class="avatar-card-name">Anggata</span>
-                <span class="avatar-card-role">Siswa Laki-laki</span>
+                <span class="avatar-card-role">Karakter Siswa</span>
               </div>
             </label>
 
@@ -467,16 +444,7 @@
               <div class="avatar-card-inner">
                 <img src="{{ asset('img/avatar_aoi.svg') }}" alt="Aoi" />
                 <span class="avatar-card-name">Aoi</span>
-                <span class="avatar-card-role">Siswi Perempuan</span>
-              </div>
-            </label>
-
-            <label class="avatar-card-item avatar-tanaka">
-              <input type="radio" name="avatar" value="img/avatar_tanaka.svg" />
-              <div class="avatar-card-inner">
-                <img src="{{ asset('img/avatar_tanaka.svg') }}" alt="Tanaka" />
-                <span class="avatar-card-name">Tanaka</span>
-                <span class="avatar-card-role">Sensei Guru</span>
+                <span class="avatar-card-role">Karakter Siswi</span>
               </div>
             </label>
           </div>
@@ -506,10 +474,16 @@
         <div id="pass-match-indicator" class="pass-match-msg"></div>
 
         <button type="submit" class="btn-submit" id="btn-submit-reg">
-          <span>Daftar Akun Baru</span>
+          <span>Daftar Akun Siswa Baru</span>
           <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
       </form>
+
+      <!-- Informasi Hak Akses Guru Pengajar -->
+      <div style="margin-top: 1.4rem; padding: 0.85rem 1rem; border-radius: 14px; background: #F8FAFC; border: 1.5px solid #E2E8F0; font-size: 0.82rem; color: #475569; line-height: 1.45; display: flex; align-items: flex-start; gap: 0.65rem;">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;color:#2563EB;" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>Pendaftaran ini khusus untuk <strong>Siswa Belajar</strong>. Akun Guru Pengajar dikelola secara terpusat oleh administrator instansi sekolah.</span>
+      </div>
 
       <div class="bottom-links">
         <div>Sudah memiliki akun belajar? <a href="{{ route('login') }}">Masuk di sini</a></div>
@@ -546,24 +520,6 @@
       } else {
         ind.className = 'pass-match-msg mismatch';
         ind.textContent = 'Kata sandi belum sama.';
-      }
-    }
-
-    function toggleRoleFields(role) {
-      const submitBtn = document.getElementById('btn-submit-reg');
-      const avatarRadios = document.getElementsByName('avatar');
-      if (role === 'guru') {
-        submitBtn.style.background = 'linear-gradient(135deg, #D9383A 0%, #B91C1C 100%)';
-        submitBtn.style.boxShadow = '0 4px 14px rgba(217, 56, 58, 0.3)';
-        for (const r of avatarRadios) {
-          if (r.value.includes('tanaka')) r.checked = true;
-        }
-      } else {
-        submitBtn.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
-        submitBtn.style.boxShadow = '0 4px 14px rgba(37, 99, 235, 0.3)';
-        for (const r of avatarRadios) {
-          if (r.value.includes('anggata')) r.checked = true;
-        }
       }
     }
   </script>

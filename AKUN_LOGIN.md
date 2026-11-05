@@ -31,14 +31,13 @@ Gunakan akun ini untuk masuk ke portal belajar siswa guna mengakses materi modul
 
 ---
 
-## 📝 3. Pendaftaran Akun Baru (Multi-Role)
-Anda juga bisa mendaftarkan akun baru secara bebas melalui menu **Daftar**:
+## 📝 3. Pendaftaran Akun Baru (Khusus Siswa)
+Siswa dapat mendaftarkan akun baru secara mandiri melalui menu **Daftar**:
 - URL Laravel: `/register`
 - URL Frontend Statis: `register.html`
 
-Pada form registrasi, Anda dapat memilih peran:
-1. **🎓 Siswa Belajar**: Untuk akun murid.
-2. **👨‍🏫 Guru Pengajar**: Untuk akun guru pengajar baru yang dapat langsung mengakses dashboard master.
+> [!NOTE]
+> Form registrasi publik dikhususkan 100% untuk **🎓 Siswa Belajar**. Murid tidak dapat memilih peran Guru Pengajar agar dashboard master, kurikulum, bank soal, dan evaluasi tetap terlindungi. Akun Guru Pengajar dikelola resmi oleh administrator instansi sekolah.
 
 ---
 
