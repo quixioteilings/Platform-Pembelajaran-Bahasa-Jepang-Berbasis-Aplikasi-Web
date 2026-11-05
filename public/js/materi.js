@@ -1837,7 +1837,8 @@ function renderLessonCatalogList() {
 // Gaya Nihongo to Japan: Mulai -> Komik -> Materi 1 -> Materi 2 -> Kaidah -> Latihan -> Kuis -> Budaya -> Selesai
 // ====================================================
 function getLessonSteps(lesson) {
-  if (lesson.id === 1) {
+  const lesId = Number(lesson.id);
+  if (lesId === 1) {
     return [
       { id: 'mulai', name: 'Mulai', label: 'Langkah 1 • Mulai' },
       { id: 'komik', name: 'Komik', label: 'Langkah 2 • Komik' },
@@ -1851,7 +1852,49 @@ function getLessonSteps(lesson) {
     ];
   }
 
-  // Tahapan dinamis untuk Pelajaran 2 dan seterusnya
+  if (lesId === 2) {
+    return [
+      { id: 'mulai', name: 'Mulai', label: 'Langkah 1 • Mulai' },
+      { id: 'komik', name: 'Komik', label: 'Langkah 2 • Kasus Hiragana' },
+      { id: 'huruf', name: '46 Huruf Dasar', label: 'Langkah 3 • 46 Huruf Hiragana' },
+      { id: 'kalimat', name: 'Tenten & Maru', label: 'Langkah 4 • Perubahan Bunyi' },
+      { id: 'romaji', name: 'Huruf Gabungan', label: 'Langkah 5 • Yōon (ゃ ゅ ょ)' },
+      { id: 'latihan', name: 'Latihan', label: 'Langkah 6 • Latihan Kosakata' },
+      { id: 'kuis', name: 'Kuis', label: 'Langkah 7 • Kuis Evaluasi' },
+      { id: 'tambahan', name: 'Latihan tambahan', label: 'Langkah 8 • Budaya' },
+      { id: 'selesai', name: 'Selesai', label: 'Langkah 9 • Selesai' }
+    ];
+  }
+
+  if (lesId === 3) {
+    return [
+      { id: 'mulai', name: 'Mulai', label: 'Langkah 1 • Mulai' },
+      { id: 'komik', name: 'Komik', label: 'Langkah 2 • Kasus Katakana' },
+      { id: 'huruf', name: '46 Huruf Katakana', label: 'Langkah 3 • Huruf Katakana' },
+      { id: 'kalimat', name: 'Tanda Panjang', label: 'Langkah 4 • Vokal Panjang (ー)' },
+      { id: 'romaji', name: 'Kata Serapan', label: 'Langkah 5 • Kosakata Serapan' },
+      { id: 'latihan', name: 'Latihan', label: 'Langkah 6 • Latihan Kosakata' },
+      { id: 'kuis', name: 'Kuis', label: 'Langkah 7 • Kuis Evaluasi' },
+      { id: 'tambahan', name: 'Latihan tambahan', label: 'Langkah 8 • Budaya' },
+      { id: 'selesai', name: 'Selesai', label: 'Langkah 9 • Selesai' }
+    ];
+  }
+
+  if (lesId === 7) {
+    return [
+      { id: 'mulai', name: 'Mulai', label: 'Langkah 1 • Mulai' },
+      { id: 'komik', name: 'Komik', label: 'Langkah 2 • Kasus Payung' },
+      { id: 'huruf', name: 'Kore Sore Are', label: 'Langkah 3 • Kata Tunjuk Benda' },
+      { id: 'kalimat', name: 'Kono & Partikel No', label: 'Langkah 4 • Kepemilikan' },
+      { id: 'romaji', name: 'Tanya Jawab', label: 'Langkah 5 • Tanya Kepemilikan' },
+      { id: 'latihan', name: 'Latihan', label: 'Langkah 6 • Latihan Kosakata' },
+      { id: 'kuis', name: 'Kuis', label: 'Langkah 7 • Kuis Evaluasi' },
+      { id: 'tambahan', name: 'Latihan tambahan', label: 'Langkah 8 • Budaya' },
+      { id: 'selesai', name: 'Selesai', label: 'Langkah 9 • Selesai' }
+    ];
+  }
+
+  // Tahapan dinamis untuk Pelajaran lainnya
   const sec1Title = (lesson.sections && lesson.sections[0]) ? lesson.sections[0].title : 'Materi 1';
   const sec2Title = (lesson.sections && lesson.sections[1]) ? lesson.sections[1].title : 'Materi 2';
   const sec3Title = (lesson.sections && lesson.sections[2]) ? lesson.sections[2].title : 'Kaidah';
@@ -1864,7 +1907,7 @@ function getLessonSteps(lesson) {
 
   return [
     { id: 'mulai', name: 'Mulai', label: 'Langkah 1 • Mulai' },
-    { id: 'komik', name: 'Kasus Dialog', label: 'Langkah 2 • Kasus Percakapan' },
+    { id: 'komik', name: 'Komik', label: 'Langkah 2 • Kasus Dialog' },
     { id: 'huruf', name: cleanShortName(sec1Title), label: `Langkah 3 • ${sec1Title}` },
     { id: 'kalimat', name: cleanShortName(sec2Title), label: `Langkah 4 • ${sec2Title}` },
     { id: 'romaji', name: cleanShortName(sec3Title), label: `Langkah 5 • ${sec3Title}` },
@@ -2256,11 +2299,13 @@ function renderLessonDynamicComic(lesson) {
 }
 
 // ----------------------------------------------------
-// STEP 3: MATERI UTAMA 1 (HURUF UNTUK MODUL 1, TOPIK 1 UNTUK MODUL LAIN)
+// STEP 3: MATERI UTAMA 1 (SESUAI SILABUS KURIKULUM RESMI)
 // ----------------------------------------------------
 function renderStepHuruf(lesson) {
-  // Hanya gunakan template statis jika Pelajaran 1
-  if (lesson.id === 1) {
+  const lesId = Number(lesson.id);
+
+  // Hanya Pelajaran 1 yang menggunakan template statis Tiga Jenis Huruf
+  if (lesId === 1) {
     const sourceEl = document.getElementById('step-content-huruf');
     if (sourceEl) {
       return `
@@ -2276,17 +2321,34 @@ function renderStepHuruf(lesson) {
     }
   }
 
-  // Pelajaran 2 dan seterusnya: Render Section 1 dari pelajaran tersebut!
+  // Pelajaran 2: Tabel Interaktif 46 Huruf Dasar Hiragana
+  if (lesId === 2) {
+    return renderHiraganaInteractiveStep(lesson);
+  }
+
+  // Pelajaran 3: Tabel Interaktif 46 Huruf Katakana
+  if (lesId === 3) {
+    return renderKatakanaInteractiveStep(lesson);
+  }
+
+  // Pelajaran 7: Kartu Visual Kata Tunjuk Benda (Kore, Sore, Are, Dore)
+  if (lesId === 7) {
+    return renderKoreSoreAreStep(lesson);
+  }
+
+  // Pelajaran lainnya: Render Section 1 dari silabus pelajaran tersebut
   const sec = (lesson.sections && lesson.sections[0]) ? lesson.sections[0] : null;
-  return renderLessonSectionStep(lesson, sec, 3, 'Materi Pokok 1');
+  return renderLessonSectionStep(lesson, sec, 3, sec ? sec.title : 'Materi Pokok 1');
 }
 
 // ----------------------------------------------------
 // STEP 4: MATERI UTAMA 2 / POLA KALIMAT
 // ----------------------------------------------------
 function renderStepKalimat(lesson) {
-  // Hanya gunakan template statis jika Pelajaran 1
-  if (lesson.id === 1) {
+  const lesId = Number(lesson.id);
+
+  // Hanya Pelajaran 1 yang menggunakan template statis Bedah Kalimat Tokyo de Ramen
+  if (lesId === 1) {
     const sourceEl = document.getElementById('step-content-kalimat');
     if (sourceEl) {
       return `
@@ -2302,16 +2364,33 @@ function renderStepKalimat(lesson) {
     }
   }
 
-  // Pelajaran 2 dan seterusnya: Render Section 2 dari pelajaran tersebut!
+  // Pelajaran 2: Perubahan Bunyi Tenten & Maru (Ga, Za, Da, Ba, Pa)
+  if (lesId === 2) {
+    return renderTentenMaruStep(lesson);
+  }
+
+  // Pelajaran 3: Tanda Bunyi Panjang (ー) & Kosakata Serapan Katakana
+  if (lesId === 3) {
+    return renderChoonLoanwordsStep(lesson);
+  }
+
+  // Pelajaran 7: Pola Kono + Benda & Partikel Kepemilikan の (No)
+  if (lesId === 7) {
+    return renderKonoNoStep(lesson);
+  }
+
+  // Pelajaran lainnya: Render Section 2 dari silabus pelajaran tersebut
   const sec = (lesson.sections && lesson.sections[1]) ? lesson.sections[1] : null;
-  return renderLessonSectionStep(lesson, sec, 4, 'Pola & Struktur Kalimat');
+  return renderLessonSectionStep(lesson, sec, 4, sec ? sec.title : 'Pola & Struktur Kalimat');
 }
 
 // ----------------------------------------------------
 // STEP 5: MATERI TAMBAHAN / TATA BAHASA & TIPS
 // ----------------------------------------------------
 function renderStepRomaji(lesson) {
-  if (lesson.id === 1) {
+  const lesId = Number(lesson.id);
+
+  if (lesId === 1) {
     return `
       <div class="step-header-banner">
         <span class="step-label-pill">Langkah 5 • Romaji &amp; Vokal</span>
@@ -2369,7 +2448,22 @@ function renderStepRomaji(lesson) {
     `;
   }
 
-  // Pelajaran 2 dan seterusnya: Render Section 3 jika ada, atau tips tata bahasa
+  // Pelajaran 2: Huruf Gabungan Yoon (ゃ ゅ ょ)
+  if (lesId === 2) {
+    return renderYoonStep(lesson);
+  }
+
+  // Pelajaran 3: Kaidah Katakana & Dakuon Katakana
+  if (lesId === 3) {
+    return renderKatakanaDakuonStep(lesson);
+  }
+
+  // Pelajaran 7: Latihan Percakapan Tanya Jawab Kepemilikan
+  if (lesId === 7) {
+    return renderKoreQuizPreviewStep(lesson);
+  }
+
+  // Pelajaran lainnya: Render Section 3 jika ada, atau tips tata bahasa
   const sec = (lesson.sections && lesson.sections[2]) ? lesson.sections[2] : null;
   if (sec) {
     return renderLessonSectionStep(lesson, sec, 5, 'Kaidah Tambahan');
@@ -2389,7 +2483,441 @@ function renderStepRomaji(lesson) {
           ${escapeHtml(lesson.cultureTip || 'Pahami pola kalimat dengan baik dan lafalkan dialog dengan suara lantang agar kebiasaan berbicara terasah secara alami.')}
         </p>
         <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:10px; padding:0.8rem 1rem; color:#92400E; font-size:0.88rem; font-weight:700;">
-          Latih pendengaranmu dengan menekan tombol audio pada setiap kalimat sebelum melanjutkan ke kuis kuis evaluasi.
+          Latih pendengaranmu dengan menekan tombol audio pada setiap kalimat sebelum melanjutkan ke kuis evaluasi pemahaman.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ====================================================
+// MODUL STEPPER INTERAKTIF KHUSUS (PELAJARAN 2, 3, 7)
+// ====================================================
+
+// 1. Modul 46 Huruf Dasar Hiragana (Pelajaran 2 Step 3)
+function renderHiraganaInteractiveStep(lesson) {
+  const hiraganaGridData = [
+    { kana: 'あ', romaji: 'a' }, { kana: 'い', romaji: 'i' }, { kana: 'う', romaji: 'u' }, { kana: 'え', romaji: 'e' }, { kana: 'お', romaji: 'o' },
+    { kana: 'か', romaji: 'ka' }, { kana: 'き', romaji: 'ki' }, { kana: 'く', romaji: 'ku' }, { kana: 'け', romaji: 'ke' }, { kana: 'こ', romaji: 'ko' },
+    { kana: 'さ', romaji: 'sa' }, { kana: 'し', romaji: 'shi' }, { kana: 'す', romaji: 'su' }, { kana: 'せ', romaji: 'se' }, { kana: 'そ', romaji: 'so' },
+    { kana: 'た', romaji: 'ta' }, { kana: 'ち', romaji: 'chi' }, { kana: 'つ', romaji: 'tsu' }, { kana: 'て', romaji: 'te' }, { kana: 'と', romaji: 'to' },
+    { kana: 'な', romaji: 'na' }, { kana: 'に', romaji: 'ni' }, { kana: 'ぬ', romaji: 'nu' }, { kana: 'ね', romaji: 'ne' }, { kana: 'の', romaji: 'no' },
+    { kana: 'は', romaji: 'ha' }, { kana: 'ひ', romaji: 'hi' }, { kana: 'ふ', romaji: 'fu' }, { kana: 'へ', romaji: 'he' }, { kana: 'ほ', romaji: 'ho' },
+    { kana: 'ま', romaji: 'ma' }, { kana: 'み', romaji: 'mi' }, { kana: 'む', romaji: 'mu' }, { kana: 'め', romaji: 'me' }, { kana: 'も', romaji: 'mo' },
+    { kana: 'や', romaji: 'ya' }, { kana: '', romaji: '' }, { kana: 'ゆ', romaji: 'yu' }, { kana: '', romaji: '' }, { kana: 'よ', romaji: 'yo' },
+    { kana: 'ら', romaji: 'ra' }, { kana: 'り', romaji: 'ri' }, { kana: 'る', romaji: 'ru' }, { kana: 'れ', romaji: 're' }, { kana: 'ろ', romaji: 'ro' },
+    { kana: 'わ', romaji: 'wa' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: 'を', romaji: 'wo' },
+    { kana: 'ん', romaji: 'n' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }
+  ];
+
+  const cellsHtml = hiraganaGridData.map(item => {
+    if (!item.kana) {
+      return `<div class="nihongo-kana-cell empty"></div>`;
+    }
+    return `
+      <div class="nihongo-kana-cell" onclick="speakJapanese('${item.kana}')" title="Klik untuk mendengar: ${item.romaji}">
+        <span class="nihongo-kana-char">${item.kana}</span>
+        <span class="nihongo-kana-romaji">${item.romaji}</span>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 3 • 46 Huruf Hiragana</span>
+      <h2 class="step-main-title">46 Huruf Dasar Hiragana (Seion)</h2>
+      <p class="step-desc-text">Inilah fondasi abjad bahasa Jepang. Klik setiap kotak huruf untuk mendengarkan lafal aslinya:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div class="nihongo-kana-chart-wrap">
+        <div class="nihongo-kana-grid">
+          ${cellsHtml}
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:1.2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <strong style="color:#0F172A; font-size:0.95rem;">Tips Menghafal dari Guru:</strong>
+          <p style="margin:0.2rem 0 0 0; color:#64748B; font-size:0.88rem;">Hafalkan per deret vokal (A - Ka - Sa - Ta - Na - Ha - Ma - Ya - Ra - Wa). Latih urutan coretannya secara teratur.</p>
+        </div>
+        <button type="button" class="btn-latihan-speaker" onclick="speakJapanese('あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん')">
+          <span>Dengar Seluruh Deret</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// 2. Modul Perubahan Bunyi Tenten & Maru (Pelajaran 2 Step 4)
+function renderTentenMaruStep(lesson) {
+  const dakuonList = [
+    { base: 'か (ka)', changed: 'が', romaji: 'ga', audio: 'が', example: 'かぎ (kagi - kunci)' },
+    { base: 'き (ki)', changed: 'ぎ', romaji: 'gi', audio: 'ぎ', example: 'ぎんこう (ginkou - bank)' },
+    { base: 'く (ku)', changed: 'ぐ', romaji: 'gu', audio: 'ぐ', example: 'ぐあい (guai - kondisi)' },
+    { base: 'け (ke)', changed: 'げ', romaji: 'ge', audio: 'げ', example: 'げんき (genki - sehat)' },
+    { base: 'こ (ko)', changed: 'ご', romaji: 'go', audio: 'ご', example: 'ごはん (gohan - nasi)' },
+    { base: 'さ (sa)', changed: 'ざ', romaji: 'za', audio: 'ざ', example: 'ざっし (zasshi - majalah)' },
+    { base: 'し (shi)', changed: 'じ', romaji: 'ji', audio: 'じ', example: 'じかん (jikan - waktu)' },
+    { base: 'す (su)', changed: 'ず', romaji: 'zu', audio: 'ず', example: 'みず (mizu - air)' },
+    { base: 'せ (se)', changed: 'ぜ', romaji: 'ze', audio: 'ぜ', example: 'ぜんぶ (zenbu - semua)' },
+    { base: 'そ (so)', changed: 'ぞ', romaji: 'zo', audio: 'ぞ', example: 'かぞく (kazoku - keluarga)' },
+    { base: 'た (ta)', changed: 'だ', romaji: 'da', audio: 'だ', example: 'だいがく (daigaku - universitas)' },
+    { base: 'ち (chi)', changed: 'ぢ', romaji: 'ji', audio: 'ぢ', example: 'はなぢ (hanaji - mimisan)' },
+    { base: 'つ (tsu)', changed: 'づ', romaji: 'zu', audio: 'づ', example: 'つづく (tsuzuku - berlanjut)' },
+    { base: 'て (te)', changed: 'で', romaji: 'de', audio: 'で', example: 'でんしゃ (densha - kereta)' },
+    { base: 'と (to)', changed: 'ど', romaji: 'do', audio: 'ど', example: 'どこ (doko - di mana)' },
+    { base: 'は (ha)', changed: 'ば', romaji: 'ba', audio: 'ば', example: 'かばん (kaban - tas)' },
+    { base: 'ひ (hi)', changed: 'び', romaji: 'bi', audio: 'び', example: 'びょういん (byouin - RS)' },
+    { base: 'ふ (fu)', changed: 'ぶ', romaji: 'bu', audio: 'ぶ', example: 'しんぶん (shinbun - koran)' },
+    { base: 'へ (he)', changed: 'べ', romaji: 'be', audio: 'べ', example: 'べんきょう (benkyou - belajar)' },
+    { base: 'ほ (ho)', changed: 'ぼ', romaji: 'bo', audio: 'ぼ', example: 'ぼうし (boushi - topi)' }
+  ];
+
+  const handakuonList = [
+    { base: 'は (ha)', changed: 'ぱ', romaji: 'pa', audio: 'ぱ', example: 'パン (pan - roti)' },
+    { base: 'ひ (hi)', changed: 'ぴ', romaji: 'pi', audio: 'ぴ', example: 'ぴかぴか (pikapika - berkilau)' },
+    { base: 'ふ (fu)', changed: 'ぷ', romaji: 'pu', audio: 'ぷ', example: 'きっぷ (kippu - tiket)' },
+    { base: 'へ (he)', changed: 'ぺ', romaji: 'pe', audio: 'ぺ', example: 'ペン (pen - pulpen)' },
+    { base: 'ほ (ho)', changed: 'ぽ', romaji: 'po', audio: 'ぽ', example: 'ポスト (posuto - kotak pos)' }
+  ];
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 4 • Perubahan Bunyi</span>
+      <h2 class="step-main-title">Tanda Tenten (゛) dan Maru (゜)</h2>
+      <p class="step-desc-text">Dua tanda kecil yang dapat mengubah bunyi huruf Hiragana menjadi konsonan tebal atau bunyi P:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div class="grammar-formula-box" style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:14px; padding:1.2rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:#92400E; margin-bottom:0.3rem;">Aturan Sederhana:</div>
+        <div style="font-size:1.15rem; font-weight:800; color:#78350F; font-family:'Noto Sans JP', sans-serif;">Tenten (゛): K &rarr; G, S &rarr; Z, T &rarr; D, H &rarr; B | Maru (゜): H &rarr; P</div>
+      </div>
+
+      <h4 style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:1.5rem 0 0.8rem 0;">1. Deret Tenten (Dakuon - 20 Huruf):</h4>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:0.75rem; margin-bottom:1.8rem;">
+        ${dakuonList.map(item => `
+          <div class="study-dialogue-card" onclick="speakJapanese('${item.audio}')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:12px; padding:0.8rem; text-align:center; transition:all 0.2s;">
+            <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.8rem; font-weight:900; color:#0F172A;">${item.changed}</div>
+            <div style="font-size:0.85rem; font-weight:800; color:#EA580C; margin:0.15rem 0;">${item.romaji}</div>
+            <div style="font-size:0.75rem; color:#64748B;">${item.base}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <h4 style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:1.5rem 0 0.8rem 0;">2. Deret Maru (Handakuon - 5 Huruf P):</h4>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:0.75rem;">
+        ${handakuonList.map(item => `
+          <div class="study-dialogue-card" onclick="speakJapanese('${item.audio}')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:12px; padding:0.8rem; text-align:center; transition:all 0.2s;">
+            <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.8rem; font-weight:900; color:#0F172A;">${item.changed}</div>
+            <div style="font-size:0.85rem; font-weight:800; color:#EA580C; margin:0.15rem 0;">${item.romaji}</div>
+            <div style="font-size:0.75rem; color:#64748B;">${item.base}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// 3. Modul Huruf Gabungan Yoon (Pelajaran 2 Step 5)
+function renderYoonStep(lesson) {
+  const yoonGroups = [
+    { label: 'Deret K (Ki)', items: [{ kana: 'きゃ', romaji: 'kya' }, { kana: 'きゅ', romaji: 'kyu' }, { kana: 'きょ', romaji: 'kyo' }] },
+    { label: 'Deret S (Shi)', items: [{ kana: 'しゃ', romaji: 'sha' }, { kana: 'しゅ', romaji: 'shu' }, { kana: 'しょ', romaji: 'sho' }] },
+    { label: 'Deret T (Chi)', items: [{ kana: 'ちゃ', romaji: 'cha' }, { kana: 'ちゅ', romaji: 'chu' }, { kana: 'ちょ', romaji: 'cho' }] },
+    { label: 'Deret N (Ni)', items: [{ kana: 'にゃ', romaji: 'nya' }, { kana: 'にゅ', romaji: 'nyu' }, { kana: 'にょ', romaji: 'nyo' }] },
+    { label: 'Deret H (Hi)', items: [{ kana: 'ひゃ', romaji: 'hya' }, { kana: 'ひゅ', romaji: 'hyu' }, { kana: 'ひょ', romaji: 'hyo' }] },
+    { label: 'Deret M (Mi)', items: [{ kana: 'みゃ', romaji: 'mya' }, { kana: 'みゅ', romaji: 'myu' }, { kana: 'みょ', romaji: 'myo' }] },
+    { label: 'Deret R (Ri)', items: [{ kana: 'りゃ', romaji: 'rya' }, { kana: 'りゅ', romaji: 'ryu' }, { kana: 'りょ', romaji: 'ryo' }] },
+    { label: 'Deret G (Gi)', items: [{ kana: 'ぎゃ', romaji: 'gya' }, { kana: 'ぎゅ', romaji: 'gyu' }, { kana: 'ぎょ', romaji: 'gyo' }] },
+    { label: 'Deret J (Ji)', items: [{ kana: 'じゃ', romaji: 'ja' }, { kana: 'じゅ', romaji: 'ju' }, { kana: 'じょ', romaji: 'jo' }] }
+  ];
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 5 • Huruf Gabungan</span>
+      <h2 class="step-main-title">Yōon: Huruf Vokal "i" + ya, yu, yo Kecil</h2>
+      <p class="step-desc-text">Gabungan huruf baris "i" dengan huruf ゃ, ゅ, ょ kecil menghasilkan satu ketukan bunyi baru:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+        ${yoonGroups.map(grp => `
+          <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:1.1rem;">
+            <div style="font-weight:800; font-size:0.85rem; color:#92400E; margin-bottom:0.75rem; text-transform:uppercase;">${grp.label}</div>
+            <div style="display:flex; gap:0.5rem; justify-content:space-between;">
+              ${grp.items.map(it => `
+                <div onclick="speakJapanese('${it.kana}')" style="cursor:pointer; flex:1; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:0.6rem 0.3rem; text-align:center;">
+                  <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.45rem; font-weight:800; color:#0F172A;">${it.kana}</div>
+                  <div style="font-size:0.78rem; font-weight:700; color:#EA580C; margin-top:0.2rem;">${it.romaji}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// 4. Modul 46 Huruf Dasar Katakana (Pelajaran 3 Step 3)
+function renderKatakanaInteractiveStep(lesson) {
+  const katakanaGridData = [
+    { kana: 'ア', romaji: 'a' }, { kana: 'イ', romaji: 'i' }, { kana: 'ウ', romaji: 'u' }, { kana: 'エ', romaji: 'e' }, { kana: 'オ', romaji: 'o' },
+    { kana: 'カ', romaji: 'ka' }, { kana: 'キ', romaji: 'ki' }, { kana: 'ク', romaji: 'ku' }, { kana: 'ケ', romaji: 'ke' }, { kana: 'コ', romaji: 'ko' },
+    { kana: 'サ', romaji: 'sa' }, { kana: 'シ', romaji: 'shi' }, { kana: 'ス', romaji: 'su' }, { kana: 'セ', romaji: 'se' }, { kana: 'ソ', romaji: 'so' },
+    { kana: 'タ', romaji: 'ta' }, { kana: 'チ', romaji: 'chi' }, { kana: 'ツ', romaji: 'tsu' }, { kana: 'テ', romaji: 'te' }, { kana: 'ト', romaji: 'to' },
+    { kana: 'ナ', romaji: 'na' }, { kana: 'ニ', romaji: 'ni' }, { kana: 'ヌ', romaji: 'nu' }, { kana: 'ネ', romaji: 'ne' }, { kana: 'ノ', romaji: 'no' },
+    { kana: 'ハ', romaji: 'ha' }, { kana: 'ヒ', romaji: 'hi' }, { kana: 'フ', romaji: 'fu' }, { kana: 'ヘ', romaji: 'he' }, { kana: 'ホ', romaji: 'ho' },
+    { kana: 'マ', romaji: 'ma' }, { kana: 'ミ', romaji: 'mi' }, { kana: 'む', romaji: 'mu' }, { kana: 'メ', romaji: 'me' }, { kana: 'モ', romaji: 'mo' },
+    { kana: 'ヤ', romaji: 'ya' }, { kana: '', romaji: '' }, { kana: 'ユ', romaji: 'yu' }, { kana: '', romaji: '' }, { kana: 'ヨ', romaji: 'yo' },
+    { kana: 'ラ', romaji: 'ra' }, { kana: 'リ', romaji: 'ri' }, { kana: 'ル', romaji: 'ru' }, { kana: 'レ', romaji: 're' }, { kana: 'ロ', romaji: 'ro' },
+    { kana: 'ワ', romaji: 'wa' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: 'ヲ', romaji: 'wo' },
+    { kana: 'ン', romaji: 'n' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }
+  ];
+
+  const cellsHtml = katakanaGridData.map(item => {
+    if (!item.kana) {
+      return `<div class="nihongo-kana-cell empty"></div>`;
+    }
+    return `
+      <div class="nihongo-kana-cell" onclick="speakJapanese('${item.kana}')" title="Klik untuk mendengar: ${item.romaji}">
+        <span class="nihongo-kana-char" style="color:#0284C7;">${item.kana}</span>
+        <span class="nihongo-kana-romaji">${item.romaji}</span>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 3 • 46 Huruf Katakana</span>
+      <h2 class="step-main-title">46 Huruf Katakana (カタカナ)</h2>
+      <p class="step-desc-text">Huruf bersudut kaku dan lurus untuk kata serapan asing. Klik tiap kotak untuk mendengar pelafalan audionya:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div class="nihongo-kana-chart-wrap">
+        <div class="nihongo-kana-grid">
+          ${cellsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 5. Modul Tanda Panjang & Serapan Katakana (Pelajaran 3 Step 4)
+function renderChoonLoanwordsStep(lesson) {
+  const words = [
+    { jp: 'ラーメン', romaji: 'rāmen', meaning: 'Mie ramen gandum khas', audio: 'ラーメン' },
+    { jp: 'コーヒー', romaji: 'kōhī', meaning: 'Kopi hitam / susu', audio: 'コーヒー' },
+    { jp: 'ホテル', romaji: 'hoteru', meaning: 'Penginapan hotel', audio: 'ホテル' },
+    { jp: 'トイレ', romaji: 'toire', meaning: 'Toilet / kamar kecil', audio: 'トイレ' },
+    { jp: 'パン', romaji: 'pan', meaning: 'Roti sarapan', audio: 'パン' },
+    { jp: 'バス', romaji: 'basu', meaning: 'Bus kota umum', audio: 'バス' },
+    { jp: 'テレビ', romaji: 'terebi', meaning: 'Televisi layar datar', audio: 'テレビ' },
+    { jp: 'タクシー', romaji: 'takushī', meaning: 'Mobil taksi', audio: 'タクシー' }
+  ];
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 4 • Tanda Panjang (ー)</span>
+      <h2 class="step-main-title">Tanda Vokal Panjang (ー) &amp; Kosakata Populer</h2>
+      <p class="step-desc-text">Garis strip horizontal (ー) memperpanjang bunyi vokal dua ketukan. Klik kartu untuk mendengar bedanya:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+        ${words.map(w => `
+          <div class="study-dialogue-card" onclick="speakJapanese('${w.audio}')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:1.1rem; display:flex; align-items:center; justify-content:space-between; gap:0.8rem; transition:all 0.2s;">
+            <div>
+              <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.6rem; font-weight:900; color:#0369A1;">${w.jp}</div>
+              <div style="font-size:0.85rem; font-weight:800; color:#EA580C; margin:0.15rem 0;">${w.romaji}</div>
+              <div style="font-size:0.85rem; color:#475569;">${w.meaning}</div>
+            </div>
+            <button type="button" class="btn-latihan-speaker" onclick="event.stopPropagation(); speakJapanese('${w.audio}')">Audio</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// 6. Modul Kaidah Dakuon Katakana (Pelajaran 3 Step 5)
+function renderKatakanaDakuonStep(lesson) {
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 5 • Kaidah Katakana</span>
+      <h2 class="step-main-title">Kaidah Penulisan Nama Orang Asing</h2>
+      <p class="step-desc-text">Aturan praktis penulisan nama dan kata internasional ke dalam ejaan Katakana:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:16px; padding:1.5rem; margin-bottom:1.5rem;">
+        <h4 style="font-size:1.05rem; font-weight:800; color:#0369A1; margin:0 0 0.5rem 0;">Nama Orang Indonesia Wajib Ditulis Katakana:</h4>
+        <p style="color:#0C4A6E; font-size:0.92rem; line-height:1.6; margin:0 0 1rem 0;">
+          Karena nama non-Jepang berasal dari bahasa asing, penulisannya wajib menggunakan Katakana yang paling mendekati bunyi aslinya:
+        </p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem;">
+          <div style="background:#FFFFFF; border:1px solid #BAE6FD; border-radius:10px; padding:0.8rem;">
+            <div style="font-size:0.82rem; color:#64748B;">Nama "Budi"</div>
+            <div style="font-size:1.35rem; font-weight:900; color:#0369A1;">ブディ</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #BAE6FD; border-radius:10px; padding:0.8rem;">
+            <div style="font-size:0.82rem; color:#64748B;">Nama "Siti"</div>
+            <div style="font-size:1.35rem; font-weight:900; color:#0369A1;">シティ</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #BAE6FD; border-radius:10px; padding:0.8rem;">
+            <div style="font-size:0.82rem; color:#64748B;">Negara "Indonesia"</div>
+            <div style="font-size:1.35rem; font-weight:900; color:#0369A1;">インドネシア</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 7. Modul Kata Tunjuk Benda Kore, Sore, Are, Dore (Pelajaran 7 Step 3)
+function renderKoreSoreAreStep(lesson) {
+  const cards = [
+    {
+      tag: 'Dekat Saya (Pembicara)',
+      jp: 'これ',
+      romaji: 'Kore',
+      meaning: 'Ini (benda berada di dekat orang yang sedang berbicara).',
+      example: 'これ は ほん です。(Ini adalah buku).',
+      audio: 'これはほんです'
+    },
+    {
+      tag: 'Dekat Lawan Bicara',
+      jp: 'それ',
+      romaji: 'Sore',
+      meaning: 'Itu (benda berada di dekat orang yang diajak bicara).',
+      example: 'それ は かばん です。(Itu adalah tasmu).',
+      audio: 'それはかばんです'
+    },
+    {
+      tag: 'Jauh dari Keduanya',
+      jp: 'あれ',
+      romaji: 'Are',
+      meaning: 'Itu jauh di sana (benda berada jauh dari saya maupun kamu).',
+      example: 'あれ は えき です。(Itu di seberang sana stasiun).',
+      audio: 'あれはえきです'
+    },
+    {
+      tag: 'Kata Tanya',
+      jp: 'どれ',
+      romaji: 'Dore',
+      meaning: 'Yang mana? (menanyakan pilihan di antara beberapa benda).',
+      example: 'あなた の かさ は どれ ですか？(Payungmu yang mana?).',
+      audio: 'あなたの傘はどれですか'
+    }
+  ];
+
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 3 • Kata Tunjuk Benda</span>
+      <h2 class="step-main-title">Pola Ko-So-A-Do: Kore, Sore, Are, Dore</h2>
+      <p class="step-desc-text">Kata tunjuk benda mandiri yang dipilih berdasarkan jarak posisi fisik benda terhadap pembicara:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div class="ko-so-a-do-grid">
+        ${cards.map(c => `
+          <div class="ko-so-a-do-card" onclick="speakJapanese('${c.audio}')">
+            <span class="ko-so-a-do-tag">${c.tag}</span>
+            <div class="ko-so-a-do-jp">${c.jp}</div>
+            <div class="ko-so-a-do-romaji">${c.romaji}</div>
+            <div class="ko-so-a-do-meaning">${c.meaning}</div>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:0.7rem; font-size:0.85rem; color:#0F172A; margin-bottom:0.75rem;">
+              <strong>Contoh: </strong>${c.example}
+            </div>
+            <button type="button" class="ko-so-a-do-btn">
+              <span>Dengar Audio Pelafalan</span>
+            </button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// 8. Modul Kono + Benda & Partikel No (Pelajaran 7 Step 4)
+function renderKonoNoStep(lesson) {
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 4 • Kepemilikan</span>
+      <h2 class="step-main-title">Penjelas Kono + Benda &amp; Partikel Kepemilikan の (No)</h2>
+      <p class="step-desc-text">Gunakan pola Kono/Sono/Ano untuk menunjuk benda spesifik dan partikel の untuk menyatakan pemilik:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div class="grammar-formula-box" style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:14px; padding:1.2rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:#92400E; margin-bottom:0.3rem;">Rumus Pola:</div>
+        <div style="font-size:1.25rem; font-weight:800; color:#78350F; font-family:'Noto Sans JP', sans-serif;">この [Benda] • [Pemilik] の [Benda]</div>
+        <div style="font-size:0.88rem; color:#92400E; margin-top:0.3rem;">Kore berdiri sendiri (Kore wa kasa desu). Kono wajib ditempel kata benda (Kono kasa wa watashi no desu).</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div class="study-dialogue-card" onclick="speakJapanese('このかさはわたしのです')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.35rem; font-weight:800; color:#0F172A;">この かさ は わたし の です。</div>
+            <div style="font-size:0.86rem; font-weight:700; color:#EA580C; margin:0.2rem 0;">Kono kasa wa watashi no desu.</div>
+            <div style="font-size:0.92rem; color:#475569;">Payung ini adalah milik saya.</div>
+          </div>
+          <button type="button" class="btn-latihan-speaker">Audio</button>
+        </div>
+
+        <div class="study-dialogue-card" onclick="speakJapanese('それはだれのかさですか')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.35rem; font-weight:800; color:#0F172A;">それ は だれ の かさ ですか？</div>
+            <div style="font-size:0.86rem; font-weight:700; color:#EA580C; margin:0.2rem 0;">Sore wa dare no kasa desu ka?</div>
+            <div style="font-size:0.92rem; color:#475569;">Itu payung milik siapa ya?</div>
+          </div>
+          <button type="button" class="btn-latihan-speaker">Audio</button>
+        </div>
+
+        <div class="study-dialogue-card" onclick="speakJapanese('これはたなかさんのほんです')" style="cursor:pointer; background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:14px; padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Noto Sans JP', sans-serif; font-size:1.35rem; font-weight:800; color:#0F172A;">これ は たなかさん の ほん です。</div>
+            <div style="font-size:0.86rem; font-weight:700; color:#EA580C; margin:0.2rem 0;">Kore wa Tanaka-san no hon desu.</div>
+            <div style="font-size:0.92rem; color:#475569;">Ini adalah buku milik Tuan Tanaka.</div>
+          </div>
+          <button type="button" class="btn-latihan-speaker">Audio</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 9. Modul Tanya Jawab Kepemilikan (Pelajaran 7 Step 5)
+function renderKoreQuizPreviewStep(lesson) {
+  return `
+    <div class="step-header-banner">
+      <span class="step-label-pill">Langkah 5 • Tanya Jawab</span>
+      <h2 class="step-main-title">Praktek Singkat Tanya Jawab Kepemilikan</h2>
+      <p class="step-desc-text">Simulasi percakapan nyata saat mencari barang yang tertinggal di kelas atau restoran:</p>
+    </div>
+
+    <div class="nihongo-study-card">
+      <div style="background:#FAF6F0; border:1.5px solid #E2D7CC; border-radius:16px; padding:1.5rem; margin-bottom:1.5rem;">
+        <h4 style="font-size:1.1rem; font-weight:800; color:#64554B; margin:0 0 0.8rem 0;">Dialog Bertanya Pemilik Barang:</h4>
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:12px; padding:0.9rem;">
+            <span style="font-size:0.75rem; font-weight:800; color:#BA3D27; text-transform:uppercase;">Tanya</span>
+            <div style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:0.2rem 0;">すみません、これ は リンさん の ですか？</div>
+            <div style="font-size:0.85rem; color:#64748B;">Permisi, apakah ini milik Rin?</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:12px; padding:0.9rem;">
+            <span style="font-size:0.75rem; font-weight:800; color:#16A34A; text-transform:uppercase;">Jawaban Ya</span>
+            <div style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:0.2rem 0;">はい、わたし の です。ありがとう ございます！</div>
+            <div style="font-size:0.85rem; color:#64748B;">Ya, itu milik saya. Terima kasih banyak!</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:0.9rem;">
+            <span style="font-size:0.75rem; font-weight:800; color:#DC2626; text-transform:uppercase;">Jawaban Bukan</span>
+            <div style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:0.2rem 0;">いいえ、わたし の じゃ ありません。</div>
+            <div style="font-size:0.85rem; color:#64748B;">Bukan, ini bukan milik saya.</div>
+          </div>
         </div>
       </div>
     </div>

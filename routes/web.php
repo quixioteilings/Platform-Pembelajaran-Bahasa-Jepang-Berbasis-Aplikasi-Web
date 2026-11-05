@@ -31,7 +31,8 @@ Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->nam
 Route::get('/api/auth/status', [AuthController::class, 'status'])->name('auth.status');
 Route::post('/api/auth/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/api/auth/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/api/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::match(['get', 'post'], '/api/auth/demo', [AuthController::class, 'quickSwitch'])->name('auth.demo');
+Route::match(['get', 'post'], '/api/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::post('/api/auth/profile', [AuthController::class, 'updateProfile'])->name('auth.profile');
 Route::post('/api/auth/score', [AuthController::class, 'addScore'])->name('auth.score');
 Route::post('/api/auth/assessment', [AuthController::class, 'submitAssessment'])->name('auth.assessment');

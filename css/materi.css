@@ -2947,6 +2947,194 @@ body.is-dragging-gesture .quest-opt-btn * {
   color: #991B1B !important;
 }
 
+/* ====================================================
+   INTERACTIVE KANA CHARTS & DISTANCE CARDS (ZERO ICON / ZERO EMOJI)
+   ==================================================== */
+.nihongo-kana-chart-wrap {
+  margin: 1.5rem 0 2rem;
+}
+
+.nihongo-kana-grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding: 0 0.2rem;
+}
+
+.nihongo-kana-grid-hint {
+  font-size: 0.85rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.nihongo-kana-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+}
+
+.nihongo-kana-cell {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 0.85rem 0.4rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.nihongo-kana-cell:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #BA3D27;
+  box-shadow: 0 6px 16px rgba(186, 61, 39, 0.12);
+}
+
+.nihongo-kana-cell.cell-hira {
+  background: #FFFDF9;
+  border-color: #FED7AA;
+}
+.nihongo-kana-cell.cell-hira:hover {
+  border-color: #EA580C;
+}
+
+.nihongo-kana-cell.cell-kata {
+  background: #F8FAFC;
+  border-color: #BFDBFE;
+}
+.nihongo-kana-cell.cell-kata:hover {
+  border-color: #2563EB;
+}
+
+.nihongo-kana-cell.cell-empty {
+  background: transparent;
+  border: 1.5px dashed #CBD5E1;
+  cursor: default;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.nihongo-kana-char {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+
+.cell-hira .nihongo-kana-char {
+  color: #C2410C;
+}
+
+.cell-kata .nihongo-kana-char {
+  color: #1D4ED8;
+}
+
+.nihongo-kana-romaji {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: lowercase;
+}
+
+/* KORE - SORE - ARE - DORE DISTANCE GRID (LESSON 7) */
+.ko-so-a-do-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.ko-so-a-do-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.3rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.ko-so-a-do-card:hover {
+  transform: translateY(-3px);
+  border-color: #EA580C;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.12);
+}
+
+.ko-so-a-do-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FFEDD5;
+  margin-bottom: 0.6rem;
+}
+
+.ko-so-a-do-jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin-bottom: 0.2rem;
+}
+
+.ko-so-a-do-romaji {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #EA580C;
+  margin-bottom: 0.5rem;
+}
+
+.ko-so-a-do-meaning {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.45;
+  margin-bottom: 0.8rem;
+  flex-grow: 1;
+}
+
+.ko-so-a-do-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .nihongo-kana-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
+  .nihongo-kana-cell {
+    padding: 0.65rem 0.2rem;
+  }
+  .nihongo-kana-char {
+    font-size: 1.4rem;
+  }
+}
+
+
 .challenge-feedback-box {
   display: none;
   margin-top: 0.9rem;
@@ -5145,4 +5333,192 @@ body.is-dragging-gesture .quest-opt-btn * {
   border-color: #EF4444 !important;
   color: #991B1B !important;
 }
+
+/* ====================================================
+   INTERACTIVE KANA CHARTS & DISTANCE CARDS (ZERO ICON / ZERO EMOJI)
+   ==================================================== */
+.nihongo-kana-chart-wrap {
+  margin: 1.5rem 0 2rem;
+}
+
+.nihongo-kana-grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding: 0 0.2rem;
+}
+
+.nihongo-kana-grid-hint {
+  font-size: 0.85rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.nihongo-kana-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+}
+
+.nihongo-kana-cell {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 0.85rem 0.4rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.nihongo-kana-cell:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #BA3D27;
+  box-shadow: 0 6px 16px rgba(186, 61, 39, 0.12);
+}
+
+.nihongo-kana-cell.cell-hira {
+  background: #FFFDF9;
+  border-color: #FED7AA;
+}
+.nihongo-kana-cell.cell-hira:hover {
+  border-color: #EA580C;
+}
+
+.nihongo-kana-cell.cell-kata {
+  background: #F8FAFC;
+  border-color: #BFDBFE;
+}
+.nihongo-kana-cell.cell-kata:hover {
+  border-color: #2563EB;
+}
+
+.nihongo-kana-cell.cell-empty {
+  background: transparent;
+  border: 1.5px dashed #CBD5E1;
+  cursor: default;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.nihongo-kana-char {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+
+.cell-hira .nihongo-kana-char {
+  color: #C2410C;
+}
+
+.cell-kata .nihongo-kana-char {
+  color: #1D4ED8;
+}
+
+.nihongo-kana-romaji {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: lowercase;
+}
+
+/* KORE - SORE - ARE - DORE DISTANCE GRID (LESSON 7) */
+.ko-so-a-do-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.ko-so-a-do-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.3rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.ko-so-a-do-card:hover {
+  transform: translateY(-3px);
+  border-color: #EA580C;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.12);
+}
+
+.ko-so-a-do-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FFEDD5;
+  margin-bottom: 0.6rem;
+}
+
+.ko-so-a-do-jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin-bottom: 0.2rem;
+}
+
+.ko-so-a-do-romaji {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #EA580C;
+  margin-bottom: 0.5rem;
+}
+
+.ko-so-a-do-meaning {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.45;
+  margin-bottom: 0.8rem;
+  flex-grow: 1;
+}
+
+.ko-so-a-do-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .nihongo-kana-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
+  .nihongo-kana-cell {
+    padding: 0.65rem 0.2rem;
+  }
+  .nihongo-kana-char {
+    font-size: 1.4rem;
+  }
+}
+
 

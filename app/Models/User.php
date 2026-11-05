@@ -17,6 +17,8 @@ class User extends Authenticatable
         'password',
         'role',
         'avatar',
+        'reg_no',
+        'class_room',
         'score',
         'completed_lessons',
     ];

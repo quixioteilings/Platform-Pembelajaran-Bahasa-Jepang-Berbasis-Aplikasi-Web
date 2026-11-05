@@ -361,19 +361,112 @@ body {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  z-index: 1;
+  perspective: 700px;
 }
 
 .sakura-petal {
   position: absolute;
-  background: linear-gradient(135deg, #FBE6E8, #F3C4C9);
-  border-radius: 100% 0 100% 40%;
-  opacity: 0.55;
-  animation: petalFall linear infinite;
+  top: -36px;
+  pointer-events: none;
+  border-radius: 95% 0 95% 35% / 95% 0 95% 35%;
+  background: linear-gradient(135deg, #FFF0F3 0%, #FFB7C5 50%, #F48CA0 100%);
+  box-shadow: 0 2px 6px rgba(244, 140, 160, 0.22);
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  transform-origin: center center;
 }
 
-@keyframes petalFall {
-  0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
-  100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+/* Layer & Depth Variants */
+.sakura-petal.petal-sm {
+  filter: blur(0.5px);
+  opacity: 0.45;
+}
+.sakura-petal.petal-md {
+  opacity: 0.75;
+}
+.sakura-petal.petal-lg {
+  opacity: 0.92;
+  filter: drop-shadow(0 3px 6px rgba(230, 110, 130, 0.22));
+}
+
+/* Natural Wind Sway Keyframes (Smooth, Fluttering & 3D Tumbling - No Freeze) */
+@keyframes sakuraSway1 {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  25% {
+    transform: translate3d(32px, 25vh, 15px) rotateZ(80deg) rotateX(110deg) rotateY(45deg);
+  }
+  50% {
+    transform: translate3d(-20px, 55vh, -10px) rotateZ(180deg) rotateX(220deg) rotateY(160deg);
+  }
+  75% {
+    transform: translate3d(36px, 85vh, 12px) rotateZ(270deg) rotateX(310deg) rotateY(240deg);
+  }
+  92% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  100% {
+    transform: translate3d(-10px, 115vh, 0) rotateZ(360deg) rotateX(400deg) rotateY(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sakuraSway2 {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotateZ(30deg) rotateX(15deg) rotateY(0deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  25% {
+    transform: translate3d(-34px, 25vh, -18px) rotateZ(120deg) rotateX(130deg) rotateY(80deg);
+  }
+  50% {
+    transform: translate3d(20px, 55vh, 14px) rotateZ(210deg) rotateX(240deg) rotateY(190deg);
+  }
+  75% {
+    transform: translate3d(-24px, 85vh, -8px) rotateZ(300deg) rotateX(340deg) rotateY(280deg);
+  }
+  92% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  100% {
+    transform: translate3d(22px, 115vh, 0) rotateZ(400deg) rotateX(440deg) rotateY(370deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sakuraSway3 {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotateZ(-20deg) rotateX(25deg) rotateY(10deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  25% {
+    transform: translate3d(26px, 25vh, 10px) rotateZ(60deg) rotateX(100deg) rotateY(65deg);
+  }
+  50% {
+    transform: translate3d(50px, 55vh, 20px) rotateZ(160deg) rotateX(200deg) rotateY(160deg);
+  }
+  75% {
+    transform: translate3d(12px, 85vh, -12px) rotateZ(255deg) rotateX(290deg) rotateY(250deg);
+  }
+  92% {
+    opacity: var(--p-opacity, 0.85);
+  }
+  100% {
+    transform: translate3d(45px, 115vh, 0) rotateZ(360deg) rotateX(390deg) rotateY(360deg);
+    opacity: 0;
+  }
 }
 
 .hero-shapes .shape {

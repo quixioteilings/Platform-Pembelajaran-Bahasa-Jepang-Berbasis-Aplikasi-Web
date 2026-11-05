@@ -62,37 +62,60 @@ class AuthController extends Controller
     // Login Form / Ajax
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $loginInput = trim((string) $request->input('email'));
+        $password = (string) $request->input('password');
+        $remember = $request->boolean('remember', true);
 
-        if (Auth::attempt($credentials, true)) {
+        if (empty($loginInput) || empty($password)) {
+            $msg = 'Email dan kata sandi wajib diisi.';
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->withInput()->withErrors(['email' => $msg]);
+        }
+
+        $email = strtolower($loginInput);
+        
+        // Coba login standar via email
+        $attempt = Auth::attempt(['email' => $email, 'password' => $password], $remember);
+
+        // Jika gagal, coba verifikasi apakah input merupakan NISN / No. Registrasi
+        if (!$attempt) {
+            $userByReg = User::where('reg_no', $loginInput)->first();
+            if ($userByReg && Hash::check($password, $userByReg->password)) {
+                Auth::login($userByReg, $remember);
+                $attempt = true;
+            }
+        }
+
+        if ($attempt) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
             if ($request->wantsJson()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Selamat datang kembali, ' . Auth::user()->name . '!',
-                    'user' => Auth::user(),
-                    'redirect' => Auth::user()->isGuru() ? route('guru.dashboard') : route('home')
+                    'message' => 'Selamat datang kembali, ' . $user->name . '!',
+                    'user' => $user,
+                    'redirect' => $user->isGuru() ? route('guru.dashboard') : route('home')
                 ]);
             }
 
-            return Auth::user()->isGuru() 
+            return $user->isGuru() 
                 ? redirect()->route('guru.dashboard') 
-                : redirect()->route('home')->with('success', 'Selamat datang kembali!');
+                : redirect()->route('home')->with('success', 'Selamat datang kembali, ' . $user->name . '!');
         }
 
+        $errMsg = 'Email/NISN atau kata sandi tidak sesuai. Silakan periksa kembali.';
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email atau kata sandi tidak cocok. Silakan coba lagi.'
+                'message' => $errMsg
             ], 422);
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau kata sandi tidak cocok.',
+        return back()->withInput()->withErrors([
+            'email' => $errMsg,
         ]);
     }
 
@@ -103,41 +126,79 @@ class AuthController extends Controller
         $targetEmail = $role === 'guru' ? 'guru@sijapanese.sch.id' : 'kenji@sijapanese.sch.id';
         
         $user = User::where('email', $targetEmail)->first();
-        if ($user) {
-            Auth::login($user, true);
-            $request->session()->regenerate();
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Beralih ke akun demo: ' . $user->name . ' (' . ucfirst($user->role) . ')',
-                'user' => $user,
-                'redirect' => $user->isGuru() ? route('guru.dashboard') : route('home')
+        if (!$user) {
+            $user = User::create([
+                'name' => $role === 'guru' ? 'Sensei Tanaka' : 'Kenji Pratama (Siswa)',
+                'email' => $targetEmail,
+                'password' => Hash::make('password'),
+                'role' => $role,
+                'avatar' => $role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg',
+                'reg_no' => $role === 'guru' ? 'SIJ-2026-GURU01' : 'JFT-2026-51720',
+                'class_room' => $role === 'guru' ? 'Master Pengajar' : 'Kelas X-A',
+                'score' => $role === 'guru' ? 999 : 150,
+                'completed_lessons' => $role === 'guru' ? [] : [1],
             ]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Akun tidak ditemukan'], 404);
+        Auth::login($user, true);
+        $request->session()->regenerate();
+        
+        $redirectUrl = $user->isGuru() ? route('guru.dashboard') : route('home');
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Masuk sebagai ' . $user->name . ' (' . ($user->isGuru() ? 'Guru' : 'Siswa') . ')',
+                'user' => $user,
+                'redirect' => $redirectUrl
+            ]);
+        }
+
+        return redirect($redirectUrl)->with('success', 'Masuk sebagai akun demo: ' . $user->name);
     }
 
     // Register Akun Baru (Multi-role: Siswa & Guru)
     public function register(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:6'],
             'role' => ['nullable', 'string', 'in:siswa,guru'],
             'avatar' => ['nullable', 'string'],
+            'reg_no' => ['nullable', 'string', 'max:50'],
+            'class_room' => ['nullable', 'string', 'max:50'],
+        ];
+
+        if ($request->filled('password_confirmation')) {
+            $rules['password'][] = 'confirmed';
+        }
+
+        $validated = $request->validate($rules, [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format alamat email tidak valid.',
+            'email.unique' => 'Alamat email sudah terdaftar. Silakan gunakan email lain atau langsung masuk.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal harus 6 karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok. Silakan ulangi pengetikan kata sandi.',
         ]);
 
         $role = $validated['role'] ?? 'siswa';
         $defaultAvatar = $role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg';
 
+        $regNo = !empty($validated['reg_no']) 
+            ? trim($validated['reg_no']) 
+            : ($role === 'guru' ? 'SIJ-2026-GURU' . rand(100, 999) : 'JFT-2026-' . rand(10000, 99999));
+
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
+            'name' => trim($validated['name']),
+            'email' => strtolower(trim($validated['email'])),
             'password' => Hash::make($validated['password']),
             'role' => $role,
             'avatar' => $validated['avatar'] ?? $defaultAvatar,
+            'reg_no' => $regNo,
+            'class_room' => $validated['class_room'] ?? ($role === 'guru' ? 'Pengajar' : 'Siswa Umum'),
             'score' => 0,
             'completed_lessons' => [],
         ]);
@@ -150,13 +211,13 @@ class AuthController extends Controller
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil dibuat!',
+                'message' => 'Pendaftaran akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil!',
                 'user' => $user,
                 'redirect' => $redirectUrl
             ]);
         }
 
-        return redirect($redirectUrl)->with('success', 'Akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil dibuat!');
+        return redirect($redirectUrl)->with('success', 'Akun ' . ($user->isGuru() ? 'Guru' : 'Siswa') . ' berhasil dibuat. Selamat belajar!');
     }
 
     // Logout

@@ -13,6 +13,7 @@
       --red-dark: #B91C1C;
       --blue: #2563EB;
       --blue-dark: #1D4ED8;
+      --green: #10B981;
       --text: #0F172A;
       --text-soft: #64748B;
       --border: #CBD5E1;
@@ -35,19 +36,19 @@
     }
     .register-container {
       width: 100%;
-      max-width: 490px;
+      max-width: 520px;
     }
     .register-card {
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
       border-radius: 24px;
-      padding: 2.4rem 2rem;
+      padding: 2.2rem 2rem;
       box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.10);
       position: relative;
     }
     .header {
       text-align: center;
-      margin-bottom: 1.8rem;
+      margin-bottom: 1.6rem;
     }
     .logo-badge {
       width: 58px;
@@ -83,17 +84,29 @@
       font-weight: 700;
       margin-bottom: 1.25rem;
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      align-items: flex-start;
+      gap: 0.65rem;
       background: #FEF2F2;
       border: 1.5px solid #FECACA;
       color: #DC2626;
+      line-height: 1.4;
+    }
+    .alert-icon-svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
     .form-group {
       margin-bottom: 1.15rem;
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
+    }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
     }
     .form-group label {
       font-size: 0.86rem;
@@ -113,10 +126,36 @@
       outline: none;
       transition: all 0.2s ease;
     }
+    .input-pass-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .input-pass-wrap input {
+      padding-right: 2.85rem;
+    }
     .form-group input:focus,
     .form-group select:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+    .btn-toggle-pass {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: color 0.15s ease;
+    }
+    .btn-toggle-pass:hover {
+      color: var(--text);
     }
 
     /* Role Selector */
@@ -147,8 +186,13 @@
       transition: all 0.2s ease;
       text-align: center;
     }
-    .role-icon {
-      font-size: 1.5rem;
+    .role-badge-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 9999px;
+      background: #E2E8F0;
+      color: #475569;
     }
     .role-name {
       font-size: 0.88rem;
@@ -158,17 +202,96 @@
     .role-desc {
       font-size: 0.72rem;
       color: var(--text-soft);
-      line-height: 1.2;
+      line-height: 1.25;
     }
     .role-option input:checked + .role-card-inner {
       border-color: var(--blue);
       background: #EFF6FF;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
     }
+    .role-option input:checked + .role-card-inner .role-badge-pill {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
     .role-option.role-guru input:checked + .role-card-inner {
       border-color: var(--red);
       background: #FEF2F2;
       box-shadow: 0 4px 12px rgba(217, 56, 58, 0.12);
+    }
+    .role-option.role-guru input:checked + .role-card-inner .role-badge-pill {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    /* Avatar Grid Selector */
+    .avatar-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.25rem;
+    }
+    .avatar-card-item {
+      cursor: pointer;
+      position: relative;
+    }
+    .avatar-card-item input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .avatar-card-inner {
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 0.65rem 0.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      background: #F8FAFC;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .avatar-card-inner img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #CBD5E1;
+      object-fit: cover;
+      display: block;
+    }
+    .avatar-card-name {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .avatar-card-role {
+      font-size: 0.66rem;
+      color: var(--text-soft);
+    }
+    .avatar-card-item input:checked + .avatar-card-inner {
+      border-color: var(--blue);
+      background: #EFF6FF;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+    .avatar-card-item.avatar-tanaka input:checked + .avatar-card-inner {
+      border-color: var(--red);
+      background: #FEF2F2;
+      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.15);
+    }
+
+    .pass-match-msg {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .pass-match-msg.match {
+      color: #059669;
+      display: block;
+    }
+    .pass-match-msg.mismatch {
+      color: #DC2626;
+      display: block;
     }
 
     .btn-submit {
@@ -197,7 +320,7 @@
       transform: translateY(0);
     }
     .bottom-links {
-      margin-top: 1.75rem;
+      margin-top: 1.6rem;
       padding-top: 1.25rem;
       border-top: 1.5px solid #F1F5F9;
       text-align: center;
@@ -229,6 +352,10 @@
       .header h1 {
         font-size: 1.4rem;
       }
+      .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
       .form-group input,
       .form-group select {
         padding: 0.8rem 0.9rem;
@@ -254,17 +381,19 @@
             <line x1="22" y1="11" x2="16" y2="11"/>
           </svg>
         </div>
-        <h1>Pendaftaran Akun</h1>
+        <h1>Pendaftaran Akun Baru</h1>
         <p>Bergabung ke platform pembelajaran bahasa Jepang SIJapanese</p>
       </div>
 
+      <!-- Flash Error Box (STRICT ZERO EMOJI) -->
       @if($errors->any())
       <div class="alert-box">
-        <span>⚠️</span> <span>{{ $errors->first() }}</span>
+        <svg viewBox="0 0 24 24" class="alert-icon-svg" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>{{ $errors->first() }}</span>
       </div>
       @endif
 
-      <form action="{{ route('register.post') }}" method="POST">
+      <form action="{{ route('register.post') }}" method="POST" id="main-reg-form">
         @csrf
 
         <!-- Pilihan Peran Akun -->
@@ -274,18 +403,18 @@
             <label class="role-option">
               <input type="radio" name="role" value="siswa" checked onchange="toggleRoleFields('siswa')" />
               <div class="role-card-inner">
-                <span class="role-icon">🎓</span>
+                <span class="role-badge-pill">Peran Murid</span>
                 <span class="role-name">Siswa Belajar</span>
-                <span class="role-desc">Akses materi modul &amp; mini game kuis</span>
+                <span class="role-desc">Akses modul materi, kuis &amp; mini games</span>
               </div>
             </label>
 
             <label class="role-option role-guru">
               <input type="radio" name="role" value="guru" onchange="toggleRoleFields('guru')" />
               <div class="role-card-inner">
-                <span class="role-icon">👨‍🏫</span>
+                <span class="role-badge-pill">Peran Guru</span>
                 <span class="role-name">Guru Pengajar</span>
-                <span class="role-desc">Akses dashboard master kelola materi &amp; soal</span>
+                <span class="role-desc">Akses dashboard master materi &amp; penilaian</span>
               </div>
             </label>
           </div>
@@ -296,24 +425,85 @@
           <input type="text" name="name" id="reg-name" placeholder="contoh: Anggata Ramadhan" value="{{ old('name') }}" required autocomplete="name" />
         </div>
 
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reg-nisn">NISN / Nomor Induk Siswa</label>
+            <input type="text" name="reg_no" id="reg-nisn" placeholder="contoh: 0071234567" value="{{ old('reg_no') }}" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-class">Kelas / Rombel</label>
+            <select name="class_room" id="reg-class">
+              <option value="Kelas X-A">Kelas X-A</option>
+              <option value="Kelas X-B">Kelas X-B</option>
+              <option value="Kelas XI-A">Kelas XI-A</option>
+              <option value="Kelas XI-B">Kelas XI-B</option>
+              <option value="Kelas XII">Kelas XII</option>
+              <option value="Siswa Umum">Siswa Umum / Mandiri</option>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="reg-email">Alamat Email</label>
-          <input type="email" name="email" id="reg-email" placeholder="contoh: nama@email.com" value="{{ old('email') }}" required autocomplete="email" />
+          <input type="email" name="email" id="reg-email" placeholder="contoh: siswa@sekolah.sch.id" value="{{ old('email') }}" required autocomplete="email" />
         </div>
 
-        <div class="form-group" id="wrap-avatar">
-          <label for="reg-avatar">Pilihan Karakter Avatar</label>
-          <select name="avatar" id="reg-avatar">
-            <option value="img/avatar_anggata.svg">Anggata Al Haadi (Siswa Laki-laki)</option>
-            <option value="img/avatar_aoi.svg">Aoi Sorano (Siswi Perempuan)</option>
-            <option value="img/avatar_tanaka.svg">Sensei Tanaka (Guru Pengajar)</option>
-          </select>
-        </div>
-
+        <!-- Pilihan Avatar Interaktif -->
         <div class="form-group">
-          <label for="reg-pass">Kata Sandi</label>
-          <input type="password" name="password" id="reg-pass" placeholder="Minimal 6 karakter..." required minlength="6" autocomplete="new-password" />
+          <label>Pilihan Karakter Avatar Belajar:</label>
+          <div class="avatar-cards-grid">
+            <label class="avatar-card-item">
+              <input type="radio" name="avatar" value="img/avatar_anggata.svg" checked />
+              <div class="avatar-card-inner">
+                <img src="{{ asset('img/avatar_anggata.svg') }}" alt="Anggata" />
+                <span class="avatar-card-name">Anggata</span>
+                <span class="avatar-card-role">Siswa Laki-laki</span>
+              </div>
+            </label>
+
+            <label class="avatar-card-item">
+              <input type="radio" name="avatar" value="img/avatar_aoi.svg" />
+              <div class="avatar-card-inner">
+                <img src="{{ asset('img/avatar_aoi.svg') }}" alt="Aoi" />
+                <span class="avatar-card-name">Aoi</span>
+                <span class="avatar-card-role">Siswi Perempuan</span>
+              </div>
+            </label>
+
+            <label class="avatar-card-item avatar-tanaka">
+              <input type="radio" name="avatar" value="img/avatar_tanaka.svg" />
+              <div class="avatar-card-inner">
+                <img src="{{ asset('img/avatar_tanaka.svg') }}" alt="Tanaka" />
+                <span class="avatar-card-name">Tanaka</span>
+                <span class="avatar-card-role">Sensei Guru</span>
+              </div>
+            </label>
+          </div>
         </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reg-pass">Kata Sandi (Min. 6 Karakter)</label>
+            <div class="input-pass-wrap">
+              <input type="password" name="password" id="reg-pass" placeholder="Minimal 6 karakter..." required minlength="6" autocomplete="new-password" oninput="checkPassMatch()" />
+              <button type="button" class="btn-toggle-pass" onclick="togglePassVisibility('reg-pass', this)" title="Lihat/Sembunyikan Sandi">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-pass-confirm">Konfirmasi Kata Sandi</label>
+            <div class="input-pass-wrap">
+              <input type="password" name="password_confirmation" id="reg-pass-confirm" placeholder="Ulangi kata sandi..." required minlength="6" autocomplete="new-password" oninput="checkPassMatch()" />
+              <button type="button" class="btn-toggle-pass" onclick="togglePassVisibility('reg-pass-confirm', this)" title="Lihat/Sembunyikan Sandi">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="pass-match-indicator" class="pass-match-msg"></div>
 
         <button type="submit" class="btn-submit" id="btn-submit-reg">
           <span>Daftar Akun Baru</span>
@@ -322,24 +512,58 @@
       </form>
 
       <div class="bottom-links">
-        <div>Sudah memiliki akun? <a href="{{ route('login') }}">Masuk di sini</a></div>
-        <div><a href="{{ route('home') }}">← Kembali ke Beranda</a></div>
+        <div>Sudah memiliki akun belajar? <a href="{{ route('login') }}">Masuk di sini</a></div>
+        <div><a href="{{ route('home') }}">Kembali ke Beranda</a></div>
       </div>
     </div>
   </div>
 
   <script>
+    function togglePassVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+      } else {
+        input.type = 'password';
+        btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+      }
+    }
+
+    function checkPassMatch() {
+      const p1 = document.getElementById('reg-pass').value;
+      const p2 = document.getElementById('reg-pass-confirm').value;
+      const ind = document.getElementById('pass-match-indicator');
+      if (!p2) {
+        ind.className = 'pass-match-msg';
+        ind.textContent = '';
+        return;
+      }
+      if (p1 === p2) {
+        ind.className = 'pass-match-msg match';
+        ind.textContent = 'Kata sandi cocok.';
+      } else {
+        ind.className = 'pass-match-msg mismatch';
+        ind.textContent = 'Kata sandi belum sama.';
+      }
+    }
+
     function toggleRoleFields(role) {
-      const avatarSelect = document.getElementById('reg-avatar');
       const submitBtn = document.getElementById('btn-submit-reg');
+      const avatarRadios = document.getElementsByName('avatar');
       if (role === 'guru') {
-        avatarSelect.value = 'img/avatar_tanaka.svg';
         submitBtn.style.background = 'linear-gradient(135deg, #D9383A 0%, #B91C1C 100%)';
         submitBtn.style.boxShadow = '0 4px 14px rgba(217, 56, 58, 0.3)';
+        for (const r of avatarRadios) {
+          if (r.value.includes('tanaka')) r.checked = true;
+        }
       } else {
-        avatarSelect.value = 'img/avatar_anggata.svg';
         submitBtn.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
         submitBtn.style.boxShadow = '0 4px 14px rgba(37, 99, 235, 0.3)';
+        for (const r of avatarRadios) {
+          if (r.value.includes('anggata')) r.checked = true;
+        }
       }
     }
   </script>

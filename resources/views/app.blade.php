@@ -7,7 +7,7 @@
   <title>SIJapanese - Belajar Bahasa Jepang Interaktif</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=20261103_sakura" />
   <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
   <link rel="stylesheet" href="css/auth.css" />
   <link rel="stylesheet" href="css/mobile_vibrant.css" />
@@ -2432,13 +2432,13 @@
 
       <!-- Quick Demo Switcher -->
       <div class="auth-quick-demo">
-        <span class="quick-demo-label"> 1-Click Coba Akun Demo:</span>
+        <span class="quick-demo-label">Akses Cepat Uji Coba Belajar (1-Klik):</span>
         <div class="quick-demo-btns">
-          <button type="button" class="btn-demo-chip chip-guru" onclick="loginDemo('guru')" title="Masuk sebagai Guru Bahasa Jepang">
-            <span></span> <strong>Guru Jepang</strong>
+          <button type="button" class="btn-demo-chip chip-siswa" onclick="loginDemo('siswa')" title="Masuk sebagai Siswa (Kenji Pratama)">
+            <strong>Siswa (Kenji)</strong>
           </button>
-          <button type="button" class="btn-demo-chip chip-siswa" onclick="loginDemo('siswa')" title="Masuk sebagai Siswa (Kenji)">
-            <span></span> <strong>Siswa (Kenji)</strong>
+          <button type="button" class="btn-demo-chip chip-guru" onclick="loginDemo('guru')" title="Masuk sebagai Guru Bahasa Jepang">
+            <strong>Guru (Sensei Tanaka)</strong>
           </button>
         </div>
       </div>
@@ -2568,7 +2568,7 @@
   </script>
 
   <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=20261103_sakura"></script>
   <script src="js/materi.js?v=20261030_v3"></script>
   <script src="js/auth.js"></script>
 </body>

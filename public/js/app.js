@@ -431,7 +431,11 @@ function showPage(page) {
   if (page === 'hiragana') renderCharGrid('hiragana');
   if (page === 'katakana') renderCharGrid('katakana');
   if (page === 'vocabulary') initVocabularySystem();
-  if (page === 'home') updateProgressBars();
+  if (page === 'home') {
+    updateProgressBars();
+    const sc = document.getElementById('sakura-container');
+    if (sc && sc.children.length === 0) createSakura();
+  }
   if (page === 'games') showGameMenu();
   if (page === 'monster') initMonsterLobby();
   if (page === 'materi') {
@@ -439,20 +443,53 @@ function showPage(page) {
   }
 }
 
-// ===== SAKURA ANIMATION =====
+// ===== ELEGANT SAKURA ANIMATION (NO-FREEZE, 3D FLUTTER & NATURAL WIND) =====
 function createSakura() {
   const container = document.getElementById('sakura-container');
   if (!container) return;
   container.innerHTML = '';
-  for (let i = 0; i < 16; i++) {
+
+  const isMobile = window.innerWidth <= 768;
+  const count = isMobile ? 18 : 28;
+  const animNames = ['sakuraSway1', 'sakuraSway2', 'sakuraSway3'];
+
+  for (let i = 0; i < count; i++) {
     const s = document.createElement('div');
-    s.className = 'sakura-petal';
-    s.style.left = Math.random() * 100 + '%';
-    s.style.animationDuration = (Math.random() * 6 + 6) + 's';
-    s.style.animationDelay = (Math.random() * 8) + 's';
-    const size = Math.random() * 8 + 8;
+    const anim = animNames[i % animNames.length];
+
+    // Distribusi ukuran 3 lapis kedalaman (latar belakang halus, tengah, latar depan tajam)
+    const rand = Math.random();
+    let size, layerClass, baseOpacity;
+    if (rand < 0.35) {
+      size = Math.floor(Math.random() * 4) + 8; // 8 - 11px
+      layerClass = 'petal-sm';
+      baseOpacity = (Math.random() * 0.15 + 0.4).toFixed(2);
+    } else if (rand < 0.8) {
+      size = Math.floor(Math.random() * 5) + 12; // 12 - 16px
+      layerClass = 'petal-md';
+      baseOpacity = (Math.random() * 0.15 + 0.68).toFixed(2);
+    } else {
+      size = Math.floor(Math.random() * 6) + 17; // 17 - 22px
+      layerClass = 'petal-lg';
+      baseOpacity = (Math.random() * 0.12 + 0.84).toFixed(2);
+    }
+
+    s.className = `sakura-petal ${layerClass}`;
     s.style.width = size + 'px';
-    s.style.height = (size * 1.3) + 'px';
+    s.style.height = Math.round(size * 1.35) + 'px';
+    s.style.left = (Math.random() * 104 - 2).toFixed(1) + '%';
+    s.style.setProperty('--p-opacity', baseOpacity);
+
+    // Durasi jatuh alami dan bervariasi (7 detik - 13 detik)
+    const duration = (Math.random() * 6 + 7).toFixed(2);
+
+    // PENTING: Gunakan delay negatif (-Math.random() * duration)!
+    // Dengan delay negatif dan timing linear, kelopak langsung meluncur bebas di tengah lintasan,
+    // TIDAK AKAN PERNAH freeze atau menggantung di bagian atas!
+    const delay = (-Math.random() * duration).toFixed(2);
+
+    s.style.animation = `${anim} ${duration}s linear ${delay}s infinite`;
+
     container.appendChild(s);
   }
 }

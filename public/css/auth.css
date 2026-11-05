@@ -411,7 +411,7 @@
   text-decoration: underline;
 }
 
-/* Quick Login Modal (Pilih Akun Bersih Tanpa Log & Tanpa Link Bawah) */
+/* Quick Login Modal */
 .sij-demo-account-list {
   display: flex;
   flex-direction: column;
@@ -602,4 +602,147 @@
   .bubble-name-text {
     display: none;
   }
+}
+
+/* ====================================================
+   INLINE AUTH MODAL & QUICK DEMO CHIPS (ZERO EMOJI)
+   ==================================================== */
+.auth-modal-card {
+  max-width: 440px;
+  padding: 2rem 1.8rem;
+  border-radius: 24px;
+}
+.auth-modal-header {
+  text-align: center;
+  margin-bottom: 1.3rem;
+}
+.auth-modal-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+.auth-modal-sub {
+  font-size: 0.84rem;
+  color: #64748B;
+  margin-top: 0.25rem;
+}
+.auth-tabs-row {
+  display: flex;
+  gap: 0.5rem;
+  background: #F1F5F9;
+  padding: 0.35rem;
+  border-radius: 14px;
+  margin-bottom: 1.25rem;
+}
+.auth-tab-btn {
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.auth-tab-btn.active {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.auth-quick-demo {
+  margin-bottom: 1.25rem;
+  padding: 0.85rem;
+  border-radius: 14px;
+  background: #F8FAFC;
+  border: 1.5px dashed #CBD5E1;
+  text-align: center;
+}
+.quick-demo-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.quick-demo-btns {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.btn-demo-chip {
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid #CBD5E1;
+  background: #FFFFFF;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.btn-demo-chip.chip-guru {
+  border-color: #FECACA;
+  color: #DC2626;
+  background: #FEF2F2;
+}
+.btn-demo-chip.chip-siswa {
+  border-color: #BFDBFE;
+  color: #2563EB;
+  background: #EFF6FF;
+}
+.btn-demo-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.btn-auth-submit {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.btn-auth-submit.btn-red {
+  background: linear-gradient(135deg, #D9383A 0%, #B91C1C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(217, 56, 58, 0.28);
+}
+.btn-auth-submit.btn-blue {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+.btn-auth-submit.btn-green {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+}
+.btn-auth-submit:hover {
+  transform: translateY(-2px);
+}
+.auth-error-alert {
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+.btn-nav-daftar:hover {
+  background: #B91C1C !important;
+  border-color: #B91C1C !important;
+  transform: translateY(-1px);
 }
