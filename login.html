@@ -206,88 +206,8 @@
       transform: translateY(0);
     }
 
-    /* Bagian Uji Coba Cepat untuk Siswa Sekolah */
-    .school-demo-box {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      border-radius: 16px;
-      background: #F8FAFC;
-      border: 1.5px dashed #CBD5E1;
-    }
-    .demo-header-label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: #475569;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      display: block;
-      text-align: center;
-    }
-    .demo-cards-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
-    }
-    .demo-card-btn {
-      padding: 0.75rem 0.65rem;
-      border-radius: 12px;
-      border: 1.5px solid #E2E8F0;
-      background: #FFFFFF;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      text-align: center;
-    }
-    .demo-card-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-    }
-    .demo-card-btn.demo-siswa:hover {
-      border-color: var(--blue);
-      background: #EFF6FF;
-    }
-    .demo-card-btn.demo-guru:hover {
-      border-color: var(--red);
-      background: #FEF2F2;
-    }
-    .demo-avatar-thumb {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1.5px solid #CBD5E1;
-      display: block;
-      object-fit: cover;
-    }
-    .demo-role-badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 0.15rem 0.5rem;
-      border-radius: 9999px;
-    }
-    .demo-role-badge.badge-siswa {
-      background: #EFF6FF;
-      color: #2563EB;
-      border: 1px solid #BFDBFE;
-    }
-    .demo-role-badge.badge-guru {
-      background: #FEF2F2;
-      color: #DC2626;
-      border: 1px solid #FECACA;
-    }
-    .demo-user-name {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
     .bottom-links {
-      margin-top: 1.6rem;
+      margin-top: 1.8rem;
       padding-top: 1.25rem;
       border-top: 1.5px solid #F1F5F9;
       text-align: center;
@@ -385,24 +305,6 @@
         </button>
       </form>
 
-      <!-- Akses Cepat Uji Coba untuk Siswa Sekolah & Guru -->
-      <div class="school-demo-box">
-        <span class="demo-header-label">Akses Cepat Belajar di Sekolah (1-Klik Masuk)</span>
-        <div class="demo-cards-grid">
-          <button type="button" class="demo-card-btn demo-siswa" onclick="quickLoginDemo('siswa')" title="Masuk langsung sebagai Siswa Belajar">
-            <img src="img/avatar_anggata.svg" alt="Kenji Pratama" class="demo-avatar-thumb" />
-            <span class="demo-role-badge badge-siswa">Siswa</span>
-            <span class="demo-user-name">Kenji Pratama</span>
-          </button>
-
-          <button type="button" class="demo-card-btn demo-guru" onclick="quickLoginDemo('guru')" title="Masuk langsung sebagai Guru Pengajar">
-            <img src="img/avatar_tanaka.svg" alt="Sensei Tanaka" class="demo-avatar-thumb" />
-            <span class="demo-role-badge badge-guru">Guru</span>
-            <span class="demo-user-name">Sensei Tanaka</span>
-          </button>
-        </div>
-      </div>
-
       <div class="bottom-links">
         <div>Belum memiliki akun siswa? <a href="register.html">Daftar Akun Baru</a></div>
         <div><a href="index.html">Kembali ke Beranda</a></div>
@@ -411,11 +313,12 @@
   </div>
 
   <script>
-    // Master data akun demo default
+    // Master data akun default sekolah
     const DEFAULT_ACCOUNTS = {
       'guru@sijapanese.sch.id': {
         name: 'Sensei Tanaka',
         email: 'guru@sijapanese.sch.id',
+        password: 'password',
         role: 'guru',
         avatar: 'img/avatar_tanaka.svg',
         reg_no: 'SIJ-2026-GURU01',
@@ -429,6 +332,7 @@
       'kenji@sijapanese.sch.id': {
         name: 'Anggata Al Haadi Ramadhan',
         email: 'kenji@sijapanese.sch.id',
+        password: 'password',
         role: 'siswa',
         avatar: 'img/avatar_anggata.svg',
         reg_no: 'JFT-2026-51720',
@@ -442,6 +346,7 @@
       'aoi@sijapanese.sch.id': {
         name: 'Aoi Sorano',
         email: 'aoi@sijapanese.sch.id',
+        password: 'password',
         role: 'siswa',
         avatar: 'img/avatar_aoi.svg',
         reg_no: 'JFT-2026-51721',
@@ -488,19 +393,23 @@
       processLogin(loginVal, password);
     }
 
-    function quickLoginDemo(role) {
-      const targetEmail = role === 'guru' ? 'guru@sijapanese.sch.id' : 'kenji@sijapanese.sch.id';
-      document.getElementById('input-email').value = targetEmail;
-      document.getElementById('input-password').value = 'password';
-      processLogin(targetEmail, 'password');
-    }
-
     async function processLogin(loginInput, password) {
       const submitBtn = document.getElementById('btn-submit');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Memproses masuk...</span>';
+      submitBtn.innerHTML = '<span>Memverifikasi akun...</span>';
 
-      // 1. Coba login ke backend Laravel jika server berjalan
+      const resetBtn = () => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Masuk Sekarang</span><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+      };
+
+      if (!loginInput || !password) {
+        showFeedback('error', 'Silakan masukkan email/NISN dan kata sandi Anda.');
+        resetBtn();
+        return;
+      }
+
+      // 1. Coba login ke API backend Laravel jika server aktif
       try {
         const isLaravel = window.location.pathname.startsWith('/login') || window.location.port === '8000' || window.location.port === '8080';
         if (isLaravel) {
@@ -523,10 +432,9 @@
               window.location.href = data.redirect || (data.user?.role === 'guru' ? '/guru' : '/');
             }, 500);
             return;
-          } else if (res.status === 422) {
-            showFeedback('error', data.message || 'Email atau kata sandi tidak cocok.');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>Masuk Sekarang</span>';
+          } else if (res.status === 422 || !data.success) {
+            showFeedback('error', data.message || 'Email/NISN atau kata sandi tidak cocok.');
+            resetBtn();
             return;
           }
         }
@@ -545,42 +453,48 @@
         const lowerInput = loginInput.toLowerCase();
 
         // Cari berdasarkan email ATAU reg_no (NISN)
-        let user = allUsers[lowerInput];
-        if (!user) {
-          user = Object.values(allUsers).find(u => 
-            (u.email && u.email.toLowerCase() === lowerInput) || 
-            (u.reg_no && u.reg_no.toLowerCase() === lowerInput)
-          );
+        let foundUser = null;
+        for (const key in allUsers) {
+          const u = allUsers[key];
+          if (
+            (u.email && u.email.toLowerCase() === lowerInput) ||
+            (u.reg_no && u.reg_no.toLowerCase() === lowerInput) ||
+            key.toLowerCase() === lowerInput
+          ) {
+            foundUser = u;
+            break;
+          }
         }
 
-        // Jika user baru yang belum ada, buatkan otomatis
-        if (!user) {
-          const isGuru = lowerInput.includes('guru');
-          user = {
-            name: loginInput.split('@')[0],
-            email: lowerInput.includes('@') ? lowerInput : (lowerInput + '@sekolah.sch.id'),
-            role: isGuru ? 'guru' : 'siswa',
-            avatar: isGuru ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg',
-            score: 0,
-            reg_no: isGuru ? 'SIJ-GURU-' + Math.floor(Math.random()*9000+1000) : 'JFT-2026-' + Math.floor(Math.random()*90000+10000),
-            class_room: isGuru ? 'Pengajar' : 'Siswa Sekolah'
-          };
+        // Validasi keberadaan akun (Tidak boleh sembarang login)
+        if (!foundUser) {
+          showFeedback('error', 'Akun tidak ditemukan. Silakan periksa kembali email/NISN atau daftar akun baru.');
+          resetBtn();
+          return;
         }
 
-        // Simpan sesi login
-        localStorage.setItem('sijapanese_active_user', JSON.stringify(user));
-        localStorage.setItem('sijapanese_auth_user', JSON.stringify(user));
+        // Validasi kecocokan kata sandi
+        const validPassword = foundUser.password || 'password';
+        if (password !== validPassword) {
+          showFeedback('error', 'Kata sandi tidak sesuai. Silakan coba lagi.');
+          resetBtn();
+          return;
+        }
 
-        showFeedback('success', `Berhasil masuk sebagai ${user.name} (${user.role === 'guru' ? 'Guru' : 'Siswa'})! Mengalihkan...`);
+        // Simpan sesi login resmi
+        localStorage.setItem('sijapanese_active_user', JSON.stringify(foundUser));
+        localStorage.setItem('sijapanese_auth_user', JSON.stringify(foundUser));
+
+        showFeedback('success', `Berhasil masuk sebagai ${foundUser.name}! Mengalihkan...`);
 
         setTimeout(() => {
-          if (user.role === 'guru') {
+          if (foundUser.role === 'guru') {
             window.location.href = 'guru.html';
           } else {
             window.location.href = 'index.html';
           }
-        }, 600);
-      }, 400);
+        }, 500);
+      }, 350);
     }
   </script>
 </body>

@@ -671,11 +671,21 @@
         registeredUsers = JSON.parse(localStorage.getItem('sij_registered_users')) || {};
       } catch (err) {}
 
+      // Cegah duplikasi email yang sudah ada
+      const defaultEmails = ['guru@sijapanese.sch.id', 'kenji@sijapanese.sch.id', 'aoi@sijapanese.sch.id'];
+      if (defaultEmails.includes(email) || registeredUsers[email]) {
+        showRegAlert('error', 'Alamat email sudah terdaftar. Silakan gunakan email lain atau langsung masuk di halaman Login.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Daftar Akun Baru</span>';
+        return;
+      }
+
       const regNo = nisn ? nisn : (role === 'guru' ? 'SIJ-2026-GURU' + Math.floor(Math.random()*900+100) : 'JFT-2026-' + Math.floor(Math.random()*90000+10000));
 
       const newUser = {
         name: name,
         email: email,
+        password: password,
         role: role,
         avatar: avatar,
         reg_no: regNo,

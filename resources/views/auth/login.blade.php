@@ -211,88 +211,8 @@
       transform: translateY(0);
     }
 
-    /* Bagian Uji Coba Cepat untuk Siswa Sekolah */
-    .school-demo-box {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      border-radius: 16px;
-      background: #F8FAFC;
-      border: 1.5px dashed #CBD5E1;
-    }
-    .demo-header-label {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: #475569;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      display: block;
-      text-align: center;
-    }
-    .demo-cards-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
-    }
-    .demo-card-btn {
-      padding: 0.75rem 0.65rem;
-      border-radius: 12px;
-      border: 1.5px solid #E2E8F0;
-      background: #FFFFFF;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      transition: all 0.2s ease;
-      font-family: inherit;
-      text-align: center;
-    }
-    .demo-card-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-    }
-    .demo-card-btn.demo-siswa:hover {
-      border-color: var(--blue);
-      background: #EFF6FF;
-    }
-    .demo-card-btn.demo-guru:hover {
-      border-color: var(--red);
-      background: #FEF2F2;
-    }
-    .demo-avatar-thumb {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1.5px solid #CBD5E1;
-      display: block;
-      object-fit: cover;
-    }
-    .demo-role-badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 0.15rem 0.5rem;
-      border-radius: 9999px;
-    }
-    .demo-role-badge.badge-siswa {
-      background: #EFF6FF;
-      color: #2563EB;
-      border: 1px solid #BFDBFE;
-    }
-    .demo-role-badge.badge-guru {
-      background: #FEF2F2;
-      color: #DC2626;
-      border: 1px solid #FECACA;
-    }
-    .demo-user-name {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
     .bottom-links {
-      margin-top: 1.6rem;
+      margin-top: 1.8rem;
       padding-top: 1.25rem;
       border-top: 1.5px solid #F1F5F9;
       text-align: center;
@@ -411,24 +331,6 @@
         </button>
       </form>
 
-      <!-- Akses Cepat Uji Coba untuk Siswa Sekolah & Guru -->
-      <div class="school-demo-box">
-        <span class="demo-header-label">Akses Cepat Belajar di Sekolah (1-Klik Masuk)</span>
-        <div class="demo-cards-grid">
-          <button type="button" class="demo-card-btn demo-siswa" onclick="quickLoginDemo('siswa')" title="Masuk langsung sebagai Siswa Belajar">
-            <img src="{{ asset('img/avatar_anggata.svg') }}" alt="Kenji Pratama" class="demo-avatar-thumb" />
-            <span class="demo-role-badge badge-siswa">Siswa</span>
-            <span class="demo-user-name">Kenji Pratama</span>
-          </button>
-
-          <button type="button" class="demo-card-btn demo-guru" onclick="quickLoginDemo('guru')" title="Masuk langsung sebagai Guru Pengajar">
-            <img src="{{ asset('img/avatar_tanaka.svg') }}" alt="Sensei Tanaka" class="demo-avatar-thumb" />
-            <span class="demo-role-badge badge-guru">Guru</span>
-            <span class="demo-user-name">Sensei Tanaka</span>
-          </button>
-        </div>
-      </div>
-
       <div class="bottom-links">
         <div>Belum memiliki akun siswa? <a href="{{ route('register') }}">Daftar Akun Baru</a></div>
         <div><a href="{{ route('home') }}">Kembali ke Beranda</a></div>
@@ -447,26 +349,6 @@
         input.type = 'password';
         btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
       }
-    }
-
-    async function quickLoginDemo(role) {
-      const emailField = document.getElementById('input-email');
-      const passField = document.getElementById('input-password');
-      if (role === 'guru') {
-        emailField.value = 'guru@sijapanese.sch.id';
-        passField.value = 'password';
-      } else {
-        emailField.value = 'kenji@sijapanese.sch.id';
-        passField.value = 'password';
-      }
-
-      const submitBtn = document.getElementById('btn-login-submit');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>Memproses Masuk...</span>';
-      }
-
-      document.getElementById('main-login-form').submit();
     }
   </script>
 </body>

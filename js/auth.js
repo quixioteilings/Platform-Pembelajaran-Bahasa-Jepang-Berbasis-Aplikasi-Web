@@ -9,6 +9,7 @@ const DEMO_ACCOUNTS = {
     id: 1,
     name: 'Sensei Tanaka',
     email: 'guru@sijapanese.sch.id',
+    password: 'password',
     role: 'guru',
     avatar: 'img/avatar_tanaka.svg',
     reg_no: 'SIJ-2026-GURU01',
@@ -24,6 +25,7 @@ const DEMO_ACCOUNTS = {
     id: 2,
     name: 'Anggata Al Haadi Ramadhan',
     email: 'kenji@sijapanese.sch.id',
+    password: 'password',
     role: 'siswa',
     avatar: 'img/avatar_anggata.svg',
     reg_no: 'JFT-2026-51720',
@@ -39,6 +41,7 @@ const DEMO_ACCOUNTS = {
     id: 3,
     name: 'Aoi Sorano',
     email: 'aoi@sijapanese.sch.id',
+    password: 'password',
     role: 'siswa',
     avatar: 'img/avatar_aoi.svg',
     reg_no: 'JFT-2026-51721',
@@ -666,17 +669,22 @@ async function handleLoginSubmit(e) {
   } catch (e) {}
 
   const all = { ...DEMO_ACCOUNTS, ...registeredUsers };
-  let found = Object.values(all).find(u => (u.email && u.email.toLowerCase() === email.toLowerCase()) || (u.reg_no && u.reg_no === email));
+  let found = Object.values(all).find(u => (u.email && u.email.toLowerCase() === email.toLowerCase()) || (u.reg_no && u.reg_no.toLowerCase() === email.toLowerCase()));
   if (!found) {
-    found = {
-      name: email.split('@')[0],
-      email: email,
-      role: email.includes('guru') ? 'guru' : 'siswa',
-      avatar: email.includes('guru') ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg',
-      score: 0,
-      reg_no: 'JFT-2026-' + Math.floor(Math.random()*90000+10000),
-      class_room: 'Kelas X'
-    };
+    if (errBox) {
+      errBox.textContent = 'Akun tidak ditemukan. Silakan periksa kembali email/NISN atau buat akun baru di tab Daftar.';
+      errBox.style.display = 'block';
+    }
+    return;
+  }
+
+  const validPassword = found.password || 'password';
+  if (password !== validPassword) {
+    if (errBox) {
+      errBox.textContent = 'Kata sandi tidak sesuai. Silakan coba lagi.';
+      errBox.style.display = 'block';
+    }
+    return;
   }
 
   saveUser(found);
@@ -697,6 +705,22 @@ async function handleRegisterSubmit(e) {
   const password = form.password.value;
   const errBox = document.getElementById('auth-register-error');
   if (errBox) errBox.style.display = 'none';
+
+  if (!name || !email || !password) {
+    if (errBox) {
+      errBox.textContent = 'Semua kolom wajib diisi.';
+      errBox.style.display = 'block';
+    }
+    return;
+  }
+
+  if (password.length < 6) {
+    if (errBox) {
+      errBox.textContent = 'Kata sandi minimal harus 6 karakter.';
+      errBox.style.display = 'block';
+    }
+    return;
+  }
 
   try {
     const res = await fetch('/api/auth/register', {
@@ -728,9 +752,23 @@ async function handleRegisterSubmit(e) {
   } catch (err) {}
 
   // Local fallback
+  let registeredUsers = {};
+  try {
+    registeredUsers = JSON.parse(localStorage.getItem('sij_registered_users')) || {};
+  } catch (err) {}
+
+  if (Object.values(DEMO_ACCOUNTS).some(u => u.email.toLowerCase() === email) || registeredUsers[email]) {
+    if (errBox) {
+      errBox.textContent = 'Alamat email sudah terdaftar. Silakan masuk melalui tab Masuk.';
+      errBox.style.display = 'block';
+    }
+    return;
+  }
+
   const newUser = {
     name,
     email,
+    password,
     role: 'siswa',
     avatar,
     score: 0,
@@ -738,6 +776,8 @@ async function handleRegisterSubmit(e) {
     class_room: 'Kelas X'
   };
 
+  registeredUsers[email] = newUser;
+  localStorage.setItem('sij_registered_users', JSON.stringify(registeredUsers));
   saveUser(newUser);
   currentUser = newUser;
   isUserLoggedIn = true;
