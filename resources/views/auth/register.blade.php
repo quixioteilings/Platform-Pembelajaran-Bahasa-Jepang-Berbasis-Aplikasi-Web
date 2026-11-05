@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daftar Akun Baru - SIJapanese Portal Pembelajaran</title>
+  <title>Daftar Akun Siswa Baru - SIJapanese</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@
     }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 10% 20%, #EFF6FF 0%, #F8FAFC 100%);
+      background: radial-gradient(circle at 10% 20%, #FEE2E2 0%, #EFF6FF 50%, #F8FAFC 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -36,7 +36,7 @@
     }
     .register-container {
       width: 100%;
-      max-width: 520px;
+      max-width: 500px;
     }
     .register-card {
       background: #FFFFFF;
@@ -48,31 +48,34 @@
     }
     .header {
       text-align: center;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.8rem;
     }
     .logo-badge {
       width: 58px;
       height: 58px;
       border-radius: 18px;
-      background: #EFF6FF;
-      border: 2px solid #BFDBFE;
+      background: #FEF2F2;
+      border: 2px solid #FECACA;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 0.85rem;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+      box-shadow: 0 4px 14px rgba(217, 56, 58, 0.15);
     }
     .logo-badge svg {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
     }
-    .header h1 {
-      font-size: 1.55rem;
+    .header-title {
+      font-size: 1.6rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text);
     }
-    .header p {
+    .header-title span {
+      color: var(--red);
+    }
+    .header-sub {
       color: var(--text-soft);
       font-size: 0.88rem;
       margin-top: 0.35rem;
@@ -135,8 +138,8 @@
     }
     .form-group input:focus,
     .form-group select:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(217, 56, 58, 0.12);
     }
     .btn-toggle-pass {
       position: absolute;
@@ -158,76 +161,11 @@
       color: var(--text);
     }
 
-    /* Role Selector */
-    .role-selector-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 0.25rem;
-    }
-    .role-option {
-      cursor: pointer;
-      position: relative;
-    }
-    .role-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .role-card-inner {
-      padding: 0.85rem 0.75rem;
-      border: 2px solid #E2E8F0;
-      border-radius: 14px;
-      background: #F8FAFC;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-    .role-badge-pill {
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 0.15rem 0.55rem;
-      border-radius: 9999px;
-      background: #E2E8F0;
-      color: #475569;
-    }
-    .role-name {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .role-desc {
-      font-size: 0.72rem;
-      color: var(--text-soft);
-      line-height: 1.25;
-    }
-    .role-option input:checked + .role-card-inner {
-      border-color: var(--blue);
-      background: #EFF6FF;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
-    }
-    .role-option input:checked + .role-card-inner .role-badge-pill {
-      background: #DBEAFE;
-      color: #1D4ED8;
-    }
-    .role-option.role-guru input:checked + .role-card-inner {
-      border-color: var(--red);
-      background: #FEF2F2;
-      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.12);
-    }
-    .role-option.role-guru input:checked + .role-card-inner .role-badge-pill {
-      background: #FEE2E2;
-      color: #B91C1C;
-    }
-
     /* Avatar Grid Selector */
     .avatar-cards-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.65rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
       margin-top: 0.25rem;
     }
     .avatar-card-item {
@@ -242,7 +180,7 @@
     .avatar-card-inner {
       border: 2px solid #E2E8F0;
       border-radius: 14px;
-      padding: 0.65rem 0.4rem;
+      padding: 0.75rem 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -252,28 +190,23 @@
       text-align: center;
     }
     .avatar-card-inner img {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       border: 1.5px solid #CBD5E1;
       object-fit: cover;
       display: block;
     }
     .avatar-card-name {
-      font-size: 0.75rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: var(--text);
     }
     .avatar-card-role {
-      font-size: 0.66rem;
+      font-size: 0.7rem;
       color: var(--text-soft);
     }
     .avatar-card-item input:checked + .avatar-card-inner {
-      border-color: var(--blue);
-      background: #EFF6FF;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-    }
-    .avatar-card-item.avatar-tanaka input:checked + .avatar-card-inner {
       border-color: var(--red);
       background: #FEF2F2;
       box-shadow: 0 4px 12px rgba(217, 56, 58, 0.15);
@@ -297,14 +230,14 @@
     .btn-submit {
       width: 100%;
       padding: 0.9rem 1.2rem;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
       color: #FFFFFF;
       border: none;
       border-radius: 14px;
       font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 14px rgba(217, 56, 58, 0.3);
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
@@ -314,13 +247,13 @@
     }
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 6px 20px rgba(217, 56, 58, 0.4);
     }
     .btn-submit:active {
       transform: translateY(0);
     }
     .bottom-links {
-      margin-top: 1.6rem;
+      margin-top: 1.8rem;
       padding-top: 1.25rem;
       border-top: 1.5px solid #F1F5F9;
       text-align: center;
@@ -349,8 +282,8 @@
         padding: 1.8rem 1.3rem;
         border-radius: 20px;
       }
-      .header h1 {
-        font-size: 1.4rem;
+      .header-title {
+        font-size: 1.45rem;
       }
       .form-row-2 {
         grid-template-columns: 1fr;
@@ -374,15 +307,13 @@
     <div class="register-card">
       <div class="header">
         <div class="logo-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <line x1="19" y1="8" x2="19" y2="14"/>
-            <line x1="22" y1="11" x2="16" y2="11"/>
+          <svg viewBox="0 0 32 32">
+            <circle cx="16" cy="16" r="14" fill="#D9383A"/>
+            <path d="M8 11h16M9 8v15M23 8v15M7 14h18" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <h1>Pendaftaran Akun Siswa</h1>
-        <p>Bergabung ke portal belajar bahasa Jepang interaktif SIJapanese</p>
+        <h1 class="header-title">SI<span>Japanese</span></h1>
+        <p class="header-sub">Pendaftaran Akun Baru Siswa Belajar</p>
       </div>
 
       <!-- Flash Error Box (STRICT ZERO EMOJI) -->
@@ -429,7 +360,7 @@
         <!-- Pilihan Avatar Interaktif Siswa -->
         <div class="form-group">
           <label>Pilihan Karakter Avatar Belajar Siswa:</label>
-          <div class="avatar-cards-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="avatar-cards-grid">
             <label class="avatar-card-item">
               <input type="radio" name="avatar" value="img/avatar_anggata.svg" checked />
               <div class="avatar-card-inner">
@@ -481,7 +412,7 @@
 
       <!-- Informasi Hak Akses Guru Pengajar -->
       <div style="margin-top: 1.4rem; padding: 0.85rem 1rem; border-radius: 14px; background: #F8FAFC; border: 1.5px solid #E2E8F0; font-size: 0.82rem; color: #475569; line-height: 1.45; display: flex; align-items: flex-start; gap: 0.65rem;">
-        <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;color:#2563EB;" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;color:var(--red);" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <span>Pendaftaran ini khusus untuk <strong>Siswa Belajar</strong>. Akun Guru Pengajar dikelola secara terpusat oleh administrator instansi sekolah.</span>
       </div>
 
