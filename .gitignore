@@ -28,3 +28,7 @@ npm-debug.log
 yarn-error.log
 composer.phar
 /scratch
+/public/uploads/avatars/*
+!/public/uploads/avatars/.gitkeep
+/uploads/avatars/*
+!/uploads/avatars/.gitkeep

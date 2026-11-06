@@ -7,6 +7,7 @@ use App\Models\StudentAssessment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -89,7 +90,9 @@ class AuthController extends Controller
         }
 
         if ($attempt) {
-            $request->session()->regenerate();
+            if ($request->hasSession()) {
+                $request->session()->regenerate();
+            }
             $user = Auth::user();
 
             if ($request->wantsJson()) {
@@ -141,7 +144,9 @@ class AuthController extends Controller
         }
 
         Auth::login($user, true);
-        $request->session()->regenerate();
+        if ($request->hasSession()) {
+            $request->session()->regenerate();
+        }
         
         $redirectUrl = $user->isGuru() ? route('guru.dashboard') : route('home');
 
@@ -157,6 +162,56 @@ class AuthController extends Controller
         return redirect($redirectUrl)->with('success', 'Masuk sebagai akun demo: ' . $user->name);
     }
 
+    // Helper untuk menangani upload foto profil atau avatar preset
+    protected function handleAvatarUpload(Request $request, ?string $fallback = 'img/avatar_default.svg'): string
+    {
+        // 1. Cek unggahan file foto langsung (dari input type="file" avatar_file atau avatar)
+        $file = $request->file('avatar_file') ?? ($request->hasFile('avatar') ? $request->file('avatar') : null);
+        if ($file && $file->isValid()) {
+            $extension = strtolower($file->getClientOriginalExtension());
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+                $extension = 'jpg';
+            }
+            $filename = 'avatar_' . time() . '_' . Str::random(8) . '.' . $extension;
+            $destinationPath = public_path('uploads/avatars');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            return 'uploads/avatars/' . $filename;
+        }
+
+        // 2. Cek jika avatar berupa Base64 Data URL (misal dari crop / preview FileReader JS)
+        $avatarInput = $request->input('avatar');
+        if (is_string($avatarInput) && preg_match('/^data:image\/(\w+);base64,/', $avatarInput, $matches)) {
+            $imageType = strtolower($matches[1]);
+            if (!in_array($imageType, ['jpeg', 'jpg', 'png', 'webp', 'svg+xml'])) {
+                $imageType = 'png';
+            }
+            if ($imageType === 'jpeg') $imageType = 'jpg';
+            if ($imageType === 'svg+xml') $imageType = 'svg';
+
+            $data = substr($avatarInput, strpos($avatarInput, ',') + 1);
+            $decoded = base64_decode($data);
+            if ($decoded !== false) {
+                $filename = 'avatar_' . time() . '_' . Str::random(8) . '.' . $imageType;
+                $destinationPath = public_path('uploads/avatars');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0755, true);
+                }
+                file_put_contents($destinationPath . '/' . $filename, $decoded);
+                return 'uploads/avatars/' . $filename;
+            }
+        }
+
+        // 3. Jika berupa string path yang valid (misal: img/avatar_default.svg atau uploads/...)
+        if (!empty($avatarInput) && is_string($avatarInput) && !str_starts_with($avatarInput, 'data:')) {
+            return trim($avatarInput);
+        }
+
+        return $fallback ?: 'img/avatar_default.svg';
+    }
+
     // Register Akun Baru (Khusus Siswa Belajar)
     public function register(Request $request)
     {
@@ -165,6 +220,7 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:6'],
             'avatar' => ['nullable', 'string'],
+            'avatar_file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:3072'],
             'reg_no' => ['nullable', 'string', 'max:50'],
             'class_room' => ['nullable', 'string', 'max:50'],
         ];
@@ -181,12 +237,14 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi minimal harus 6 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok. Silakan ulangi pengetikan kata sandi.',
+            'avatar_file.image' => 'File foto profil harus berupa gambar yang valid (JPG, PNG, WebP, SVG).',
+            'avatar_file.max' => 'Ukuran file foto profil maksimal 3MB.',
         ]);
 
         // Pendaftaran mandiri dikhususkan 100% untuk Siswa Belajar
         User::ensureSchemaReady();
         $role = 'siswa';
-        $defaultAvatar = 'img/avatar_anggata.svg';
+        $avatarPath = $this->handleAvatarUpload($request, 'img/avatar_default.svg');
 
         $regNo = !empty($validated['reg_no']) 
             ? trim($validated['reg_no']) 
@@ -197,7 +255,7 @@ class AuthController extends Controller
             'email' => strtolower(trim($validated['email'])),
             'password' => Hash::make($validated['password']),
             'role' => $role,
-            'avatar' => $validated['avatar'] ?? $defaultAvatar,
+            'avatar' => $avatarPath,
             'reg_no' => $regNo,
             'class_room' => $validated['class_room'] ?? 'Siswa Umum',
             'score' => 0,
@@ -205,7 +263,9 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user, true);
-        $request->session()->regenerate();
+        if ($request->hasSession()) {
+            $request->session()->regenerate();
+        }
 
         $redirectUrl = route('home');
 
@@ -225,8 +285,10 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         if ($request->wantsJson()) {
             return response()->json(['success' => true, 'redirect' => route('home')]);
@@ -247,6 +309,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'email' => ['nullable', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'avatar' => ['nullable', 'string', 'max:255'],
+            'avatar_file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:3072'],
             'password' => ['nullable', 'string', 'min:6'],
         ]);
 
@@ -254,8 +317,8 @@ class AuthController extends Controller
         if (!empty($validated['email'])) {
             $user->email = strtolower(trim($validated['email']));
         }
-        if (!empty($validated['avatar'])) {
-            $user->avatar = $validated['avatar'];
+        if ($request->hasFile('avatar_file') || $request->hasFile('avatar') || !empty($validated['avatar'])) {
+            $user->avatar = $this->handleAvatarUpload($request, $user->avatar ?: 'img/avatar_default.svg');
         }
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);

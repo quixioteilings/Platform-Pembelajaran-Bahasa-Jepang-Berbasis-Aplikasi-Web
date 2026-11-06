@@ -95,8 +95,7 @@ function getSavedUser() {
       if (parsed && parsed.email) {
         if (!parsed.avatar || parsed.avatar.length <= 4) {
           if (parsed.role === 'guru') parsed.avatar = 'img/avatar_tanaka.svg';
-          else if (parsed.name && parsed.name.includes('Aoi')) parsed.avatar = 'img/avatar_aoi.svg';
-          else parsed.avatar = 'img/avatar_anggata.svg';
+          else parsed.avatar = 'img/avatar_default.svg';
         }
         return parsed;
       }
@@ -124,17 +123,21 @@ function initAuthSystem() {
   renderUserWidget();
 }
 
-// Helper untuk render elemen avatar (Mendukung SVG / PNG gambar maupun teks)
+// Helper untuk render elemen avatar (Mendukung SVG / PNG / JPG / WebP gambar, Base64 maupun teks)
 function renderAvatarHtml(avatar, altText = 'Avatar', extraClass = '') {
   if (!avatar) {
-    return `
-      <span class="${extraClass} avatar-silhouette-wrap" style="display:inline-flex;align-items:center;justify-content:center;background:#E2E8F0;width:100%;height:100%;border-radius:50%;">
-        <svg viewBox="0 0 24 24" style="width:65%;height:65%;fill:#64748B;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-      </span>
-    `;
+    return `<img src="img/avatar_default.svg" alt="${escapeHtml(altText)}" class="${extraClass}" style="object-fit:cover;" />`;
   }
-  if (avatar.startsWith('img/') || avatar.startsWith('/') || avatar.endsWith('.svg') || avatar.endsWith('.png')) {
-    return `<img src="${avatar}" alt="${escapeHtml(altText)}" class="${extraClass}" />`;
+  const isImage = avatar.startsWith('img/') || 
+                  avatar.startsWith('uploads/') || 
+                  avatar.startsWith('/') || 
+                  avatar.startsWith('http://') || 
+                  avatar.startsWith('https://') || 
+                  avatar.startsWith('data:image/') || 
+                  /\.(svg|png|jpg|jpeg|webp|gif)(\?.*)?$/i.test(avatar);
+
+  if (isImage) {
+    return `<img src="${avatar}" alt="${escapeHtml(altText)}" class="${extraClass}" style="object-fit:cover;" onerror="this.onerror=null;this.src='img/avatar_default.svg';" />`;
   }
   return `<span class="${extraClass}">${escapeHtml(avatar)}</span>`;
 }
@@ -161,7 +164,7 @@ function renderUserWidget() {
 
   const isGuru = currentUser.role === 'guru';
   const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'User';
-  const avatarPath = currentUser.avatar || (isGuru ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg');
+  const avatarPath = currentUser.avatar || (isGuru ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg');
 
   container.innerHTML = `
     <div class="nav-auth-wrap">
@@ -287,12 +290,16 @@ function injectAuthModals() {
                 <span class="sij-badge-foto-kustom">Foto Identitas</span>
               </div>
               <div class="sij-pasfoto-buttons">
-                <button type="button" class="btn-pasfoto-upload" onclick="pickNextAvatar()">
+                <input type="file" id="modal-photo-input" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;" onchange="handleModalPhotoSelected(event)" />
+                <button type="button" class="btn-pasfoto-upload" onclick="triggerProfilePhotoUpload()" style="background:#2563EB; color:#fff; border:none;">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  <span>Ganti Karakter Avatar</span>
+                  <span>Upload Foto</span>
+                </button>
+                <button type="button" class="btn-pasfoto-upload" onclick="pickNextAvatar()">
+                  <span>Pilih Karakter</span>
                 </button>
                 <button type="button" class="btn-pasfoto-anonim" onclick="setAnonymousAvatar()">
-                  <span>Karakter Default</span>
+                  <span>Foto Anonim</span>
                 </button>
               </div>
             </div>
@@ -370,11 +377,45 @@ function injectAuthModals() {
 // LOGIKA MODAL PROFIL (PAS MENCET BUBBLE)
 // ====================================================
 const AVATAR_PRESETS = [
+  'img/avatar_default.svg',
   'img/avatar_anggata.svg',
   'img/avatar_aoi.svg',
   'img/avatar_tanaka.svg'
 ];
 let currentAvatarIdx = 0;
+
+function triggerProfilePhotoUpload() {
+  const input = document.getElementById('modal-photo-input');
+  if (input) input.click();
+}
+
+function handleModalPhotoSelected(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('Silakan pilih file foto gambar (JPG, PNG, atau WebP).');
+    return;
+  }
+
+  if (file.size > 3 * 1024 * 1024) {
+    alert('Ukuran file foto maksimal 3MB.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    if (currentUser) {
+      currentUser.avatar = dataUrl;
+    }
+    const avatarBox = document.getElementById('profile-avatar-display-box');
+    if (avatarBox) {
+      avatarBox.innerHTML = renderAvatarHtml(dataUrl, currentUser ? currentUser.name : '', 'profile-modal-avatar-img');
+    }
+  };
+  reader.readAsDataURL(file);
+}
 
 function openProfileModal() {
   if (!currentUser) {
@@ -446,7 +487,7 @@ function pickNextAvatar() {
 }
 
 function setAnonymousAvatar() {
-  const defaultAvatar = currentUser?.role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg';
+  const defaultAvatar = currentUser?.role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg';
   if (currentUser) {
     currentUser.avatar = defaultAvatar;
   }

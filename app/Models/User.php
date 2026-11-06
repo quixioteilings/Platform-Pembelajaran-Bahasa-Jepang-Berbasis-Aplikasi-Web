@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->isGuru() ? 'badge-guru' : 'badge-siswa';
     }
 
+    public function getAvatarAttribute($value): string
+    {
+        return !empty($value) ? $value : 'img/avatar_default.svg';
+    }
+
     public function assessments()
     {
         return $this->hasMany(StudentAssessment::class, 'user_id')->orderBy('created_at', 'desc');

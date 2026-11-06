@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role')->default('siswa'); // 'guru' or 'siswa'
-            $table->string('avatar')->default('img/avatar_anggata.svg');
+            $table->string('avatar')->default('img/avatar_default.svg');
             $table->string('reg_no')->nullable();
             $table->string('class_room')->nullable();
             $table->integer('score')->default(0);

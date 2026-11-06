@@ -171,9 +171,10 @@
     /* Avatar Grid Selector */
     .avatar-cards-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
       margin-top: 0.25rem;
+      margin-bottom: 0.65rem;
     }
     .avatar-card-item {
       cursor: pointer;
@@ -187,36 +188,122 @@
     .avatar-card-inner {
       border: 2px solid #E2E8F0;
       border-radius: 14px;
-      padding: 0.75rem 0.5rem;
+      padding: 0.65rem 0.4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
       background: #F8FAFC;
       transition: all 0.2s ease;
       text-align: center;
     }
     .avatar-card-inner img {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: 1.5px solid #CBD5E1;
       object-fit: cover;
       display: block;
     }
     .avatar-card-name {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 800;
       color: var(--text);
     }
     .avatar-card-role {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-soft);
     }
     .avatar-card-item input:checked + .avatar-card-inner {
       border-color: var(--red);
       background: #FEF2F2;
       box-shadow: 0 4px 12px rgba(217, 56, 58, 0.15);
+    }
+
+    /* Custom Photo Upload Card */
+    .upload-avatar-box {
+      border: 1.5px dashed #CBD5E1;
+      border-radius: 14px;
+      padding: 0.75rem 0.9rem;
+      background: #F8FAFC;
+      transition: all 0.2s ease;
+    }
+    .upload-avatar-box.has-file {
+      border-color: var(--blue);
+      background: #EFF6FF;
+    }
+    .upload-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .upload-avatar-preview {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid #CBD5E1;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .upload-avatar-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .upload-avatar-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .upload-avatar-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .upload-avatar-desc {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-bottom: 0.35rem;
+    }
+    .upload-avatar-btns {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-choose-file {
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: inherit;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+    .btn-choose-file:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: #F8FAFC;
+    }
+    .btn-cancel-custom-photo {
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: inherit;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #DC2626;
+      cursor: pointer;
     }
 
     .pass-match-msg {
@@ -365,12 +452,21 @@
           <input type="email" name="email" id="reg-email" placeholder="contoh: siswa@sekolah.sch.id" required autocomplete="email" />
         </div>
 
-        <!-- Pilihan Avatar Interaktif Siswa -->
+        <!-- Pilihan Foto Profil / Avatar Siswa -->
         <div class="form-group">
-          <label>Pilihan Karakter Avatar Belajar Siswa:</label>
+          <label>Foto Profil Siswa Belajar:</label>
           <div class="avatar-cards-grid">
             <label class="avatar-card-item">
-              <input type="radio" name="avatar" value="img/avatar_anggata.svg" checked />
+              <input type="radio" name="avatar" id="avatar-anonim" value="img/avatar_default.svg" checked onchange="onPresetAvatarSelected('img/avatar_default.svg')" />
+              <div class="avatar-card-inner">
+                <img src="img/avatar_default.svg" alt="Anonim" />
+                <span class="avatar-card-name">Anonim</span>
+                <span class="avatar-card-role">Default Sistem</span>
+              </div>
+            </label>
+
+            <label class="avatar-card-item">
+              <input type="radio" name="avatar" id="avatar-anggata" value="img/avatar_anggata.svg" onchange="onPresetAvatarSelected('img/avatar_anggata.svg')" />
               <div class="avatar-card-inner">
                 <img src="img/avatar_anggata.svg" alt="Anggata" />
                 <span class="avatar-card-name">Anggata</span>
@@ -379,13 +475,36 @@
             </label>
 
             <label class="avatar-card-item">
-              <input type="radio" name="avatar" value="img/avatar_aoi.svg" />
+              <input type="radio" name="avatar" id="avatar-aoi" value="img/avatar_aoi.svg" onchange="onPresetAvatarSelected('img/avatar_aoi.svg')" />
               <div class="avatar-card-inner">
                 <img src="img/avatar_aoi.svg" alt="Aoi" />
                 <span class="avatar-card-name">Aoi</span>
                 <span class="avatar-card-role">Karakter Siswi</span>
               </div>
             </label>
+          </div>
+
+          <!-- Opsi Upload Foto Sendiri -->
+          <div class="upload-avatar-box" id="upload-avatar-wrap">
+            <input type="file" id="reg-avatar-file" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;" onchange="handleRegisterPhotoUpload(this)" />
+            <div class="upload-avatar-row">
+              <div class="upload-avatar-preview">
+                <img id="upload-avatar-preview-img" src="img/avatar_default.svg" alt="Preview Foto" />
+              </div>
+              <div class="upload-avatar-info">
+                <div class="upload-avatar-title">Atau Upload Foto Sendiri</div>
+                <div class="upload-avatar-desc">Format JPG, PNG, atau WebP (Maksimal 3MB)</div>
+                <div class="upload-avatar-btns">
+                  <button type="button" class="btn-choose-file" onclick="document.getElementById('reg-avatar-file').click()">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Pilih Foto dari Perangkat</span>
+                  </button>
+                  <button type="button" class="btn-cancel-custom-photo" id="btn-cancel-photo" style="display:none;" onclick="resetToAnonymousPhoto()">
+                    Batal
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -462,6 +581,69 @@
       }
     }
 
+    let customUploadedAvatarData = null;
+
+    function handleRegisterPhotoUpload(input) {
+      const file = input.files && input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showRegAlert('error', 'Silakan pilih file foto gambar (JPG, PNG, WebP).');
+        input.value = '';
+        return;
+      }
+
+      if (file.size > 3 * 1024 * 1024) {
+        showRegAlert('error', 'Ukuran foto terlalu besar. Maksimal 3MB.');
+        input.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        customUploadedAvatarData = e.target.result;
+        const previewImg = document.getElementById('upload-avatar-preview-img');
+        if (previewImg) previewImg.src = customUploadedAvatarData;
+        
+        document.getElementById('upload-avatar-wrap')?.classList.add('has-file');
+        const cancelBtn = document.getElementById('btn-cancel-photo');
+        if (cancelBtn) cancelBtn.style.display = 'inline-block';
+
+        // Uncheck preset radio buttons agar foto kustom yang digunakan
+        document.querySelectorAll('input[name="avatar"]').forEach(r => r.checked = false);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function onPresetAvatarSelected(path) {
+      customUploadedAvatarData = null;
+      const fileInput = document.getElementById('reg-avatar-file');
+      if (fileInput) fileInput.value = '';
+
+      document.getElementById('upload-avatar-wrap')?.classList.remove('has-file');
+      const cancelBtn = document.getElementById('btn-cancel-photo');
+      if (cancelBtn) cancelBtn.style.display = 'none';
+
+      const previewImg = document.getElementById('upload-avatar-preview-img');
+      if (previewImg) previewImg.src = 'img/avatar_default.svg';
+    }
+
+    function resetToAnonymousPhoto() {
+      customUploadedAvatarData = null;
+      const fileInput = document.getElementById('reg-avatar-file');
+      if (fileInput) fileInput.value = '';
+
+      document.getElementById('upload-avatar-wrap')?.classList.remove('has-file');
+      const cancelBtn = document.getElementById('btn-cancel-photo');
+      if (cancelBtn) cancelBtn.style.display = 'none';
+
+      const anonRadio = document.getElementById('avatar-anonim');
+      if (anonRadio) anonRadio.checked = true;
+
+      const previewImg = document.getElementById('upload-avatar-preview-img');
+      if (previewImg) previewImg.src = 'img/avatar_default.svg';
+    }
+
     function showRegAlert(type, text) {
       const errBox = document.getElementById('reg-alert-error');
       const succBox = document.getElementById('reg-alert-success');
@@ -486,7 +668,7 @@
       const classRoom = document.getElementById('reg-class').value;
       const email = document.getElementById('reg-email').value.trim().toLowerCase();
       const avatarRadio = form.querySelector('input[name="avatar"]:checked');
-      const avatar = avatarRadio ? avatarRadio.value : 'img/avatar_anggata.svg';
+      const avatar = customUploadedAvatarData ? customUploadedAvatarData : (avatarRadio ? avatarRadio.value : 'img/avatar_default.svg');
       const password = document.getElementById('reg-pass').value;
       const passwordConfirm = document.getElementById('reg-pass-confirm').value;
 

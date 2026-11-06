@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradDefault" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="bodyGradDefault" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+    <linearGradient id="headGradDefault" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A0AEC0"/>
+      <stop offset="100%" stop-color="#718096"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Circle -->
+  <circle cx="60" cy="60" r="58" fill="url(#bgGradDefault)" stroke="#CBD5E1" stroke-width="2.5"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- Anonymous Torso & Shoulders -->
+  <path d="M22 114 C24 88 41 78 60 78 C79 78 96 88 98 114 Z" fill="url(#bodyGradDefault)"/>
+
+  <!-- Neck -->
+  <rect x="53" y="64" width="14" height="16" rx="4" fill="url(#headGradDefault)"/>
+
+  <!-- Head Silhouette -->
+  <circle cx="60" cy="48" r="22" fill="url(#headGradDefault)"/>
+</svg>
