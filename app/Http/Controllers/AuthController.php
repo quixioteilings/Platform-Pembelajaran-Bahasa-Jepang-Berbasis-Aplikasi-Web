@@ -219,6 +219,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:6'],
+            'gender' => ['nullable', 'string', 'max:30'],
             'avatar' => ['nullable', 'string'],
             'avatar_file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:3072'],
             'reg_no' => ['nullable', 'string', 'max:50'],
@@ -237,7 +238,6 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi minimal harus 6 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok. Silakan ulangi pengetikan kata sandi.',
-            'avatar_file.image' => 'File foto profil harus berupa gambar yang valid (JPG, PNG, WebP, SVG).',
             'avatar_file.max' => 'Ukuran file foto profil maksimal 3MB.',
         ]);
 
@@ -258,6 +258,7 @@ class AuthController extends Controller
             'avatar' => $avatarPath,
             'reg_no' => $regNo,
             'class_room' => $validated['class_room'] ?? 'Siswa Umum',
+            'gender' => !empty($validated['gender']) ? trim($validated['gender']) : 'Laki-laki (MALE)',
             'score' => 0,
             'completed_lessons' => [],
         ]);
@@ -310,12 +311,16 @@ class AuthController extends Controller
             'email' => ['nullable', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'avatar' => ['nullable', 'string', 'max:255'],
             'avatar_file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:3072'],
+            'gender' => ['nullable', 'string', 'max:30'],
             'password' => ['nullable', 'string', 'min:6'],
         ]);
 
         $user->name = $validated['name'];
         if (!empty($validated['email'])) {
             $user->email = strtolower(trim($validated['email']));
+        }
+        if (!empty($validated['gender'])) {
+            $user->gender = trim($validated['gender']);
         }
         if ($request->hasFile('avatar_file') || $request->hasFile('avatar') || !empty($validated['avatar'])) {
             $user->avatar = $this->handleAvatarUpload($request, $user->avatar ?: 'img/avatar_default.svg');

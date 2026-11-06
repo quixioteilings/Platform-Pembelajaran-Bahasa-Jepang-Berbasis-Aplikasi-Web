@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('avatar')->default('img/avatar_default.svg');
             $table->string('reg_no')->nullable();
             $table->string('class_room')->nullable();
+            $table->string('gender', 30)->nullable();
             $table->integer('score')->default(0);
             $table->text('completed_lessons')->nullable();
             $table->rememberToken();

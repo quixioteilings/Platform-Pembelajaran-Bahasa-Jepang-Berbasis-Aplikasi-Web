@@ -161,56 +161,66 @@
       color: var(--text);
     }
 
-    /* Avatar Grid Selector */
-    .avatar-cards-grid {
+    /* Gender Cards Grid */
+    .gender-cards-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.65rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
       margin-top: 0.25rem;
-      margin-bottom: 0.65rem;
     }
-    .avatar-card-item {
+    .gender-card-item {
       cursor: pointer;
       position: relative;
     }
-    .avatar-card-item input {
+    .gender-card-item input {
       position: absolute;
       opacity: 0;
       pointer-events: none;
     }
-    .avatar-card-inner {
+    .gender-card-inner {
       border: 2px solid #E2E8F0;
       border-radius: 14px;
-      padding: 0.65rem 0.4rem;
+      padding: 0.75rem 0.85rem;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.65rem;
       background: #F8FAFC;
       transition: all 0.2s ease;
-      text-align: center;
     }
-    .avatar-card-inner img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+    .gender-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #FFFFFF;
       border: 1.5px solid #CBD5E1;
-      object-fit: cover;
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748B;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
     }
-    .avatar-card-name {
-      font-size: 0.78rem;
+    .gender-title {
+      font-size: 0.90rem;
       font-weight: 800;
       color: var(--text);
+      display: block;
+      line-height: 1.2;
     }
-    .avatar-card-role {
-      font-size: 0.68rem;
+    .gender-sub {
+      font-size: 0.72rem;
       color: var(--text-soft);
+      font-weight: 600;
     }
-    .avatar-card-item input:checked + .avatar-card-inner {
+    .gender-card-item input:checked + .gender-card-inner {
       border-color: var(--red);
       background: #FEF2F2;
-      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.15);
+      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.12);
+    }
+    .gender-card-item input:checked + .gender-card-inner .gender-icon-wrap {
+      background: #FEE2E2;
+      border-color: #FECACA;
+      color: var(--red);
     }
 
     /* Custom Photo Upload Card */
@@ -444,52 +454,64 @@
           <input type="email" name="email" id="reg-email" placeholder="contoh: siswa@sekolah.sch.id" value="{{ old('email') }}" required autocomplete="email" />
         </div>
 
-        <!-- Pilihan Foto Profil / Avatar Siswa -->
+        <!-- Pilihan Jenis Kelamin (Gender) Siswa -->
         <div class="form-group">
-          <label>Foto Profil Siswa Belajar:</label>
-          <div class="avatar-cards-grid">
-            <label class="avatar-card-item">
-              <input type="radio" name="avatar" id="avatar-anonim" value="img/avatar_default.svg" checked onchange="onPresetAvatarSelected('img/avatar_default.svg')" />
-              <div class="avatar-card-inner">
-                <img src="{{ asset('img/avatar_default.svg') }}" alt="Anonim" />
-                <span class="avatar-card-name">Anonim</span>
-                <span class="avatar-card-role">Default Sistem</span>
+          <label>Jenis Kelamin Siswa Belajar:</label>
+          <div class="gender-cards-grid">
+            <label class="gender-card-item">
+              <input type="radio" name="gender" value="Laki-laki (MALE)" checked />
+              <div class="gender-card-inner">
+                <div class="gender-icon-wrap">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="10" cy="14" r="5"/>
+                    <line x1="19" y1="5" x2="13.6" y2="10.4"/>
+                    <line x1="19" y1="5" x2="14" y2="5"/>
+                    <line x1="19" y1="5" x2="19" y2="10"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="gender-title">Laki-laki</span>
+                  <span class="gender-sub">Siswa (MALE)</span>
+                </div>
               </div>
             </label>
 
-            <label class="avatar-card-item">
-              <input type="radio" name="avatar" id="avatar-anggata" value="img/avatar_anggata.svg" onchange="onPresetAvatarSelected('img/avatar_anggata.svg')" />
-              <div class="avatar-card-inner">
-                <img src="{{ asset('img/avatar_anggata.svg') }}" alt="Anggata" />
-                <span class="avatar-card-name">Anggata</span>
-                <span class="avatar-card-role">Karakter Siswa</span>
-              </div>
-            </label>
-
-            <label class="avatar-card-item">
-              <input type="radio" name="avatar" id="avatar-aoi" value="img/avatar_aoi.svg" onchange="onPresetAvatarSelected('img/avatar_aoi.svg')" />
-              <div class="avatar-card-inner">
-                <img src="{{ asset('img/avatar_aoi.svg') }}" alt="Aoi" />
-                <span class="avatar-card-name">Aoi</span>
-                <span class="avatar-card-role">Karakter Siswi</span>
+            <label class="gender-card-item">
+              <input type="radio" name="gender" value="Perempuan (FEMALE)" />
+              <div class="gender-card-inner">
+                <div class="gender-icon-wrap">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="9" r="5"/>
+                    <line x1="12" y1="14" x2="12" y2="21"/>
+                    <line x1="9" y1="18" x2="15" y2="18"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="gender-title">Perempuan</span>
+                  <span class="gender-sub">Siswi (FEMALE)</span>
+                </div>
               </div>
             </label>
           </div>
+        </div>
 
-          <!-- Opsi Upload Foto Sendiri -->
+        <!-- Foto Profil Siswa (Opsional - Default Anonim) -->
+        <div class="form-group">
+          <label>Foto Profil Siswa (Opsional):</label>
+          <input type="hidden" name="avatar" value="img/avatar_default.svg" id="reg-avatar-val" />
           <div class="upload-avatar-box" id="upload-avatar-wrap">
             <input type="file" name="avatar_file" id="reg-avatar-file" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;" onchange="handleRegisterPhotoUpload(this)" />
             <div class="upload-avatar-row">
               <div class="upload-avatar-preview">
-                <img id="upload-avatar-preview-img" src="{{ asset('img/avatar_default.svg') }}" alt="Preview Foto" />
+                <img id="upload-avatar-preview-img" src="{{ asset('img/avatar_default.svg') }}" alt="Foto Profil Siswa" />
               </div>
               <div class="upload-avatar-info">
-                <div class="upload-avatar-title">Atau Upload Foto Sendiri</div>
+                <div class="upload-avatar-title">Foto Profil Anonim (Default)</div>
                 <div class="upload-avatar-desc">Format JPG, PNG, atau WebP (Maksimal 3MB)</div>
                 <div class="upload-avatar-btns">
                   <button type="button" class="btn-choose-file" onclick="document.getElementById('reg-avatar-file').click()">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    <span>Pilih Foto dari Perangkat</span>
+                    <span>Upload Foto Sendiri</span>
                   </button>
                   <button type="button" class="btn-cancel-custom-photo" id="btn-cancel-photo" style="display:none;" onclick="resetToAnonymousPhoto()">
                     Batal
@@ -597,23 +619,8 @@
         document.getElementById('upload-avatar-wrap')?.classList.add('has-file');
         const cancelBtn = document.getElementById('btn-cancel-photo');
         if (cancelBtn) cancelBtn.style.display = 'inline-block';
-
-        // Uncheck preset radio buttons agar server memprioritaskan file upload
-        document.querySelectorAll('input[name="avatar"]').forEach(r => r.checked = false);
       };
       reader.readAsDataURL(file);
-    }
-
-    function onPresetAvatarSelected(path) {
-      const fileInput = document.getElementById('reg-avatar-file');
-      if (fileInput) fileInput.value = '';
-
-      document.getElementById('upload-avatar-wrap')?.classList.remove('has-file');
-      const cancelBtn = document.getElementById('btn-cancel-photo');
-      if (cancelBtn) cancelBtn.style.display = 'none';
-
-      const previewImg = document.getElementById('upload-avatar-preview-img');
-      if (previewImg) previewImg.src = "{{ asset('img/avatar_default.svg') }}";
     }
 
     function resetToAnonymousPhoto() {
@@ -623,9 +630,6 @@
       document.getElementById('upload-avatar-wrap')?.classList.remove('has-file');
       const cancelBtn = document.getElementById('btn-cancel-photo');
       if (cancelBtn) cancelBtn.style.display = 'none';
-
-      const anonRadio = document.getElementById('avatar-anonim');
-      if (anonRadio) anonRadio.checked = true;
 
       const previewImg = document.getElementById('upload-avatar-preview-img');
       if (previewImg) previewImg.src = "{{ asset('img/avatar_default.svg') }}";

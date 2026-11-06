@@ -19,6 +19,7 @@ class User extends Authenticatable
         'avatar',
         'reg_no',
         'class_room',
+        'gender',
         'score',
         'completed_lessons',
     ];
@@ -84,6 +85,9 @@ class User extends Authenticatable
                     }
                     if (!\Illuminate\Support\Facades\Schema::hasColumn('users', 'class_room')) {
                         $table->string('class_room')->nullable();
+                    }
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('users', 'gender')) {
+                        $table->string('gender', 30)->nullable();
                     }
                 });
             }
