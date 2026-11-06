@@ -309,9 +309,11 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'email' => ['nullable', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'avatar' => ['nullable', 'string', 'max:255'],
+            'avatar' => ['nullable', 'string'],
             'avatar_file' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:3072'],
             'gender' => ['nullable', 'string', 'max:30'],
+            'reg_no' => ['nullable', 'string', 'max:50'],
+            'class_room' => ['nullable', 'string', 'max:50'],
             'password' => ['nullable', 'string', 'min:6'],
         ]);
 
@@ -321,6 +323,12 @@ class AuthController extends Controller
         }
         if (!empty($validated['gender'])) {
             $user->gender = trim($validated['gender']);
+        }
+        if (!empty($validated['reg_no'])) {
+            $user->reg_no = trim($validated['reg_no']);
+        }
+        if (!empty($validated['class_room'])) {
+            $user->class_room = trim($validated['class_room']);
         }
         if ($request->hasFile('avatar_file') || $request->hasFile('avatar') || !empty($validated['avatar'])) {
             $user->avatar = $this->handleAvatarUpload($request, $user->avatar ?: 'img/avatar_default.svg');

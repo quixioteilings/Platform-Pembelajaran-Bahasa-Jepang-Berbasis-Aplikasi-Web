@@ -84,6 +84,10 @@ function resolveAuthUrl(target) {
 function getSavedUser() {
   // 1. Cek sesi Laravel jika disuntikkan via window.LARAVEL_USER
   if (typeof window !== 'undefined' && window.LARAVEL_USER !== undefined && window.LARAVEL_USER !== null) {
+    try {
+      localStorage.setItem('sijapanese_active_user', JSON.stringify(window.LARAVEL_USER));
+      localStorage.setItem('sijapanese_auth_user', JSON.stringify(window.LARAVEL_USER));
+    } catch (e) {}
     return window.LARAVEL_USER;
   }
 
@@ -524,6 +528,7 @@ async function saveProfileModal(e) {
       body: JSON.stringify({
         name: currentUser.name,
         avatar: currentUser.avatar,
+        gender: currentUser.gender,
         reg_no: currentUser.reg_no,
         class_room: currentUser.class_room
       })

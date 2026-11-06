@@ -2548,18 +2548,26 @@
 
   <script>
     @if(auth()->check())
+      @php
+        $authUser = auth()->user();
+        $avatarRaw = $authUser->avatar ?: ($authUser->isGuru() ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg');
+        $avatarUrl = (str_starts_with($avatarRaw, 'http://') || str_starts_with($avatarRaw, 'https://') || str_starts_with($avatarRaw, 'data:'))
+          ? $avatarRaw 
+          : asset($avatarRaw);
+      @endphp
       window.LARAVEL_USER = {
-        id: {{ auth()->id() }},
-        name: {!! json_encode(auth()->user()->name) !!},
-        email: {!! json_encode(auth()->user()->email) !!},
-        role: {!! json_encode(auth()->user()->role) !!},
-        avatar: {!! json_encode(auth()->user()->avatar ? (str_starts_with(auth()->user()->avatar, 'img/') ? auth()->user()->avatar : 'img/' . auth()->user()->avatar) : (auth()->user()->isGuru() ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg')) !!},
-        score: {{ auth()->user()->score ?? 0 }},
-        reg_no: {!! json_encode(auth()->user()->isGuru() ? 'SIJ-2026-GURU01' : 'JFT-2026-51720') !!},
-        nationality: 'INDONESIA',
-        gender: 'Laki-laki (MALE)',
-        birthdate: '2007/09/16',
-        target_level: {!! json_encode(auth()->user()->isGuru() ? 'Pengajar (N1 - N5)' : 'JLPT N5 (Dasar 1)') !!}
+        id: {{ $authUser->id }},
+        name: {!! json_encode($authUser->name) !!},
+        email: {!! json_encode($authUser->email) !!},
+        role: {!! json_encode($authUser->role) !!},
+        avatar: {!! json_encode($avatarUrl) !!},
+        score: {{ $authUser->score ?? 0 }},
+        reg_no: {!! json_encode($authUser->reg_no ?: ($authUser->isGuru() ? 'SIJ-2026-GURU01' : 'JFT-2026-51720')) !!},
+        class_room: {!! json_encode($authUser->class_room ?: ($authUser->isGuru() ? 'Master Guru' : 'Kelas X-A')) !!},
+        nationality: {!! json_encode($authUser->nationality ?: ($authUser->isGuru() ? 'JAPAN' : 'INDONESIA')) !!},
+        gender: {!! json_encode($authUser->gender ?: 'Laki-laki (MALE)') !!},
+        birthdate: {!! json_encode($authUser->birthdate ?: '2007-09-16') !!},
+        target_level: {!! json_encode($authUser->target_level ?: ($authUser->isGuru() ? 'Pengajar (N1 - N5)' : 'JLPT N5 (Dasar 1)')) !!}
       };
     @else
       window.LARAVEL_USER = null;
