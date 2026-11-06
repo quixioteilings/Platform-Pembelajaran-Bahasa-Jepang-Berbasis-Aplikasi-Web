@@ -396,408 +396,12 @@
       font-weight: 700;
       color: #475569;
     }
-
-    /* Tabel Standard Master */
     .guru-table-wrap {
-      overflow-x: auto;
-    }
-    .guru-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-    .guru-table th {
-      background: #F8FAFC;
-      color: #475569;
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0.85rem 1rem;
-      border-bottom: 2px solid #E2E8F0;
-    }
-    .guru-table td {
-      padding: 1rem;
-      border-bottom: 1.5px solid #F1F5F9;
-      font-size: 0.9rem;
-      vertical-align: middle;
-    }
-    .guru-table tr:hover td {
-      background: #FAFAFA;
-    }
-
-    /* Styling Modals - WAJIB DI TENGAH LAYAR */
-    .guru-modal-backdrop,
-    #modal-edit-guru-profile,
-    #modal-profile-success {
-      position: fixed !important;
-      inset: 0 !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
-      background: rgba(15, 23, 42, 0.65) !important;
-      backdrop-filter: blur(5px) !important;
-      display: none !important;
-      align-items: center !important;
-      justify-content: center !important;
-      z-index: 99999 !important;
-      padding: 1.5rem !important;
-      box-sizing: border-box !important;
-    }
-    .guru-modal-backdrop.show,
-    #modal-edit-guru-profile.show,
-    #modal-profile-success.show {
-      display: flex !important;
-    }
-    .guru-modal-box,
-    #modal-edit-guru-profile .guru-modal-box,
-    #modal-profile-success .guru-modal-box {
-      background: #FFFFFF !important;
-      border-radius: 20px !important;
+      overflow-x: visible !important;
+      border: none !important;
+      background: transparent !important;
       width: 100% !important;
-      max-width: 600px !important;
-      max-height: 90vh !important;
-      max-height: 90dvh !important;
-      overflow-y: auto !important;
-      padding: 2rem !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
-      position: relative !important;
-      margin: auto !important;
-      top: auto !important;
-      bottom: auto !important;
-      left: auto !important;
-      right: auto !important;
-      transform: none !important;
-      align-self: center !important;
     }
-    .guru-modal-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1.5px solid #F1F5F9;
-    }
-    .guru-modal-header h3 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin: 0;
-      color: #0F172A;
-    }
-    .btn-close-modal {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: #94A3B8;
-      cursor: pointer;
-      line-height: 1;
-    }
-    .btn-close-modal:hover {
-      color: #0F172A;
-    }
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 0.4rem;
-    }
-    .form-control {
-      width: 100%;
-      padding: 0.65rem 0.9rem;
-      border-radius: 10px;
-      border: 1.5px solid #CBD5E1;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: #0F172A;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-    .form-control:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    }
-    .modal-btn-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1.5px solid #F1F5F9;
-    }
-    .btn-cancel {
-      background: #F1F5F9;
-      color: #475569;
-      border: none;
-      padding: 0.65rem 1.2rem;
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-    }
-    .btn-cancel:hover {
-      background: #E2E8F0;
-    }
-
-    /* Quest item styling */
-    .quest-admin-item {
-      background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      border-radius: 16px;
-      padding: 1.3rem;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
-    }
-    .quest-admin-item:hover {
-      border-color: #CBD5E1;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-    }
-    .quest-thumb-preview {
-      width: 140px;
-      height: 90px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1.5px solid #CBD5E1;
-      background: #FAF6F0;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .quest-thumb-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: transform 0.2s ease;
-    }
-    .quest-thumb-preview:hover img {
-      transform: scale(1.05);
-    }
-    .badge-has-img {
-      background: #EFF6FF;
-      color: #1D4ED8;
-      font-size: 0.74rem;
-      font-weight: 800;
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid #BFDBFE;
-    }
-    .badge-no-img {
-      background: #F1F5F9;
-      color: #64748B;
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-pill);
-    }
-    .opt-row-box {
-      transition: all 0.2s ease;
-    }
-    .opt-row-box.is-correct {
-      background: #ECFDF5 !important;
-      border-color: #10B981 !important;
-    }
-    .opt-row-box.is-correct .correct-badge-pill {
-      display: inline-block !important;
-    }
-
-    /* ===== RESPONSIVE MEDIA QUERIES (MOBILE & TABLET) ===== */
-    @media (max-width: 900px) {
-      .guru-navbar {
-        padding: 0.85rem 1.2rem;
-      }
-      .guru-main-container {
-        padding: 0 1rem;
-        margin: 1.2rem auto 3rem;
-      }
-      .kpi-summary-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 0.9rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .guru-navbar {
-        display: grid !important;
-        grid-template-columns: auto 1fr !important;
-        grid-template-rows: auto auto !important;
-        row-gap: 0.65rem !important;
-        column-gap: 0.6rem !important;
-        padding: 0.65rem 0.85rem !important;
-        box-sizing: border-box !important;
-        width: 100% !important;
-      }
-      .guru-nav-left {
-        display: contents !important;
-      }
-      .guru-brand-wrap {
-        grid-column: 1 !important;
-        grid-row: 1 !important;
-        align-self: center !important;
-        gap: 0.4rem !important;
-      }
-      .guru-brand-text {
-        font-size: 1.15rem !important;
-      }
-      .svg-crest-mini {
-        width: 22px !important;
-        height: 22px !important;
-      }
-      .guru-profile-bar {
-        grid-column: 2 !important;
-        grid-row: 1 !important;
-        justify-self: end !important;
-        align-self: center !important;
-        gap: 0.45rem !important;
-      }
-      .guru-avatar-circle {
-        width: 34px !important;
-        height: 34px !important;
-        flex-shrink: 0 !important;
-      }
-      .guru-info-text {
-        max-width: none !important;
-        overflow: visible !important;
-      }
-      .guru-name {
-        font-size: 0.88rem !important;
-        font-weight: 800 !important;
-        white-space: nowrap !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 3px !important;
-      }
-      .guru-role-sub {
-        display: none !important;
-      }
-      .btn-logout-top {
-        padding: 0.3rem 0.65rem !important;
-        font-size: 0.74rem !important;
-        border-radius: var(--radius-pill) !important;
-      }
-      .badge-master-guru {
-        grid-column: 1 !important;
-        grid-row: 2 !important;
-        justify-self: start !important;
-        align-self: center !important;
-        font-size: 0.68rem !important;
-        padding: 0.28rem 0.6rem !important;
-        white-space: nowrap !important;
-        letter-spacing: 0.2px !important;
-      }
-      .btn-return-app {
-        grid-column: 2 !important;
-        grid-row: 2 !important;
-        justify-self: end !important;
-        align-self: center !important;
-        font-size: 0.76rem !important;
-        padding: 0.32rem 0.75rem !important;
-        white-space: nowrap !important;
-        gap: 0.35rem !important;
-      }
-      .btn-return-app .svg-icon-mini {
-        width: 13px !important;
-        height: 13px !important;
-      }
-      .guru-main-container {
-        padding: 0 0.75rem !important;
-        margin: 1rem auto 2.5rem !important;
-      }
-      .kpi-summary-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.65rem !important;
-        margin-bottom: 1.2rem !important;
-      }
-      .kpi-card {
-        padding: 0.85rem 0.75rem !important;
-        border-radius: 14px !important;
-      }
-      .kpi-card:last-child {
-        grid-column: span 2 !important;
-      }
-      .kpi-label {
-        font-size: 0.7rem !important;
-      }
-      .kpi-value {
-        font-size: 1.5rem !important;
-      }
-      .kpi-sub {
-        font-size: 0.68rem !important;
-      }
-      .guru-tabs-nav {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 0.45rem !important;
-        padding: 0.5rem !important;
-        background: #FFFFFF !important;
-        border-radius: 16px !important;
-        border: 1.5px solid #E2E8F0 !important;
-        margin-bottom: 1.2rem !important;
-        overflow-x: visible !important;
-      }
-      .guru-tab-btn {
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        padding: 0.65rem 0.5rem !important;
-        font-size: 0.82rem !important;
-        font-weight: 700 !important;
-        border-radius: 12px !important;
-        white-space: normal !important;
-        line-height: 1.25 !important;
-        flex-shrink: 0 !important;
-        background: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
-        color: #475569 !important;
-        box-shadow: none !important;
-      }
-      .guru-tab-btn.active {
-        background: var(--red) !important;
-        color: #FFFFFF !important;
-        border-color: var(--red) !important;
-        box-shadow: 0 4px 12px rgba(186, 61, 39, 0.25) !important;
-      }
-      .guru-tab-btn:last-child {
-        grid-column: span 2 !important;
-      }
-      .master-card {
-        padding: 1.1rem 0.85rem !important;
-        border-radius: 16px !important;
-        margin-bottom: 1.2rem !important;
-      }
-      .master-card-header {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 0.85rem !important;
-      }
-      .master-card-header > button,
-      .master-card-header > div > button,
-      .master-card-header > a {
-        width: 100% !important;
-        justify-content: center !important;
-        text-align: center !important;
-      }
-
-      /* ===== RESPONSIVE MOBILE DATA CARDS (NO CUTOFFS) ===== */
-      .guru-table-wrap {
-        overflow-x: visible !important;
-        border: none !important;
-        background: transparent !important;
-        width: 100% !important;
-      }
       .guru-table {
         min-width: 100% !important;
         width: 100% !important;
@@ -1167,6 +771,27 @@
       align-self: center !important;
       border-radius: 20px !important;
     }
+
+    /* Custom Styled Select Dropdown (Zero Ugly Browser Default Chevron) */
+    select.form-control,
+    .guru-filter-bar select,
+    .guru-modal-box select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #FFFFFF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 15px 15px;
+      padding-right: 2.5rem !important;
+      cursor: pointer;
+    }
+    select.form-control:focus,
+    .guru-filter-bar select:focus,
+    .guru-modal-box select:focus {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
   </style>
 </head>
 <body>
@@ -1252,6 +877,9 @@
       </button>
       <button class="guru-tab-btn" onclick="switchGuruTab('minigames')">
         <span>Kelola Mini Games &amp; Bank Soal</span>
+      </button>
+      <button class="guru-tab-btn" onclick="switchGuruTab('japan-cities')">
+        <span>Kota Jepang &amp; 3 Aksara</span>
       </button>
     </div>
 
@@ -1472,10 +1100,6 @@
         </div>
       </div>
     </div>
-
-    <!-- ==============================================
-         TAB 5: KELOLA MINI GAMES & BANK SOAL GAME
-         ============================================== -->
     <div class="guru-tab-content" id="guru-tab-minigames">
       <div class="master-card">
         <div class="master-card-header">
@@ -1518,6 +1142,82 @@
           <div id="admin-game-details" class="admin-game-details">
             <!-- Dynamically populated via JS -->
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         TAB 6: MANAJEMEN PETA KOTA JEPANG & 3 SISTEM AKSARA
+         ============================================== -->
+    <div class="guru-tab-content" id="guru-tab-japan-cities">
+      <div class="master-card">
+        <div class="master-card-header">
+          <div class="master-card-title">
+            <h3>Pusat Pengaturan Peta Kota Jepang &amp; Pengenalan 3 Aksara (Nihongo to Japan)</h3>
+            <p>Kelola titik pin peta visual SVG interaktif (Tokyo, Kyoto, Osaka, Sapporo, dll), aksara Kanji, Kana, Romaji, deskripsi profil wilayah, highlights budaya, dan kuliner khas yang tampil langsung di Modul 1 murid.</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <button type="button" class="btn-preset" onclick="resetAdminJapanCities()" style="color:#DC2626; border-color:#FECACA;" title="Reset daftar kota ke 6 kota default Jepang">Reset Default Kota</button>
+            <button type="button" class="btn-guru-primary" onclick="openAddCityModal()">
+              <span>+ Tambah Titik Kota Baru</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- INFO BOX: PENGENALAN 3 AKSARA & SIMBOL KANJI ALAM DASAR -->
+        <div style="background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:16px; padding:1.2rem; margin-bottom:1.5rem;">
+          <div style="font-weight:800; font-size:0.95rem; color:#0F172A; margin-bottom:0.4rem;">Status Kurikulum 3 Aksara di Modul 1 Siswa</div>
+          <p style="font-size:0.85rem; color:#64748B; margin:0 0 1rem; line-height:1.5;">
+            Sesuai referensi <em>Nihongo to Japan</em>, Modul 1 kini membekali murid dengan pemahaman pondasi 3 sistem tulisan: 
+            <strong>Hiragana</strong> (aksara asli), <strong>Katakana</strong> (kata serapan), dan <strong>Kanji</strong> (ideogram bermakna dari alam: 日, 月, 木, 山, 川, 日本) tanpa beban hafalan rumit, disertai audio pengucapan asli.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.85rem;">
+            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:12px; padding:0.8rem 1rem;">
+              <div style="font-size:0.75rem; font-weight:800; color:#1E40AF; text-transform:uppercase;">1. Hiragana (ひらがな)</div>
+              <div style="font-size:0.88rem; font-weight:800; color:#1E3A8A; margin:0.2rem 0;">46 Karakter Dasar + Suara Gabungan</div>
+              <div style="font-size:0.75rem; color:#3B82F6;">Aksara melengkung alami kata asli Jepang &amp; partikel kalimat</div>
+            </div>
+            <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:12px; padding:0.8rem 1rem;">
+              <div style="font-size:0.75rem; font-weight:800; color:#92400E; text-transform:uppercase;">2. Katakana (カタカナ)</div>
+              <div style="font-size:0.88rem; font-weight:800; color:#78350F; margin:0.2rem 0;">46 Karakter Bersudut Tegas</div>
+              <div style="font-size:0.75rem; color:#B45309;">Kata serapan bahasa asing, nama negara, menu &amp; onomatope</div>
+            </div>
+            <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:12px; padding:0.8rem 1rem;">
+              <div style="font-size:0.75rem; font-weight:800; color:#991B1B; text-transform:uppercase;">3. Kanji Simbol Alam (漢字)</div>
+              <div style="font-size:0.88rem; font-weight:800; color:#7F1D1D; margin:0.2rem 0;">Ideogram Representasi Visual Alam</div>
+              <div style="font-size:0.75rem; color:#EF4444;">Bentuk matahari (日), bulan (月), pohon (木), gunung (山), sungai (川)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATISTIK TOTAL KOTA PETA -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.6rem;">
+          <div style="font-size:0.92rem; font-weight:800; color:#334155;">
+            Daftar Titik Kota Interaktif (<span id="japan-cities-count-badge">6</span> Kota Terdaftar)
+          </div>
+          <div style="font-size:0.8rem; color:#64748B;">
+            Perubahan titik koordinat atau profil kota tersimpan secara instan di peramban dan langsung muncul di web siswa.
+          </div>
+        </div>
+
+        <!-- TABEL CRUD KOTA JEPANG -->
+        <div class="guru-table-wrap">
+          <table class="guru-table" id="japan-cities-table">
+            <thead>
+              <tr>
+                <th style="width:70px;">Pin</th>
+                <th>Kota &amp; Aksara</th>
+                <th>Wilayah / Region</th>
+                <th>Koordinat Peta (X / Y)</th>
+                <th>Deskripsi &amp; Sorotan Budaya</th>
+                <th>Kuliner Khas</th>
+                <th style="text-align:right; width:140px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="japan-cities-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -1614,6 +1314,87 @@
       <button type="button" class="btn-primary" onclick="closeModal('modal-profile-success')" style="width: 100%; justify-content: center; padding: 0.85rem 1.5rem; font-size: 0.95rem; font-weight: 800; border-radius: 12px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFF; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(16,185,129,0.35);">
         Siap, Lanjutkan
       </button>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       MODAL: TAMBAH / EDIT KOTA JEPANG & PIN PETA
+       ============================================== -->
+  <div class="guru-modal-backdrop" id="modal-japan-city">
+    <div class="guru-modal-box" style="max-width: 640px; max-height: 90vh; overflow-y: auto;">
+      <div class="guru-modal-header">
+        <h3 id="modal-japan-city-title">Kelola Titik Kota Jepang</h3>
+        <button type="button" class="btn-close-modal" onclick="closeModal('modal-japan-city')">&times;</button>
+      </div>
+      <form id="form-japan-city" onsubmit="saveJapanCityAdmin(event)">
+        <input type="hidden" id="city-modal-mode" value="add" />
+        <input type="hidden" id="city-original-id" value="" />
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">
+          <div class="form-group">
+            <label>ID Unik Kota (huruf kecil):</label>
+            <input type="text" id="city-input-id" class="form-control" placeholder="contoh: tokyo, kyoto" required />
+            <small style="color:#64748B; font-size:0.75rem;">Digunakan sebagai pengenal unik titik peta.</small>
+          </div>
+          <div class="form-group">
+            <label>Nama Kota (Romaji):</label>
+            <input type="text" id="city-input-name" class="form-control" placeholder="contoh: Tokyo, Osaka" required />
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.9rem;">
+          <div class="form-group">
+            <label>Aksara Kanji:</label>
+            <input type="text" id="city-input-kanji" class="form-control" placeholder="contoh: 東京" required />
+          </div>
+          <div class="form-group">
+            <label>Aksara Kana (Hiragana/Katakana):</label>
+            <input type="text" id="city-input-kana" class="form-control" placeholder="contoh: とうきょう" required />
+          </div>
+          <div class="form-group">
+            <label>Pelafalan Romaji:</label>
+            <input type="text" id="city-input-romaji" class="form-control" placeholder="contoh: Tōkyō" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Wilayah / Region Geografis:</label>
+          <input type="text" id="city-input-region" class="form-control" placeholder="contoh: Kanto, Honshu" required />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">
+          <div class="form-group">
+            <label>Posisi Pin Horizontal (Pin X %):</label>
+            <input type="text" id="city-input-pinx" class="form-control" placeholder="contoh: 62%" required />
+            <small style="color:#64748B; font-size:0.75rem;">Rentang 5% (barat) hingga 85% (timur).</small>
+          </div>
+          <div class="form-group">
+            <label>Posisi Pin Vertikal (Pin Y %):</label>
+            <input type="text" id="city-input-piny" class="form-control" placeholder="contoh: 61%" required />
+            <small style="color:#64748B; font-size:0.75rem;">Rentang 10% (utara) hingga 90% (selatan).</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Deskripsi &amp; Profil Wilayah:</label>
+          <textarea id="city-input-desc" class="form-control" rows="3" placeholder="Jelaskan karakteristik kota, peran pentingnya di Jepang, suasana umum kota..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Sorotan / Destinasi Utama (Highlights):</label>
+          <input type="text" id="city-input-highlights" class="form-control" placeholder="contoh: Shibuya Crossing, Tokyo Skytree, Asakusa" required />
+        </div>
+
+        <div class="form-group">
+          <label>Rekomendasi Kuliner Khas:</label>
+          <input type="text" id="city-input-food" class="form-control" placeholder="contoh: Tokyo Ramen, Monjayaki, Tsukiji Sushi" required />
+        </div>
+
+        <div class="modal-btn-row">
+          <button type="button" class="btn-cancel" onclick="closeModal('modal-japan-city')">Batal</button>
+          <button type="submit" class="btn-guru-primary">Simpan Titik Kota</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -2305,7 +2086,330 @@
     }
 
     // Tab switching
+    // ==============================================
+    // MANAJEMEN KOTA JEPANG (PETA VISUAL INTERAKTIF MODUL 1)
+    // ==============================================
+    const DEFAULT_ADMIN_JAPAN_CITIES = [
+      {
+        id: 'tokyo',
+        name: 'Tokyo',
+        kanji: '東京',
+        kana: 'とうきょう',
+        romaji: 'Tōkyō',
+        region: 'Kanto, Honshu',
+        pinX: '62%',
+        pinY: '61%',
+        desc: 'Ibu kota modern Jepang, pusat pemerintahan, teknologi, seni kontemporer, dan salah satu metropolitan tersibuk di dunia.',
+        highlights: 'Shibuya Crossing, Menara Tokyo Skytree, Kuil Asakusa Sensoji, Akihabara',
+        food: 'Tokyo Ramen, Tsukiji Sushi, Monjayaki'
+      },
+      {
+        id: 'kyoto',
+        name: 'Kyoto',
+        kanji: '京都',
+        kana: 'きょうと',
+        romaji: 'Kyōto',
+        region: 'Kansai, Honshu',
+        pinX: '46%',
+        pinY: '65%',
+        desc: 'Bekas ibu kota kekaisaran Jepang selama lebih dari 1000 tahun. Pusat kebudayaan tradisional, ribuan kuil bersejarah, dan taman zen.',
+        highlights: 'Gerbang Merah Fushimi Inari, Paviliun Emas Kinkaku-ji, Hutan Bambu Arashiyama, Distrik Geisha Gion',
+        food: 'Kyoto Matcha Kaiseki, Yudofu (Tahu Rebus), Yatsuhashi'
+      },
+      {
+        id: 'osaka',
+        name: 'Osaka',
+        kanji: '大阪',
+        kana: 'おおさか',
+        romaji: 'Ōsaka',
+        region: 'Kansai, Honshu',
+        pinX: '43%',
+        pinY: '68%',
+        desc: 'Kota metropolis terbesar kedua di Jepang yang terkenal dengan keramahan warganya, pusat hiburan, komedi, serta surga kuliner jalanan lezat.',
+        highlights: 'Kastil Osaka (Osaka-jo), Distrik Lampu Neon Dotonbori, Universal Studios Japan, Pasar Kuromon',
+        food: 'Takoyaki, Okonomiyaki Kansai-style, Kushikatsu'
+      },
+      {
+        id: 'sapporo',
+        name: 'Sapporo',
+        kanji: '札幌',
+        kana: 'さっぽろ',
+        romaji: 'Sapporo',
+        region: 'Hokkaido',
+        pinX: '74%',
+        pinY: '18%',
+        desc: 'Kota terbesar di pulau utara Hokkaido. Terkenal dengan festival salju musim dingin kelas dunia, alam pegunungan sejuk, dan hasil laut segar.',
+        highlights: 'Sapporo Snow Festival di Taman Odori, Menara Jam Sapporo, Gunung Moiwa Ropeway, Susukino',
+        food: 'Miso Ramen Sapporo, Kepiting Hokkaido, Genghis Khan (Kambing Panggang)'
+      },
+      {
+        id: 'hiroshima',
+        name: 'Hiroshima',
+        kanji: '広島',
+        kana: 'ひろしま',
+        romaji: 'Hiroshima',
+        region: 'Chugoku, Honshu',
+        pinX: '31%',
+        pinY: '71%',
+        desc: 'Kota perdamaian bersejarah dunia yang berhasil bangkit indah dan modern. Menghadap ke Laut Pedalaman Seto yang permai.',
+        highlights: 'Taman Monumen Perdamaian (Atomic Bomb Dome), Kuil Terapung Itsukushima di Pulau Miyajima',
+        food: 'Hiroshima-yaki (Okonomiyaki Mie Berlapis), Tiram Bakar Miyajima, Momiji Manju'
+      },
+      {
+        id: 'fukuoka',
+        name: 'Fukuoka',
+        kanji: '福岡',
+        kana: 'ふくおか',
+        romaji: 'Fukuoka',
+        region: 'Kyushu',
+        pinX: '19%',
+        pinY: '75%',
+        desc: 'Pintu gerbang pulau selatan Kyushu yang hangat dan ramah. Kota pelabuhan dinamis dengan kedai kaki lima (yatai) malam yang legendaris.',
+        highlights: 'Warung Tenda Pinggir Sungai Yatai Nakasu, Kuil Dazaifu Tenmangu, Pantai Momochi, Kanal Kota Hakata',
+        food: 'Hakata Tonkotsu Ramen, Motsunabe, Mentaiko (Telur Ikan Pedas)'
+      }
+    ];
+
+    function getAdminJapanCities() {
+      try {
+        const stored = localStorage.getItem('sijapanese_japan_cities');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (err) {
+        console.warn('Gagal membaca data kota jepang dari localStorage:', err);
+      }
+      return DEFAULT_ADMIN_JAPAN_CITIES;
+    }
+
+    function renderAdminJapanCitiesTable() {
+      const tbody = document.getElementById('japan-cities-table-body');
+      if (!tbody) return;
+      const cities = getAdminJapanCities();
+      const countBadge = document.getElementById('japan-cities-count-badge');
+      if (countBadge) countBadge.textContent = cities.length;
+
+      if (cities.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center; padding:2rem; color:#64748B;">
+              Belum ada titik kota yang terdaftar. Klik tombol "+ Tambah Titik Kota Baru" di atas.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      let html = '';
+      cities.forEach((city, idx) => {
+        const no = idx + 1;
+        html += `
+          <tr>
+            <td style="font-weight:900; color:#BA3D27; text-align:center;">
+              <span style="display:inline-block; width:28px; height:28px; line-height:28px; border-radius:50%; background:#FEE2E2; border:1.5px solid #FCA5A5; font-size:0.82rem;">${no}</span>
+            </td>
+            <td>
+              <div style="font-weight:800; font-size:1rem; color:#0F172A;">${city.name}</div>
+              <div style="font-size:0.84rem; color:#64748B;">
+                <span style="color:#BA3D27; font-weight:700;">${city.kanji}</span> &bull; 
+                <span>${city.kana}</span> &bull; 
+                <span style="font-style:italic;">${city.romaji}</span>
+              </div>
+            </td>
+            <td>
+              <span style="display:inline-block; padding:0.25rem 0.65rem; background:#F1F5F9; border-radius:9999px; font-size:0.8rem; font-weight:700; color:#334155;">
+                ${city.region || '-'}
+              </span>
+            </td>
+            <td>
+              <div style="font-family:monospace; font-size:0.82rem; color:#1E293B; background:#F8FAFC; border:1px solid #E2E8F0; padding:0.25rem 0.55rem; border-radius:6px; display:inline-block;">
+                X: <strong>${city.pinX}</strong> | Y: <strong>${city.pinY}</strong>
+              </div>
+            </td>
+            <td style="max-width:280px; font-size:0.84rem; line-height:1.4; color:#334155;">
+              <p style="margin:0 0 0.35rem;">${city.desc}</p>
+              <div style="font-size:0.76rem; color:#64748B;">
+                <strong>Destinasi:</strong> ${city.highlights || '-'}
+              </div>
+            </td>
+            <td style="max-width:200px; font-size:0.82rem; color:#047857; font-weight:600;">
+              ${city.food || '-'}
+            </td>
+            <td style="text-align:right; white-space:nowrap;">
+              <button type="button" class="btn-preset" onclick="openEditCityModal('${city.id}')" style="font-size:0.8rem; padding:0.35rem 0.75rem; margin-right:0.3rem;">
+                Ubah
+              </button>
+              <button type="button" class="btn-preset" onclick="deleteJapanCityAdmin('${city.id}')" style="font-size:0.8rem; padding:0.35rem 0.75rem; color:#DC2626; border-color:#FECACA;">
+                Hapus
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    let adminCityEditingId = null;
+
+    function openAddCityModal() {
+      adminCityEditingId = null;
+      document.getElementById('modal-japan-city-title').textContent = 'Tambah Titik Kota Jepang Baru';
+      document.getElementById('city-modal-mode').value = 'add';
+      document.getElementById('city-original-id').value = '';
+      document.getElementById('city-input-id').value = '';
+      document.getElementById('city-input-id').disabled = false;
+      document.getElementById('city-input-name').value = '';
+      document.getElementById('city-input-kanji').value = '';
+      document.getElementById('city-input-kana').value = '';
+      document.getElementById('city-input-romaji').value = '';
+      document.getElementById('city-input-region').value = '';
+      document.getElementById('city-input-pinx').value = '50%';
+      document.getElementById('city-input-piny').value = '50%';
+      document.getElementById('city-input-desc').value = '';
+      document.getElementById('city-input-highlights').value = '';
+      document.getElementById('city-input-food').value = '';
+      openModal('modal-japan-city');
+    }
+
+    function openEditCityModal(cityId) {
+      const cities = getAdminJapanCities();
+      const city = cities.find(c => c.id === cityId);
+      if (!city) {
+        alert('Data kota tidak ditemukan!');
+        return;
+      }
+      adminCityEditingId = cityId;
+      document.getElementById('modal-japan-city-title').textContent = 'Edit Titik Kota Jepang: ' + city.name;
+      document.getElementById('city-modal-mode').value = 'edit';
+      document.getElementById('city-original-id').value = city.id;
+      document.getElementById('city-input-id').value = city.id;
+      document.getElementById('city-input-id').disabled = true;
+      document.getElementById('city-input-name').value = city.name || '';
+      document.getElementById('city-input-kanji').value = city.kanji || '';
+      document.getElementById('city-input-kana').value = city.kana || '';
+      document.getElementById('city-input-romaji').value = city.romaji || '';
+      document.getElementById('city-input-region').value = city.region || '';
+      document.getElementById('city-input-pinx').value = city.pinX || '50%';
+      document.getElementById('city-input-piny').value = city.pinY || '50%';
+      document.getElementById('city-input-desc').value = city.desc || '';
+      document.getElementById('city-input-highlights').value = city.highlights || '';
+      document.getElementById('city-input-food').value = city.food || '';
+      openModal('modal-japan-city');
+    }
+
+    function saveJapanCityAdmin(event) {
+      event.preventDefault();
+      const mode = document.getElementById('city-modal-mode').value;
+      const originalId = document.getElementById('city-original-id').value;
+      const rawId = (document.getElementById('city-input-id').value || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      const name = (document.getElementById('city-input-name').value || '').trim();
+      const kanji = (document.getElementById('city-input-kanji').value || '').trim();
+      const kana = (document.getElementById('city-input-kana').value || '').trim();
+      const romaji = (document.getElementById('city-input-romaji').value || '').trim();
+      const region = (document.getElementById('city-input-region').value || '').trim();
+      let pinX = (document.getElementById('city-input-pinx').value || '').trim();
+      let pinY = (document.getElementById('city-input-piny').value || '').trim();
+      const desc = (document.getElementById('city-input-desc').value || '').trim();
+      const highlights = (document.getElementById('city-input-highlights').value || '').trim();
+      const food = (document.getElementById('city-input-food').value || '').trim();
+
+      if (!name || !kanji || !kana || !romaji) {
+        alert('Harap isi Nama Kota, Kanji, Kana, dan Romaji secara lengkap!');
+        return;
+      }
+      if (!pinX.includes('%')) pinX += '%';
+      if (!pinY.includes('%')) pinY += '%';
+
+      let cities = [...getAdminJapanCities()];
+
+      if (mode === 'add') {
+        const id = rawId || name.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+        if (cities.some(c => c.id === id)) {
+          alert('ID Kota "' + id + '" sudah digunakan. Harap gunakan ID unik lain!');
+          return;
+        }
+        const newCity = {
+          id: id,
+          name: name,
+          kanji: kanji,
+          kana: kana,
+          romaji: romaji,
+          region: region,
+          pinX: pinX,
+          pinY: pinY,
+          desc: desc,
+          highlights: highlights,
+          food: food
+        };
+        cities.push(newCity);
+      } else {
+        const idx = cities.findIndex(c => c.id === originalId);
+        if (idx !== -1) {
+          cities[idx] = {
+            ...cities[idx],
+            name: name,
+            kanji: kanji,
+            kana: kana,
+            romaji: romaji,
+            region: region,
+            pinX: pinX,
+            pinY: pinY,
+            desc: desc,
+            highlights: highlights,
+            food: food
+          };
+        }
+      }
+
+      localStorage.setItem('sijapanese_japan_cities', JSON.stringify(cities));
+      closeModal('modal-japan-city');
+      renderAdminJapanCitiesTable();
+      alert('Data titik kota Jepang berhasil disimpan ke database!');
+    }
+
+    function deleteJapanCityAdmin(cityId) {
+      const cities = getAdminJapanCities();
+      const city = cities.find(c => c.id === cityId);
+      const name = city ? city.name : cityId;
+      if (!confirm('Hapus titik kota "' + name + '" dari peta interaktif?')) return;
+      const updated = cities.filter(c => c.id !== cityId);
+      localStorage.setItem('sijapanese_japan_cities', JSON.stringify(updated));
+      renderAdminJapanCitiesTable();
+    }
+
+    function resetAdminJapanCities() {
+      if (!confirm('Kembalikan seluruh daftar titik kota ke 6 kota besar bawaan Jepang (Tokyo, Kyoto, Osaka, Sapporo, Hiroshima, Fukuoka)?')) return;
+      localStorage.removeItem('sijapanese_japan_cities');
+      renderAdminJapanCitiesTable();
+      alert('Daftar kota berhasil direset ke pengaturan bawaan!');
+    }
+
+    // SWITCH GURU TAB FUNCTION
     function switchGuruTab(tabName) {
+      const tabs = document.querySelectorAll('.guru-tab-content');
+      tabs.forEach(t => t.classList.remove('active'));
+      const btns = document.querySelectorAll('.guru-tab-btn');
+      btns.forEach(b => b.classList.remove('active'));
+
+      const targetTab = document.getElementById('guru-tab-' + tabName);
+      if (targetTab) targetTab.classList.add('active');
+
+      const activeBtn = Array.from(btns).find(b => {
+        const onclickAttr = b.getAttribute('onclick') || '';
+        return onclickAttr.includes(`'${tabName}'`);
+      });
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabName === 'levels') renderAdminLevels();
+      if (tabName === 'lessons') renderAdminLessons();
+    renderAdminJapanCitiesTable(); // MARK_SWITCH_TAB
+      if (tabName === 'quests') renderAdminQuests();
+      if (tabName === 'students') renderAdminStudents();
+      if (tabName === 'minigames') renderAdminMiniGames();
+      if (tabName === 'japan-cities') renderAdminJapanCitiesTable();
+    }
       document.querySelectorAll('.guru-tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.guru-tab-content').forEach(c => c.classList.remove('active'));
 

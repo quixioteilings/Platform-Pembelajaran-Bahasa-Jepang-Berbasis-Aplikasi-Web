@@ -319,11 +319,19 @@ function injectAuthModals() {
             <div class="sij-form-row">
               <div class="sij-form-group">
                 <label for="prof-class">Kelas / Rombel:</label>
-                <input type="text" id="prof-class" class="sij-form-input" placeholder="contoh: Kelas X-A" />
+                <select id="prof-class" class="sij-form-input sij-form-select">
+                  <option value="Kelas X-A">Kelas X-A</option>
+                  <option value="Kelas X-B">Kelas X-B</option>
+                  <option value="Kelas XI-A">Kelas XI-A</option>
+                  <option value="Kelas XI-B">Kelas XI-B</option>
+                  <option value="Kelas XII">Kelas XII</option>
+                  <option value="Siswa Umum">Siswa Umum / Mandiri</option>
+                  <option value="Master Guru">Master Guru</option>
+                </select>
               </div>
               <div class="sij-form-group">
                 <label for="prof-gender">Jenis Kelamin:</label>
-                <select id="prof-gender" class="sij-form-input">
+                <select id="prof-gender" class="sij-form-input sij-form-select">
                   <option value="Laki-laki (MALE)">Laki-laki (MALE)</option>
                   <option value="Perempuan (FEMALE)">Perempuan (FEMALE)</option>
                 </select>
@@ -337,10 +345,11 @@ function injectAuthModals() {
               </div>
               <div class="sij-form-group">
                 <label for="prof-level">Target Tingkat Belajar:</label>
-                <select id="prof-level" class="sij-form-input">
+                <select id="prof-level" class="sij-form-input sij-form-select">
                   <option value="JLPT N5 (Dasar 1)">JLPT N5 (Dasar 1)</option>
                   <option value="JLPT N4 (Dasar 2)">JLPT N4 (Dasar 2)</option>
                   <option value="JLPT N3 (Menengah)">JLPT N3 (Menengah)</option>
+                  <option value="Pengajar (N1 - N5)">Pengajar (N1 - N5)</option>
                 </select>
               </div>
             </div>
@@ -436,7 +445,21 @@ function openProfileModal() {
   
   const classField = document.getElementById('prof-class');
   if (classField) {
-    classField.value = currentUser.class_room || (isGuru ? 'Master Guru' : 'Kelas X-A');
+    const targetClass = currentUser.class_room || (isGuru ? 'Master Guru' : 'Kelas X-A');
+    let exists = false;
+    for (let i = 0; i < classField.options.length; i++) {
+      if (classField.options[i].value === targetClass) {
+        exists = true;
+        break;
+      }
+    }
+    if (!exists) {
+      const opt = document.createElement('option');
+      opt.value = targetClass;
+      opt.textContent = targetClass;
+      classField.appendChild(opt);
+    }
+    classField.value = targetClass;
   }
 
   const avatarBox = document.getElementById('profile-avatar-display-box');
