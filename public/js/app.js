@@ -408,14 +408,20 @@ function showPage(page) {
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-btn').forEach(b => {
+    b.classList.remove('active', 'is-animating');
+  });
 
   const targetPage = document.getElementById('page-' + page);
   if (targetPage) {
+    void targetPage.offsetWidth;
     targetPage.classList.add('active');
   } else {
     const homePage = document.getElementById('page-home');
-    if (homePage) homePage.classList.add('active');
+    if (homePage) {
+      void homePage.offsetWidth;
+      homePage.classList.add('active');
+    }
     page = 'home';
   }
 
@@ -424,7 +430,13 @@ function showPage(page) {
   if (navBtn) navBtn.classList.add('active');
 
   const mobBtn = document.querySelector('.mob-nav-btn[data-page="' + activeNavPage + '"]');
-  if (mobBtn) mobBtn.classList.add('active');
+  if (mobBtn) {
+    void mobBtn.offsetWidth;
+    mobBtn.classList.add('active', 'is-animating');
+    setTimeout(() => {
+      mobBtn.classList.remove('is-animating');
+    }, 450);
+  }
 
   window.scrollTo(0, 0);
 
