@@ -184,6 +184,7 @@ class AuthController extends Controller
         ]);
 
         // Pendaftaran mandiri dikhususkan 100% untuk Siswa Belajar
+        User::ensureSchemaReady();
         $role = 'siswa';
         $defaultAvatar = 'img/avatar_anggata.svg';
 

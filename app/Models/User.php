@@ -65,4 +65,25 @@ class User extends Authenticatable
         $avg = $this->assessments()->avg('score');
         return $avg !== null ? (int) round($avg) : null;
     }
+
+    /**
+     * Memastikan kolom reg_no dan class_room tersedia di tabel users
+     */
+    public static function ensureSchemaReady(): void
+    {
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('users')) {
+                \Illuminate\Support\Facades\Schema::table('users', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('users', 'reg_no')) {
+                        $table->string('reg_no')->nullable();
+                    }
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('users', 'class_room')) {
+                        $table->string('class_room')->nullable();
+                    }
+                });
+            }
+        } catch (\Throwable $e) {
+            // Fail-safe jika schema sudah siap
+        }
+    }
 }
