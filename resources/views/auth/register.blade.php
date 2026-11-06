@@ -157,14 +157,17 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E6157' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      background-size: 16px 16px;
+      background-repeat: no-repeat !important;
+      background-position: right 1rem center !important;
+      background-size: 16px 16px !important;
       padding-right: 2.75rem !important;
       cursor: pointer;
     }
     .form-group select:focus {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23BA5444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat !important;
+      background-position: right 1rem center !important;
+      background-size: 16px 16px !important;
     }
     .form-group select option {
       background-color: #FAF6F0;
@@ -182,7 +185,7 @@
     .form-group input:focus,
     .form-group select:focus {
       border-color: var(--red);
-      background: #FFFFFF;
+      background-color: #FFFFFF;
       box-shadow: 0 0 0 3px rgba(186, 84, 68, 0.12);
     }
     .btn-toggle-pass {

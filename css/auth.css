@@ -316,7 +316,7 @@
   box-sizing: border-box;
 }
 .sij-form-input:focus {
-  background: var(--card, #FAF6F0);
+  background-color: var(--card, #FAF6F0);
   border-color: var(--red, #BA5444);
   box-shadow: 0 0 0 3px rgba(186, 84, 68, 0.12);
 }
@@ -329,9 +329,9 @@ select.sij-form-input,
   -moz-appearance: none;
   background-color: var(--card-inner, #F4EFE6);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E6157' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  background-size: 15px 15px;
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  background-size: 15px 15px !important;
   padding-right: 2.5rem !important;
   cursor: pointer;
 }
@@ -343,8 +343,12 @@ select.sij-form-input:focus,
 .sij-form-select:focus {
   background-color: var(--card, #FAF6F0);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23BA5444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  background-size: 15px 15px !important;
   border-color: var(--red, #BA5444);
   box-shadow: 0 0 0 3px rgba(186, 84, 68, 0.12);
+  outline: none;
 }
 select.sij-form-input option,
 .sij-form-select option {
@@ -787,13 +791,16 @@ select.sij-form-input option,
   -moz-appearance: none;
   background-color: var(--card-inner, #F4EFE6);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E6157' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  background-size: 15px 15px;
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  background-size: 15px 15px !important;
   padding-right: 2.5rem !important;
   cursor: pointer;
 }
 .auth-modal-card .form-group select:focus {
   background-color: var(--card, #FAF6F0);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23BA5444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  background-size: 15px 15px !important;
 }
