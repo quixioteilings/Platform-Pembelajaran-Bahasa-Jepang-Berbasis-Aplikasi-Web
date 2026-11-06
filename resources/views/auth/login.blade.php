@@ -9,14 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --red: #D9383A;
-      --red-dark: #B91C1C;
-      --blue: #2563EB;
-      --blue-dark: #1D4ED8;
-      --green: #10B981;
-      --text: #0F172A;
-      --text-soft: #64748B;
-      --bg: #F8FAFC;
+      /* Warm Japanese Terracotta (Akane-iro) */
+      --red: #BA5444;
+      --red-light: #CA6757;
+      --red-dark: #9A3F31;
+      --red-pale: #FAF1EE;
+      --red-border: #F1D6CF;
+
+      /* Warm Muted Indigo */
+      --blue: #3E6B89;
+      --blue-light: #5281A1;
+      --blue-dark: #2E5169;
+      --blue-pale: #EFF4F8;
+      --blue-border: #D1DFE9;
+
+      /* Warm Matcha Green */
+      --green: #437856;
+      --green-pale: #F0F6F2;
+      --green-border: #D0E4D7;
+
+      /* Deep Warm Espresso Charcoal (Zero Glare) */
+      --text: #2F2620;
+      --text-soft: #6E6157;
+      --text-light: #A3968B;
+
+      /* Warm Washi Off-White (Kinari) - Harmonis dengan Dashboard & Profil */
+      --bg: #F8F4EC;
+      --bg-warm: #EFE8DC;
+      --card: #FAF6F0;
+      --card-warm: #F4EFE6;
+      --card-inner: #EDE6DA;
+      --border: #DFD7C8;
+      --border-light: #EBE4D8;
     }
     * {
       box-sizing: border-box;
@@ -25,7 +49,7 @@
     }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 10% 20%, #FEE2E2 0%, #EFF6FF 50%, #F8FAFC 100%);
+      background: radial-gradient(circle at 10% 20%, #FAF1EE 0%, #F5EFE6 50%, #F8F4EC 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -38,11 +62,11 @@
       max-width: 480px;
     }
     .login-card {
-      background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 24px;
       padding: 2.2rem 2rem;
-      box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.10);
+      box-shadow: 0 20px 40px -15px rgba(60, 45, 30, 0.10);
       position: relative;
     }
     .login-header {
@@ -53,13 +77,13 @@
       width: 58px;
       height: 58px;
       border-radius: 18px;
-      background: #FEF2F2;
-      border: 2px solid #FECACA;
+      background: var(--red-pale);
+      border: 2px solid var(--red-border);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 0.85rem;
-      box-shadow: 0 4px 14px rgba(217, 56, 58, 0.15);
+      box-shadow: 0 4px 14px rgba(186, 84, 68, 0.15);
     }
     .logo-badge svg {
       width: 32px;
@@ -97,9 +121,9 @@
       margin-top: 1px;
     }
     .alert-error {
-      background: #FEF2F2;
-      border: 1.5px solid #FECACA;
-      color: #DC2626;
+      background: #FAF1EE;
+      border: 1.5px solid #F1D6CF;
+      color: #BA5444;
     }
     .alert-warning {
       background: #FFFBEB;
@@ -107,9 +131,9 @@
       color: #D97706;
     }
     .alert-success {
-      background: #ECFDF5;
-      border: 1.5px solid #A7F3D0;
-      color: #065F46;
+      background: var(--green-pale);
+      border: 1.5px solid var(--green-border);
+      color: var(--green);
     }
     .form-group {
       margin-bottom: 1.15rem;
@@ -120,7 +144,7 @@
     .form-group label {
       font-size: 0.86rem;
       font-weight: 700;
-      color: #334155;
+      color: var(--text);
     }
     .input-pass-wrap {
       position: relative;
@@ -129,12 +153,12 @@
     .form-group input {
       width: 100%;
       padding: 0.85rem 1rem;
-      border: 1.5px solid #CBD5E1;
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       font-size: 0.95rem;
       font-family: inherit;
       color: var(--text);
-      background: #FFFFFF;
+      background: #FDFBF7;
       transition: all 0.2s ease;
       outline: none;
     }
@@ -143,7 +167,8 @@
     }
     .form-group input:focus {
       border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(217, 56, 58, 0.12);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(186, 84, 68, 0.12);
     }
     .btn-toggle-pass {
       position: absolute;
@@ -154,7 +179,7 @@
       border: none;
       padding: 6px;
       cursor: pointer;
-      color: #64748B;
+      color: var(--text-soft);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -175,7 +200,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      color: #475569;
+      color: var(--text-soft);
       cursor: pointer;
       user-select: none;
       font-weight: 600;
@@ -196,7 +221,7 @@
       font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(217, 56, 58, 0.3);
+      box-shadow: 0 4px 14px rgba(186, 84, 68, 0.28);
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
@@ -205,7 +230,7 @@
     }
     .btn-submit-login:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(217, 56, 58, 0.4);
+      box-shadow: 0 6px 20px rgba(186, 84, 68, 0.38);
     }
     .btn-submit-login:active {
       transform: translateY(0);
@@ -214,7 +239,7 @@
     .bottom-links {
       margin-top: 1.8rem;
       padding-top: 1.25rem;
-      border-top: 1.5px solid #F1F5F9;
+      border-top: 1.5px solid var(--border-light);
       text-align: center;
       font-size: 0.88rem;
       color: var(--text-soft);
@@ -262,7 +287,7 @@
       <div class="login-header">
         <div class="logo-badge">
           <svg viewBox="0 0 32 32">
-            <circle cx="16" cy="16" r="14" fill="#D9383A"/>
+            <circle cx="16" cy="16" r="14" fill="#BA5444"/>
             <path d="M8 11h16M9 8v15M23 8v15M7 14h18" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>

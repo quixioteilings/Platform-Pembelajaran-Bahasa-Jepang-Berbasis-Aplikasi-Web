@@ -2478,12 +2478,12 @@
         </div>
 
         <div class="form-group">
-          <label>Pilih Avatar Karakter</label>
-          <select name="avatar">
-            <option value="img/avatar_anggata.svg">Anggata Al Haadi (Siswa)</option>
-            <option value="img/avatar_aoi.svg">Aoi Sorano (Siswi)</option>
-            <option value="img/avatar_tanaka.svg">Sensei Tanaka (Guru)</option>
+          <label>Jenis Kelamin Siswa</label>
+          <select name="gender">
+            <option value="Laki-laki (MALE)">Laki-laki (MALE)</option>
+            <option value="Perempuan (FEMALE)">Perempuan (FEMALE)</option>
           </select>
+          <input type="hidden" name="avatar" value="img/avatar_default.svg" />
         </div>
 
         <div class="form-group">
@@ -2521,11 +2521,10 @@
         </div>
 
         <div class="form-group">
-          <label>Avatar Karakter</label>
-          <select id="profile-edit-avatar">
-            <option value="img/avatar_anggata.svg">Anggata Al Haadi (Siswa)</option>
-            <option value="img/avatar_aoi.svg">Aoi Sorano (Siswi)</option>
-            <option value="img/avatar_tanaka.svg">Sensei Tanaka (Guru)</option>
+          <label>Jenis Kelamin</label>
+          <select id="profile-edit-gender">
+            <option value="Laki-laki (MALE)">Laki-laki (MALE)</option>
+            <option value="Perempuan (FEMALE)">Perempuan (FEMALE)</option>
           </select>
         </div>
 
