@@ -1802,7 +1802,57 @@ const LESSON_CATALOG_DATA = [
 
 // Inisialisasi Halaman Materi
 function initMateriPage() {
+  syncLessonsFromDatabase();
   renderLessonCatalogList();
+}
+
+function syncLessonsFromDatabase() {
+  if (window.LARAVEL_LESSONS) {
+    applyDbLessons(window.LARAVEL_LESSONS);
+    return;
+  }
+  if (typeof fetch === 'function') {
+    fetch('/api/materi/lessons/n5')
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.success && data.lessons) {
+          applyDbLessons(data.lessons);
+          renderLessonCatalogList();
+        }
+      })
+      .catch(() => {});
+  }
+}
+
+function applyDbLessons(dbLessons) {
+  const list = Array.isArray(dbLessons) ? dbLessons : Object.values(dbLessons);
+  list.forEach(dbLes => {
+    if (!dbLes || !dbLes.id) return;
+    const lesId = Number(dbLes.id);
+    if (LESSON_DETAIL_DATA[lesId]) {
+      LESSON_DETAIL_DATA[lesId].comic_image = dbLes.comic_image;
+      LESSON_DETAIL_DATA[lesId].audio_text = dbLes.audio_text;
+      LESSON_DETAIL_DATA[lesId].audio_label = dbLes.audio_label;
+      if (dbLes.title) LESSON_DETAIL_DATA[lesId].title = dbLes.title;
+      if (dbLes.subtitle) LESSON_DETAIL_DATA[lesId].subtitle = dbLes.subtitle;
+    } else {
+      LESSON_DETAIL_DATA[lesId] = {
+        id: lesId,
+        title: dbLes.title,
+        subtitle: dbLes.subtitle,
+        comic_image: dbLes.comic_image,
+        audio_text: dbLes.audio_text,
+        audio_label: dbLes.audio_label,
+        overview: [],
+        sections: []
+      };
+    }
+    const catalogItem = LESSON_CATALOG_DATA.find(c => c.id === lesId);
+    if (catalogItem) {
+      if (dbLes.title) catalogItem.title = dbLes.title;
+      if (dbLes.subtitle) catalogItem.subtitle = dbLes.subtitle;
+    }
+  });
 }
 
 function renderLessonCatalogList() {
@@ -2139,7 +2189,53 @@ function renderStepMulai(lesson) {
 // STEP 2: KOMIK / KASUS DIALOG
 // ----------------------------------------------------
 function renderStepKomik(lesson) {
-  // Hanya gunakan komik bawaan jika Pelajaran 1
+  // Ambil data database terbaru jika tersedia
+  const dbLesson = (window.LARAVEL_LESSONS && (window.LARAVEL_LESSONS[lesson.id] || window.LARAVEL_LESSONS[String(lesson.id)])) || lesson;
+  const comicImage = dbLesson.comic_image || lesson.comic_image;
+  const audioText = dbLesson.audio_text || lesson.audio_text;
+  const audioLabel = dbLesson.audio_label || lesson.audio_label || 'Dengarkan Pelafalan Komik';
+
+  // 1. Jika ada gambar komik yang diunggah guru (misal file uploads/ atau gambar kustom bukan default SVG Pelajaran 1)
+  const hasCustomUpload = comicImage && (
+    comicImage.startsWith('uploads/') || 
+    comicImage.startsWith('data:') || 
+    comicImage.startsWith('http') ||
+    (comicImage.startsWith('img/') && comicImage !== 'img/comic_ramen.svg' && lesson.id === 1) ||
+    (lesson.id !== 1 && !comicImage.includes('default'))
+  );
+
+  if (hasCustomUpload) {
+    return `
+      <div class="step-header-banner">
+        <span class="step-label-pill">Langkah 2 • Komik</span>
+        <h2 class="step-main-title">${escapeHtml(dbLesson.title || lesson.title)}</h2>
+        <p class="step-desc-text">${escapeHtml(dbLesson.subtitle || lesson.subtitle || 'Simak cerita komik pengantar situasi nyata berikut ini:')}</p>
+      </div>
+
+      <div class="nihongo-study-card">
+        <div class="manga-custom-comic-box" style="background:#FFFFFF; border:2px solid #E2E8F0; border-radius:18px; padding:1.2rem; text-align:center; box-shadow:0 4px 16px rgba(15,23,42,0.06);">
+          <div style="margin-bottom:1rem; border-radius:14px; overflow:hidden; border:1.5px solid #CBD5E1; background:#F8FAFC;">
+            <img src="${escapeHtml(comicImage)}" alt="Komik Materi" style="width:100%; max-width:850px; height:auto; display:block; margin:0 auto; object-fit:contain;" />
+          </div>
+
+          ${audioText ? `
+            <div style="background:#FFFBF6; border:1.5px solid #FDE68A; border-radius:14px; padding:0.9rem 1.1rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:0.8rem; text-align:left;">
+              <div>
+                <div style="font-size:0.75rem; font-weight:800; color:#B45309; text-transform:uppercase; letter-spacing:0.5px;">Audio Percakapan</div>
+                <div style="font-size:0.88rem; font-weight:700; color:#2D2520;">${escapeHtml(audioLabel)}</div>
+              </div>
+              <button type="button" class="btn-audio-listen" onclick="speakJapanese('${escapeHtml(audioText).replace(/'/g, "\\'")}')" style="background:#D9383A; color:#FFFFFF; border:none; border-radius:10px; padding:0.55rem 1rem; font-size:0.82rem; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem; flex-shrink:0;">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:#FFFFFF; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                <span>Dengar Dialog</span>
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // 2. Hanya gunakan komik bawaan SVG multi-panel jika Pelajaran 1 tanpa upload kustom
   if (lesson.id === 1) {
     const sourceEl = document.getElementById('step-content-komik');
     let comicHtml = '';
@@ -2158,8 +2254,8 @@ function renderStepKomik(lesson) {
     `;
   }
 
-  // Pelajaran 2 dan seterusnya: Render kasus percakapan Rin & Guru Kucing yang sesuai modul
-  return renderLessonDynamicComic(lesson);
+  // 3. Pelajaran 2 dan seterusnya: Render kasus percakapan Rin & Guru Kucing yang sesuai modul
+  return renderLessonDynamicComic(dbLesson);
 }
 
 // Komik Kasus Percakapan Dinamis untuk Pelajaran selain 1

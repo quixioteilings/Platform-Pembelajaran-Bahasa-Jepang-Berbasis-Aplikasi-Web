@@ -2572,6 +2572,12 @@
     @else
       window.LARAVEL_USER = null;
     @endif
+
+    @if(isset($lessons))
+      window.LARAVEL_LESSONS = {!! json_encode($lessons) !!};
+    @else
+      window.LARAVEL_LESSONS = null;
+    @endif
   </script>
 
   <script src="js/data.js"></script>
