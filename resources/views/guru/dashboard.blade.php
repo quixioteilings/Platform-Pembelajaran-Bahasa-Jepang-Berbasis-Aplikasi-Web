@@ -11,21 +11,37 @@
   <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/materi.css') }}" />
   <style>
-    /* Styling Khusus Guru Master Dashboard */
+    /* Styling Khusus Guru Master Dashboard - Harmonized Warm Japanese Theme */
     :root {
-      --guru-bg: #F8FAFC;
+      --guru-bg: #FAF6F0;
+      --guru-card: #FFFFFF;
+      --guru-border: #E8DFD5;
+      --guru-border-soft: #F2ECE3;
+      --guru-primary: #BA5444;
+      --guru-primary-hover: #A34536;
+      --guru-indigo: #3E6B89;
+      --guru-indigo-light: #EFF4F8;
+      --guru-matcha: #437856;
+      --guru-matcha-light: #F0F6F2;
+      --guru-amber: #BA7635;
+      --guru-amber-light: #FDF5ED;
+      --guru-purple: #74567A;
+      --guru-purple-light: #F7F1F8;
+      --guru-text: #2D2520;
+      --guru-text-soft: #786C62;
+      --guru-text-muted: #A3978B;
       --card-white: #FFFFFF;
     }
     body {
       background: var(--guru-bg);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      color: #0F172A;
+      color: var(--guru-text);
       margin: 0;
       padding: 0;
     }
     .guru-navbar {
       background: #FFFFFF;
-      border-bottom: 2px solid #E2E8F0;
+      border-bottom: 2px solid var(--guru-border);
       padding: 0.85rem 2rem;
       display: flex;
       align-items: center;
@@ -33,14 +49,15 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
       flex-wrap: wrap;
       gap: 1rem;
     }
     .guru-nav-left {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
     .guru-brand-wrap {
       display: inline-flex;
@@ -56,13 +73,13 @@
     .guru-brand-text {
       font-weight: 900;
       font-size: 1.25rem;
-      color: #0F172A;
+      color: var(--guru-text);
       letter-spacing: -0.5px;
     }
     .badge-master-guru {
-      background: #FEF2F2;
-      color: #D9383A;
-      border: 1.5px solid #FCA5A5;
+      background: #FAF1EE;
+      color: var(--guru-primary);
+      border: 1.5px solid #F1D6CF;
       font-size: 0.74rem;
       font-weight: 800;
       padding: 0.35rem 0.85rem;
@@ -74,13 +91,13 @@
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      background: #F1F5F9;
-      color: #1E293B;
-      border: 1.5px solid #CBD5E1;
+      background: #EFF4F8;
+      color: var(--guru-indigo);
+      border: 1.5px solid #D1DFE9;
       padding: 0.45rem 1rem;
       border-radius: var(--radius-pill);
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -88,17 +105,17 @@
     .btn-return-app .svg-icon-mini {
       width: 15px;
       height: 15px;
-      stroke: #334155;
+      stroke: var(--guru-indigo);
       fill: none;
       stroke-width: 2.2;
     }
     .btn-return-app:hover {
-      background: #EFF6FF;
-      color: #1D4ED8;
-      border-color: #93C5FD;
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+      border-color: var(--guru-indigo);
     }
     .btn-return-app:hover .svg-icon-mini {
-      stroke: #1D4ED8;
+      stroke: #FFFFFF;
     }
     .guru-profile-bar {
       display: flex;
@@ -111,8 +128,8 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: #FEE2E2;
-      border: 2px solid #D9383A;
+      background: #FAF1EE;
+      border: 2px solid var(--guru-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -126,10 +143,11 @@
     .guru-name {
       font-weight: 800;
       font-size: 0.95rem;
+      color: var(--guru-text);
     }
     .guru-role-sub {
       font-size: 0.72rem;
-      color: #D9383A;
+      color: var(--guru-primary);
       font-weight: 700;
     }
 
@@ -140,7 +158,174 @@
       padding: 0 1.5rem;
     }
 
-    /* KPI Stat Cards (Warna-Warni) */
+    /* Banner Panduan Utama Guru */
+    .guru-welcome-card {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FAF1EE 100%);
+      border: 1.5px solid var(--guru-border);
+      border-radius: 20px;
+      padding: 1.6rem 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+    }
+    .welcome-left {
+      max-width: 780px;
+    }
+    .welcome-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--guru-primary);
+      margin-bottom: 0.5rem;
+    }
+    .welcome-pill {
+      background: #FFFFFF;
+      border: 1px solid #F1D6CF;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      color: var(--guru-primary);
+    }
+    .welcome-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--guru-text);
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.02em;
+    }
+    .welcome-desc {
+      font-size: 0.92rem;
+      color: var(--guru-text-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .btn-hero-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(62, 107, 137, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-hero-preview:hover {
+      background: #2E5169;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(62, 107, 137, 0.35);
+    }
+
+    /* Peta Alur Kerja Kurikulum Master */
+    .guru-workflow-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 18px;
+      padding: 1.3rem 1.6rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.03);
+    }
+    .workflow-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--guru-border-soft);
+    }
+    .workflow-tag {
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--guru-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .workflow-title-wrap h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--guru-text);
+      margin: 0;
+    }
+    .workflow-hint {
+      font-size: 0.8rem;
+      color: var(--guru-text-soft);
+      font-weight: 600;
+    }
+    .workflow-steps-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .workflow-step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--guru-bg);
+      border: 1.5px solid var(--guru-border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+      min-width: 170px;
+    }
+    .workflow-step-item:hover {
+      background: #FFFFFF;
+      border-color: var(--guru-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(186, 84, 68, 0.12);
+    }
+    .step-num-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--guru-primary);
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content {
+      line-height: 1.25;
+    }
+    .step-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--guru-text);
+    }
+    .step-desc {
+      font-size: 0.72rem;
+      color: var(--guru-text-soft);
+      margin-top: 2px;
+    }
+    .workflow-separator {
+      color: var(--guru-text-muted);
+      font-size: 1.1rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* KPI Stat Cards (Warna-Warni Hangat Washi) */
     .guru-kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -149,16 +334,17 @@
     }
     .kpi-card {
       background: #FFFFFF;
-      border-radius: 16px;
-      padding: 1.4rem;
-      border: 1.5px solid #E2E8F0;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      border-radius: 18px;
+      padding: 1.3rem 1.4rem;
+      border: 1.5px solid var(--guru-border);
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.04);
       position: relative;
       overflow: hidden;
       transition: transform 0.2s ease;
     }
     .kpi-card:hover {
       transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(45, 37, 32, 0.08);
     }
     .kpi-card::before {
       content: '';
@@ -168,28 +354,28 @@
       right: 0;
       height: 4px;
     }
-    .kpi-red::before { background: var(--red); }
-    .kpi-blue::before { background: var(--blue); }
-    .kpi-yellow::before { background: var(--yellow); }
-    .kpi-green::before { background: var(--green); }
-    .kpi-purple::before { background: var(--purple); }
+    .kpi-red::before { background: var(--guru-primary); }
+    .kpi-blue::before { background: var(--guru-indigo); }
+    .kpi-yellow::before { background: var(--guru-amber); }
+    .kpi-green::before { background: var(--guru-matcha); }
+    .kpi-purple::before { background: var(--guru-purple); }
 
     .kpi-label {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #64748B;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--guru-text-soft);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .kpi-value {
       font-size: 2.1rem;
       font-weight: 900;
-      color: #0F172A;
+      color: var(--guru-text);
       margin: 0.35rem 0 0.2rem;
     }
     .kpi-sub {
       font-size: 0.78rem;
-      color: #94A3B8;
+      color: var(--guru-text-muted);
       font-weight: 600;
     }
 
@@ -200,31 +386,54 @@
       gap: 0.6rem;
       background: #FFFFFF;
       padding: 0.6rem;
-      border-radius: 16px;
-      border: 1.5px solid #E2E8F0;
+      border-radius: 18px;
+      border: 1.5px solid var(--guru-border);
       margin-bottom: 1.8rem;
       overflow-x: auto;
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.04);
     }
     .guru-tab-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.2rem;
+      gap: 0.55rem;
+      padding: 0.7rem 1.15rem;
       border-radius: 12px;
-      border: none;
+      border: 1.5px solid transparent;
       background: transparent;
-      color: #475569;
-      font-weight: 700;
-      font-size: 0.9rem;
+      color: var(--guru-text-soft);
+      font-weight: 800;
+      font-size: 0.88rem;
       cursor: pointer;
       transition: all 0.2s ease;
       white-space: nowrap;
     }
-    .guru-tab-btn.active {
-      background: var(--red);
-      color: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.25);
+    .guru-tab-btn:hover {
+      background: var(--guru-bg);
+      color: var(--guru-text);
+      border-color: var(--guru-border);
     }
+    .guru-tab-btn.active {
+      background: var(--guru-primary);
+      color: #FFFFFF;
+      border-color: var(--guru-primary);
+      box-shadow: 0 4px 14px rgba(186, 84, 68, 0.25);
+    }
+    .tab-emoji {
+      font-size: 1rem;
+    }
+    .tab-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      color: currentColor;
+    }
+    .guru-tab-btn.active .tab-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
     .guru-tab-content {
       display: none;
     }
@@ -232,13 +441,59 @@
       display: block;
     }
 
+    /* Callout Panduan Letak di Tiap Tab */
+    .guru-guide-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.95rem 1.25rem;
+      border-radius: 14px;
+      margin-bottom: 1.4rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .callout-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .callout-body strong {
+      font-weight: 800;
+    }
+    .callout-blue {
+      background: #EFF4F8;
+      border: 1.5px solid #D1DFE9;
+      color: #264A62;
+    }
+    .callout-orange {
+      background: #FAF1EE;
+      border: 1.5px solid #F1D6CF;
+      color: #7A3428;
+    }
+    .callout-yellow {
+      background: #FDF5ED;
+      border: 1.5px solid #F3E0CC;
+      color: #78491E;
+    }
+    .callout-green {
+      background: #F0F6F2;
+      border: 1.5px solid #D0E4D7;
+      color: #274D35;
+    }
+    .callout-purple {
+      background: #F7F1F8;
+      border: 1.5px solid #E5D6E8;
+      color: #4D3352;
+    }
+
     /* Box Card Standard */
     .master-card {
       background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      border-radius: 18px;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 20px;
       padding: 1.8rem;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
       margin-bottom: 1.8rem;
     }
     .master-card-header {
@@ -247,56 +502,66 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
       padding-bottom: 1rem;
-      border-bottom: 1.5px solid #F1F5F9;
+      border-bottom: 1.5px solid var(--guru-border-soft);
     }
     .master-card-title h3 {
       font-size: 1.35rem;
-      font-weight: 800;
-      margin: 0 0 0.2rem;
-      color: #0F172A;
+      font-weight: 900;
+      margin: 0 0 0.3rem;
+      color: var(--guru-text);
+      letter-spacing: -0.01em;
     }
     .master-card-title p {
       margin: 0;
-      color: #64748B;
+      color: var(--guru-text-soft);
       font-size: 0.88rem;
+      line-height: 1.5;
     }
 
     /* Action Buttons */
     .btn-guru-primary {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      background: var(--red);
+      gap: 0.5rem;
+      background: var(--guru-primary);
       color: #FFFFFF;
       border: none;
-      padding: 0.6rem 1.25rem;
+      padding: 0.6rem 1.3rem;
       border-radius: var(--radius-pill);
       font-weight: 800;
       font-size: 0.88rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.25);
+      box-shadow: 0 3px 10px rgba(186, 84, 68, 0.25);
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .btn-guru-primary:hover {
-      background: var(--red-dark);
+      background: var(--guru-primary-hover);
       transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(186, 84, 68, 0.35);
     }
 
     .btn-preset {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      background: #F8FAFC;
-      border: 1.5px solid #CBD5E1;
-      padding: 0.45rem 0.95rem;
+      gap: 0.4rem;
+      background: #FFFFFF;
+      color: var(--guru-text);
+      border: 1.5px solid var(--guru-border);
+      padding: 0.55rem 1rem;
       border-radius: var(--radius-pill);
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      color: #1E293B;
       cursor: pointer;
       transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-preset:hover {
+      background: var(--guru-bg);
+      border-color: var(--guru-text-soft);
+      transform: translateY(-1px);
     }
     .btn-preset:hover {
       border-color: var(--blue);
@@ -1269,15 +1534,18 @@
       <div class="guru-brand-wrap">
         <span class="logo-crest">
           <svg viewBox="0 0 32 32" class="svg-crest-mini">
-            <circle cx="16" cy="16" r="14" fill="#D9383A"/>
+            <circle cx="16" cy="16" r="14" fill="#BA5444"/>
             <path d="M8 11h16M9 8v15M23 8v15M7 14h18" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </span>
-        <span class="guru-brand-text">SI<span style="color:#D9383A;">Japanese</span></span>
+        <span class="guru-brand-text">SI<span style="color:var(--guru-primary);">Japanese</span></span>
       </div>
       <span class="badge-master-guru">DASHBOARD GURU MASTER</span>
-      <a href="{{ route('home') }}" class="btn-return-app" title="Kembali ke portal murid" onclick="try{sessionStorage.setItem('sijapanese_active_page','home');sessionStorage.removeItem('sijapanese_active_lesson_id');sessionStorage.removeItem('sijapanese_active_step');}catch(e){}">
-        <span>Lihat Web Siswa</span>
+      <a href="{{ route('home') }}" target="_blank" class="btn-return-app" title="Buka pratinjau tampilan murid di tab baru">
+        <span>👁️ Pratinjau Layar Siswa &nearr;</span>
+      </a>
+      <a href="{{ route('home') }}" class="btn-preset" title="Kembali ke Beranda Siswa" onclick="try{sessionStorage.setItem('sijapanese_active_page','home');sessionStorage.removeItem('sijapanese_active_lesson_id');sessionStorage.removeItem('sijapanese_active_step');}catch(e){}">
+        <span>Kembali ke Beranda</span>
       </a>
     </div>
 
@@ -1342,6 +1610,25 @@
     </div>
     @endif
 
+    <!-- BANNER PANDUAN UTAMA GURU -->
+    <div class="guru-welcome-card">
+      <div class="welcome-left">
+        <div class="welcome-badge">
+          <span class="badge-dot"></span>
+          <span>Pusat Kendali Kurikulum &amp; Pantauan Belajar Siswa</span>
+        </div>
+        <h2 class="welcome-title">Selamat datang di Panel Master Guru, {{ auth()->user()->name }} Sensei! 🌸</h2>
+        <p class="welcome-desc">
+          Panel ini dirancang berurutan sesuai alur mengajar bahasa Jepang: mulai dari mengatur tingkat level (N5 &bull; N4), membuat modul komik cerita, menyusun bank soal quest, mengelola kosakata mini games, hingga memantau rekap nilai siswa secara otomatis.
+        </p>
+      </div>
+      <div class="welcome-right">
+        <a href="{{ route('home') }}" target="_blank" class="btn-guru-primary" style="text-decoration:none;">
+          <span>👁️ Buka Layar Siswa &nearr;</span>
+        </a>
+      </div>
+    </div>
+
     <!-- KPI STAT CARDS -->
     <section class="guru-kpi-grid">
       <div class="kpi-card kpi-red">
@@ -1371,22 +1658,84 @@
       </div>
     </section>
 
+    <!-- PETA ALUR KERJA MASTER (AGAR GURU MUDAH MEMAHAMI LETAK PENGATURAN) -->
+    <div class="guru-workflow-card">
+      <div class="workflow-header">
+        <div class="workflow-title">
+          <span>🗺️</span>
+          <span>Panduan Cepat: Urutan Pengaturan Materi &amp; Evaluasi Kelas</span>
+        </div>
+        <span class="workflow-hint">Klik langkah di bawah untuk langsung menuju tab pengaturan yang sesuai</span>
+      </div>
+      <div class="workflow-steps">
+        <div class="workflow-step-pill" onclick="switchGuruTab('levels')">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <span class="step-label">Tingkat Level</span>
+            <span class="step-sub">N5 &bull; N4 &bull; Kustom</span>
+          </div>
+        </div>
+        <span class="workflow-arrow">&rarr;</span>
+        <div class="workflow-step-pill" onclick="switchGuruTab('lessons')">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <span class="step-label">Modul &amp; Komik</span>
+            <span class="step-sub">Bab, cerita &amp; dialog</span>
+          </div>
+        </div>
+        <span class="workflow-arrow">&rarr;</span>
+        <div class="workflow-step-pill" onclick="switchGuruTab('quests')">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <span class="step-label">Bank Soal Quest</span>
+            <span class="step-sub">Kuis langkah evaluasi</span>
+          </div>
+        </div>
+        <span class="workflow-arrow">&rarr;</span>
+        <div class="workflow-step-pill" onclick="switchGuruTab('minigames')">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <span class="step-label">Mini Games</span>
+            <span class="step-sub">6 game hafalan &amp; kosakata</span>
+          </div>
+        </div>
+        <span class="workflow-arrow">&rarr;</span>
+        <div class="workflow-step-pill" onclick="switchGuruTab('students')">
+          <span class="step-num">5</span>
+          <div class="step-body">
+            <span class="step-label">Pantau Nilai</span>
+            <span class="step-sub">Rekap progres &amp; kuis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- TAB NAVIGASI UTAMA -->
     <div class="guru-tabs-nav">
-      <button class="guru-tab-btn active" onclick="switchGuruTab('levels')">
-        <span>Kotak Level Materi</span>
+      <button class="guru-tab-btn active" data-tab="levels" onclick="switchGuruTab('levels', this)">
+        <span class="tab-emoji">📚</span>
+        <span class="tab-text">1. Tingkat Level</span>
+        <span class="tab-badge">{{ $stats['total_levels'] ?? 2 }} Level</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('lessons')">
-        <span>Modul Pelajaran</span>
+      <button class="guru-tab-btn" data-tab="lessons" onclick="switchGuruTab('lessons', this)">
+        <span class="tab-emoji">📖</span>
+        <span class="tab-text">2. Modul Pelajaran</span>
+        <span class="tab-badge">{{ $stats['total_lessons'] ?? 49 }} Modul</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('quests')">
-        <span>Bank Soal &amp; Kuis</span>
+      <button class="guru-tab-btn" data-tab="quests" onclick="switchGuruTab('quests', this)">
+        <span class="tab-emoji">✍️</span>
+        <span class="tab-text">3. Bank Soal Quest</span>
+        <span class="tab-badge">{{ $stats['total_quests'] ?? 0 }} Soal</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('students')">
-        <span>Pantauan Siswa &amp; Nilai</span>
+      <button class="guru-tab-btn" data-tab="minigames" onclick="switchGuruTab('minigames', this)">
+        <span class="tab-emoji">🎮</span>
+        <span class="tab-text">4. Kelola Mini Games</span>
+        <span class="tab-badge">6 Game</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('minigames', this)">
-        <span>Kelola Mini Games &amp; Bank Soal</span>
+      <button class="guru-tab-btn" data-tab="students" onclick="switchGuruTab('students', this)">
+        <span class="tab-emoji">📊</span>
+        <span class="tab-text">5. Pantauan Nilai &amp; Siswa</span>
+        <span class="tab-badge">{{ $stats['total_students'] ?? 0 }} Siswa</span>
       </button>
     </div>
 
@@ -1394,6 +1743,12 @@
          TAB 1: MANAJEMEN KOTAK LEVEL (N5, N4, N3, N2, N1)
          ============================================== -->
     <div class="guru-tab-content active" id="guru-tab-levels">
+      <div class="guru-guide-callout callout-blue">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Panduan Letak di Layar Murid:</strong> Pengaturan kotak level ini langsung menjadi pilihan tab filter tingkat kemampuan (misal: <em>N5 Dasar</em>, <em>N4 Pemula</em>) di menu <strong>Materi</strong> pada antarmuka murid. Siswa akan memilih level ini sebelum membuka modul-modul di dalamnya.
+        </div>
+      </div>
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -1447,6 +1802,12 @@
          TAB 2: MANAJEMEN MODUL PELAJARAN
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-lessons">
+      <div class="guru-guide-callout callout-orange">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Panduan Letak di Layar Murid:</strong> Modul yang didaftarkan di sini tampil sebagai kartu pelajaran berurutan di menu <strong>Materi</strong> murid. Setiap modul tersusun dari 9 langkah belajar interaktif: cerita komik 4-panel, audio pelafalan asli Jepang, tips Sensei Tanaka, kupas kosakata kalimat, dan evaluasi quest.
+        </div>
+      </div>
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -1571,6 +1932,12 @@
          TAB 3: BANK SOAL QUEST & KUIS INTERAKTIF
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-quests">
+      <div class="guru-guide-callout callout-yellow">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Panduan Letak di Layar Murid:</strong> Soal quest di bawah ini ditampilkan di <strong>Langkah 8 (Quest Kuis)</strong> pada setiap modul yang dipelajari murid. Murid akan memilih jawaban (A, B, C, D) dan langsung melihat animasi skor perolehan serta pembahasan kuis.
+        </div>
+      </div>
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -1709,6 +2076,12 @@
          TAB 4: PANTAUAN SISWA & REKAP PENILAIAN LATIHAN
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-students">
+      <div class="guru-guide-callout callout-purple">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Panduan Rekap Nilai &amp; Hasil Evaluasi:</strong> Tabel ini memantau progres belajar setiap murid secara otomatis. Sensei dapat memeriksa rincian berapa soal yang dijawab <strong>Benar</strong> vs <strong>Salah</strong>, nilai skala 0–100, persentase kelulusan, dan status evaluasi tiap siswa.
+        </div>
+      </div>
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -2003,6 +2376,12 @@
          TAB 5: KELOLA MINI GAMES & BANK SOAL GAME
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-minigames">
+      <div class="guru-guide-callout callout-green">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Panduan Letak di Layar Murid:</strong> Pengaturan durasi dan bank soal kosakata di bawah ini dipakai langsung saat siswa bermain di menu <strong>Games</strong> (Kana Blast, Sky Atk Defense, Flash Card, Speed Quiz, Word Builder). Kosakata yang Sensei tambahkan akan muncul acak dalam permainan.
+        </div>
+      </div>
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">

@@ -11,28 +11,37 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/materi.css" />
   <style>
+    /* Styling Khusus Guru Master Dashboard - Harmonized Warm Japanese Theme */
     :root {
-      --guru-bg: #F8FAFC;
+      --guru-bg: #FAF6F0;
+      --guru-card: #FFFFFF;
+      --guru-border: #E8DFD5;
+      --guru-border-soft: #F2ECE3;
+      --guru-primary: #BA5444;
+      --guru-primary-hover: #A34536;
+      --guru-indigo: #3E6B89;
+      --guru-indigo-light: #EFF4F8;
+      --guru-matcha: #437856;
+      --guru-matcha-light: #F0F6F2;
+      --guru-amber: #BA7635;
+      --guru-amber-light: #FDF5ED;
+      --guru-purple: #74567A;
+      --guru-purple-light: #F7F1F8;
+      --guru-text: #2D2520;
+      --guru-text-soft: #786C62;
+      --guru-text-muted: #A3978B;
       --card-white: #FFFFFF;
-      --red: #BA3D27;
-      --red-dark: #9A2E1A;
-      --blue: #2563EB;
-      --blue-pale: #EFF6FF;
-      --radius-pill: 9999px;
-    }
-    * {
-      box-sizing: border-box;
     }
     body {
       background: var(--guru-bg);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      color: #0F172A;
+      color: var(--guru-text);
       margin: 0;
       padding: 0;
     }
     .guru-navbar {
       background: #FFFFFF;
-      border-bottom: 2px solid #E2E8F0;
+      border-bottom: 2px solid var(--guru-border);
       padding: 0.85rem 2rem;
       display: flex;
       align-items: center;
@@ -40,12 +49,15 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
     .guru-nav-left {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
     .guru-brand-wrap {
       display: inline-flex;
@@ -61,13 +73,13 @@
     .guru-brand-text {
       font-weight: 900;
       font-size: 1.25rem;
-      color: #0F172A;
+      color: var(--guru-text);
       letter-spacing: -0.5px;
     }
     .badge-master-guru {
-      background: #FEF2F2;
-      color: var(--red);
-      border: 1.5px solid #FCA5A5;
+      background: #FAF1EE;
+      color: var(--guru-primary);
+      border: 1.5px solid #F1D6CF;
       font-size: 0.74rem;
       font-weight: 800;
       padding: 0.35rem 0.85rem;
@@ -79,13 +91,13 @@
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      background: #F1F5F9;
-      color: #1E293B;
-      border: 1.5px solid #CBD5E1;
+      background: #EFF4F8;
+      color: var(--guru-indigo);
+      border: 1.5px solid #D1DFE9;
       padding: 0.45rem 1rem;
       border-radius: var(--radius-pill);
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -93,41 +105,35 @@
     .btn-return-app .svg-icon-mini {
       width: 15px;
       height: 15px;
-      stroke: #334155;
+      stroke: var(--guru-indigo);
       fill: none;
       stroke-width: 2.2;
     }
     .btn-return-app:hover {
-      background: #EFF6FF;
-      color: #1D4ED8;
-      border-color: #93C5FD;
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+      border-color: var(--guru-indigo);
     }
     .btn-return-app:hover .svg-icon-mini {
-      stroke: #1D4ED8;
+      stroke: #FFFFFF;
     }
     .guru-profile-bar {
       display: flex;
       align-items: center;
       gap: 0.85rem;
+      order: 3;
+      margin-left: auto;
     }
     .guru-avatar-circle {
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: #FEE2E2;
-      border: 2px solid var(--red);
+      background: #FAF1EE;
+      border: 2px solid var(--guru-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--red);
-      overflow: hidden;
-    }
-    .guru-avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      font-size: 1.4rem;
     }
     .guru-info-text {
       display: flex;
@@ -137,51 +143,208 @@
     .guru-name {
       font-weight: 800;
       font-size: 0.95rem;
+      color: var(--guru-text);
     }
     .guru-role-sub {
       font-size: 0.72rem;
-      color: var(--red);
+      color: var(--guru-primary);
       font-weight: 700;
-    }
-    .btn-logout-top {
-      background: transparent;
-      border: 1.5px solid #E2E8F0;
-      color: #64748B;
-      padding: 0.4rem 0.9rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .btn-logout-top:hover {
-      border-color: #DC2626;
-      color: #DC2626;
-      background: #FEF2F2;
     }
 
-    .guru-main-container {
-      max-width: 1240px;
-      margin: 2rem auto;
+    /* Layout Konten */
+    .guru-container {
+      max-width: 1200px;
+      margin: 1.8rem auto 4rem;
       padding: 0 1.5rem;
     }
 
-    /* KPI Summary Cards */
-    .kpi-summary-grid {
+    /* Banner Panduan Utama Guru */
+    .guru-welcome-card {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FAF1EE 100%);
+      border: 1.5px solid var(--guru-border);
+      border-radius: 20px;
+      padding: 1.6rem 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+    }
+    .welcome-left {
+      max-width: 780px;
+    }
+    .welcome-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--guru-primary);
+      margin-bottom: 0.5rem;
+    }
+    .welcome-pill {
+      background: #FFFFFF;
+      border: 1px solid #F1D6CF;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      color: var(--guru-primary);
+    }
+    .welcome-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--guru-text);
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.02em;
+    }
+    .welcome-desc {
+      font-size: 0.92rem;
+      color: var(--guru-text-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .btn-hero-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius-pill);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(62, 107, 137, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-hero-preview:hover {
+      background: #2E5169;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(62, 107, 137, 0.35);
+    }
+
+    /* Peta Alur Kerja Kurikulum Master */
+    .guru-workflow-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 18px;
+      padding: 1.3rem 1.6rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.03);
+    }
+    .workflow-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--guru-border-soft);
+    }
+    .workflow-tag {
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--guru-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .workflow-title-wrap h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--guru-text);
+      margin: 0;
+    }
+    .workflow-hint {
+      font-size: 0.8rem;
+      color: var(--guru-text-soft);
+      font-weight: 600;
+    }
+    .workflow-steps-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .workflow-step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--guru-bg);
+      border: 1.5px solid var(--guru-border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+      min-width: 170px;
+    }
+    .workflow-step-item:hover {
+      background: #FFFFFF;
+      border-color: var(--guru-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(186, 84, 68, 0.12);
+    }
+    .step-num-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--guru-primary);
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content {
+      line-height: 1.25;
+    }
+    .step-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--guru-text);
+    }
+    .step-desc {
+      font-size: 0.72rem;
+      color: var(--guru-text-soft);
+      margin-top: 2px;
+    }
+    .workflow-separator {
+      color: var(--guru-text-muted);
+      font-size: 1.1rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* KPI Stat Cards (Warna-Warni Hangat Washi) */
+    .guru-kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 1.2rem;
       margin-bottom: 2rem;
     }
     .kpi-card {
       background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
       border-radius: 18px;
-      padding: 1.3rem;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+      padding: 1.3rem 1.4rem;
+      border: 1.5px solid var(--guru-border);
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.04);
       position: relative;
       overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(45, 37, 32, 0.08);
     }
     .kpi-card::before {
       content: '';
@@ -191,28 +354,28 @@
       right: 0;
       height: 4px;
     }
-    .kpi-red::before { background: var(--red); }
-    .kpi-blue::before { background: #2563EB; }
-    .kpi-yellow::before { background: #D97706; }
-    .kpi-green::before { background: #059669; }
-    .kpi-purple::before { background: #7C3AED; }
+    .kpi-red::before { background: var(--guru-primary); }
+    .kpi-blue::before { background: var(--guru-indigo); }
+    .kpi-yellow::before { background: var(--guru-amber); }
+    .kpi-green::before { background: var(--guru-matcha); }
+    .kpi-purple::before { background: var(--guru-purple); }
 
     .kpi-label {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 800;
+      color: var(--guru-text-soft);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #64748B;
     }
     .kpi-value {
       font-size: 2.1rem;
       font-weight: 900;
-      color: #0F172A;
+      color: var(--guru-text);
       margin: 0.35rem 0 0.2rem;
     }
     .kpi-sub {
       font-size: 0.78rem;
-      color: #94A3B8;
+      color: var(--guru-text-muted);
       font-weight: 600;
     }
 
@@ -223,31 +386,54 @@
       gap: 0.6rem;
       background: #FFFFFF;
       padding: 0.6rem;
-      border-radius: 16px;
-      border: 1.5px solid #E2E8F0;
+      border-radius: 18px;
+      border: 1.5px solid var(--guru-border);
       margin-bottom: 1.8rem;
       overflow-x: auto;
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.04);
     }
     .guru-tab-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.2rem;
+      gap: 0.55rem;
+      padding: 0.7rem 1.15rem;
       border-radius: 12px;
-      border: none;
+      border: 1.5px solid transparent;
       background: transparent;
-      color: #475569;
-      font-weight: 700;
-      font-size: 0.9rem;
+      color: var(--guru-text-soft);
+      font-weight: 800;
+      font-size: 0.88rem;
       cursor: pointer;
       transition: all 0.2s ease;
       white-space: nowrap;
     }
-    .guru-tab-btn.active {
-      background: var(--red);
-      color: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(186, 61, 39, 0.25);
+    .guru-tab-btn:hover {
+      background: var(--guru-bg);
+      color: var(--guru-text);
+      border-color: var(--guru-border);
     }
+    .guru-tab-btn.active {
+      background: var(--guru-primary);
+      color: #FFFFFF;
+      border-color: var(--guru-primary);
+      box-shadow: 0 4px 14px rgba(186, 84, 68, 0.25);
+    }
+    .tab-emoji {
+      font-size: 1rem;
+    }
+    .tab-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      color: currentColor;
+    }
+    .guru-tab-btn.active .tab-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
     .guru-tab-content {
       display: none;
     }
@@ -255,13 +441,59 @@
       display: block;
     }
 
+    /* Callout Panduan Letak di Tiap Tab */
+    .guru-guide-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.95rem 1.25rem;
+      border-radius: 14px;
+      margin-bottom: 1.4rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .callout-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .callout-body strong {
+      font-weight: 800;
+    }
+    .callout-blue {
+      background: #EFF4F8;
+      border: 1.5px solid #D1DFE9;
+      color: #264A62;
+    }
+    .callout-orange {
+      background: #FAF1EE;
+      border: 1.5px solid #F1D6CF;
+      color: #7A3428;
+    }
+    .callout-yellow {
+      background: #FDF5ED;
+      border: 1.5px solid #F3E0CC;
+      color: #78491E;
+    }
+    .callout-green {
+      background: #F0F6F2;
+      border: 1.5px solid #D0E4D7;
+      color: #274D35;
+    }
+    .callout-purple {
+      background: #F7F1F8;
+      border: 1.5px solid #E5D6E8;
+      color: #4D3352;
+    }
+
     /* Box Card Standard */
     .master-card {
       background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      border-radius: 18px;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 20px;
       padding: 1.8rem;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 16px rgba(45, 37, 32, 0.04);
       margin-bottom: 1.8rem;
     }
     .master-card-header {
@@ -270,56 +502,66 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
       padding-bottom: 1rem;
-      border-bottom: 1.5px solid #F1F5F9;
+      border-bottom: 1.5px solid var(--guru-border-soft);
     }
     .master-card-title h3 {
       font-size: 1.35rem;
-      font-weight: 800;
-      margin: 0 0 0.2rem;
-      color: #0F172A;
+      font-weight: 900;
+      margin: 0 0 0.3rem;
+      color: var(--guru-text);
+      letter-spacing: -0.01em;
     }
     .master-card-title p {
       margin: 0;
-      color: #64748B;
+      color: var(--guru-text-soft);
       font-size: 0.88rem;
+      line-height: 1.5;
     }
 
     /* Action Buttons */
     .btn-guru-primary {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      background: var(--red);
+      gap: 0.5rem;
+      background: var(--guru-primary);
       color: #FFFFFF;
       border: none;
-      padding: 0.6rem 1.25rem;
+      padding: 0.6rem 1.3rem;
       border-radius: var(--radius-pill);
       font-weight: 800;
       font-size: 0.88rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(186, 61, 39, 0.25);
+      box-shadow: 0 3px 10px rgba(186, 84, 68, 0.25);
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .btn-guru-primary:hover {
-      background: var(--red-dark);
+      background: var(--guru-primary-hover);
       transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(186, 84, 68, 0.35);
     }
 
     .btn-preset {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      background: #F8FAFC;
-      border: 1.5px solid #CBD5E1;
-      padding: 0.45rem 0.95rem;
+      gap: 0.4rem;
+      background: #FFFFFF;
+      color: var(--guru-text);
+      border: 1.5px solid var(--guru-border);
+      padding: 0.55rem 1rem;
       border-radius: var(--radius-pill);
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      color: #1E293B;
       cursor: pointer;
       transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-preset:hover {
+      background: var(--guru-bg);
+      border-color: var(--guru-text-soft);
+      transform: translateY(-1px);
     }
     .btn-preset:hover {
       border-color: var(--blue);
@@ -355,53 +597,560 @@
       margin-bottom: 0.8rem;
     }
     .level-code-badge {
-      font-size: 0.82rem;
-      font-weight: 900;
-      background: #0F172A;
+      background: var(--lvl-accent, #CBD5E1);
       color: #FFFFFF;
-      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 900;
+      padding: 0.3rem 0.75rem;
       border-radius: var(--radius-pill);
-      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
     .level-status-pill {
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 0.2rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
       border-radius: var(--radius-pill);
     }
-    .status-active {
-      background: #ECFDF5;
-      color: #065F46;
-      border: 1px solid #A7F3D0;
-    }
+    .status-active { background: #ECFDF5; color: #065F46; }
+    .status-inactive { background: #F1F5F9; color: #64748B; }
+
     .level-name-h4 {
       font-size: 1.25rem;
       font-weight: 800;
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.2rem;
       color: #0F172A;
     }
     .level-sub-desc {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: #64748B;
-      line-height: 1.4;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
     .level-meta-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 0.8rem;
-      border-top: 1.5px solid #F1F5F9;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #475569;
+      border-top: 1.5px dashed #E2E8F0;
+      padding-top: 0.8rem;
+      margin-top: 0.8rem;
     }
+
+    /* Tabel Manajemen */
     .guru-table-wrap {
-      overflow-x: visible !important;
-      border: none !important;
-      background: transparent !important;
-      width: 100% !important;
+      overflow-x: auto;
     }
+    .guru-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .guru-table th {
+      background: #F8FAFC;
+      color: #475569;
+      font-weight: 800;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      padding: 0.85rem 1rem;
+      border-bottom: 2px solid #E2E8F0;
+    }
+    .guru-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.9rem;
+      color: #1E293B;
+      vertical-align: middle;
+    }
+    .guru-table tr:hover td {
+      background: #F8FAFC;
+    }
+
+    /* Modal Form */
+    .guru-modal-backdrop,
+    #modal-edit-guru-profile,
+    #modal-profile-success {
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      background: rgba(15, 23, 42, 0.65) !important;
+      backdrop-filter: blur(5px) !important;
+      -webkit-backdrop-filter: blur(5px) !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      z-index: 99999 !important;
+      padding: 1rem !important;
+      box-sizing: border-box !important;
+    }
+    .guru-modal-backdrop.show,
+    #modal-edit-guru-profile.show,
+    #modal-profile-success.show {
+      display: flex !important;
+    }
+    .guru-modal-box,
+    #modal-edit-guru-profile .guru-modal-box,
+    #modal-profile-success .guru-modal-box {
+      background: #FFFFFF !important;
+      border-radius: 20px !important;
+      width: 100% !important;
+      max-width: 560px !important;
+      max-height: 90vh !important;
+      max-height: 90dvh !important;
+      overflow-y: auto !important;
+      padding: 2rem !important;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.35) !important;
+      position: relative !important;
+      margin: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+    .guru-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1.5px solid #E2E8F0;
+    }
+    .guru-modal-header h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0F172A;
+    }
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #94A3B8;
+      transition: color 0.2s;
+    }
+    .btn-close-modal:hover { color: #0F172A; }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.4rem;
+    }
+    .form-control {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.65rem 0.95rem;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    select.form-control {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #FFFFFF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat !important;
+      background-position: right 0.85rem center !important;
+      background-size: 15px 15px !important;
+      padding-right: 2.5rem !important;
+      cursor: pointer;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    select.form-control:focus {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat !important;
+      background-position: right 0.85rem center !important;
+      background-size: 15px 15px !important;
+    }
+    .modal-btn-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 1.8rem;
+      padding-top: 1rem;
+      border-top: 1.5px solid #E2E8F0;
+    }
+    .btn-cancel {
+      background: #F1F5F9;
+      border: 1.5px solid #CBD5E1;
+      color: #475569;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Styling Pilihan Ganda & Bank Soal */
+    .opt-row-box {
+      transition: all 0.2s ease;
+    }
+    .opt-row-box:focus-within {
+      border-color: #3B82F6 !important;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    }
+    .opt-row-box.is-correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+    }
+    .quest-admin-item {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 1.3rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    }
+    .quest-admin-item:hover {
+      border-color: #CBD5E1;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    }
+    .quest-thumb-preview {
+      width: 140px;
+      height: 90px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid #CBD5E1;
+      background: #F8FAFC;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .quest-thumb-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .quest-thumb-preview:hover img {
+      transform: scale(1.05);
+    }
+    .badge-has-img {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid #BFDBFE;
+    }
+    .badge-no-img {
+      background: #F1F5F9;
+      color: #64748B;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid #E2E8F0;
+    }
+    /* Responsive Toolbar Components for Tables & Cards */
+    .master-toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: #F8FAFC;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 1.2rem;
+    }
+    .toolbar-search-box {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+    .toolbar-search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #64748B;
+    }
+    .toolbar-search-box input {
+      padding-left: 34px !important;
+    }
+    .toolbar-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .toolbar-filter-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+      white-space: nowrap;
+      margin: 0;
+    }
+    .toolbar-filter-group select {
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 10px;
+      border: 1.5px solid #CBD5E1;
+      background: #FFFFFF;
+      color: #0F172A;
+    }
+    .toolbar-count-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #2563EB;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    /* ===== RESPONSIVE MEDIA QUERIES (FULL MOBILE & TABLET ADAPTATION) ===== */
+    @media (max-width: 900px) {
+      .guru-navbar {
+        padding: 0.85rem 1.2rem;
+      }
+      .guru-container {
+        padding: 0 1rem;
+        margin: 1.2rem auto 3rem;
+      }
+      .guru-kpi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .guru-navbar {
+        display: grid !important;
+        grid-template-columns: auto 1fr !important;
+        grid-template-rows: auto auto !important;
+        row-gap: 0.65rem !important;
+        column-gap: 0.6rem !important;
+        padding: 0.65rem 0.85rem !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+      }
+      .guru-nav-left {
+        display: contents !important;
+      }
+      .guru-brand-wrap {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        align-self: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.4rem !important;
+      }
+      .guru-brand-text {
+        font-size: 1.15rem !important;
+      }
+      .svg-crest-mini {
+        width: 22px !important;
+        height: 22px !important;
+      }
+      .guru-profile-bar {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        justify-self: end !important;
+        align-self: center !important;
+        gap: 0.45rem !important;
+        margin-left: auto !important;
+        width: auto !important;
+      }
+      .guru-avatar-circle {
+        width: 34px !important;
+        height: 34px !important;
+        flex-shrink: 0 !important;
+      }
+      .guru-info-text {
+        max-width: none !important;
+        overflow: visible !important;
+      }
+      .guru-name {
+        font-size: 0.88rem !important;
+        font-weight: 800 !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 3px !important;
+      }
+      .guru-role-sub {
+        display: none !important;
+      }
+      .guru-profile-bar form {
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+      }
+      .guru-profile-bar form button {
+        padding: 0.3rem 0.65rem !important;
+        font-size: 0.74rem !important;
+        border-radius: var(--radius-pill) !important;
+      }
+      .badge-master-guru {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        justify-self: start !important;
+        align-self: center !important;
+        font-size: 0.68rem !important;
+        padding: 0.28rem 0.6rem !important;
+        white-space: nowrap !important;
+        letter-spacing: 0.2px !important;
+      }
+      .btn-return-app {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        justify-self: end !important;
+        align-self: center !important;
+        font-size: 0.76rem !important;
+        padding: 0.32rem 0.75rem !important;
+        white-space: nowrap !important;
+        gap: 0.35rem !important;
+      }
+      .btn-return-app .svg-icon-mini {
+        width: 13px !important;
+        height: 13px !important;
+      }
+      .guru-container {
+        padding: 0 0.75rem;
+        margin: 1rem auto 2.5rem;
+      }
+      .guru-kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem;
+        margin-bottom: 1.2rem;
+      }
+      .kpi-card {
+        padding: 0.9rem 0.8rem;
+        border-radius: 14px;
+      }
+      .kpi-card:last-child {
+        grid-column: span 2;
+      }
+      .kpi-label {
+        font-size: 0.72rem;
+      }
+      .kpi-value {
+        font-size: 1.55rem;
+      }
+      .kpi-sub {
+        font-size: 0.7rem;
+      }
+      .guru-tabs-nav {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.45rem !important;
+        padding: 0.5rem !important;
+        background: #FFFFFF !important;
+        border-radius: 16px !important;
+        border: 1.5px solid #E2E8F0 !important;
+        margin-bottom: 1.2rem !important;
+        overflow-x: visible !important;
+      }
+      .guru-tab-btn {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 0.65rem 0.5rem !important;
+        font-size: 0.82rem !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        flex-shrink: 0 !important;
+        background: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
+        color: #475569 !important;
+        box-shadow: none !important;
+      }
+      .guru-tab-btn.active {
+        background: var(--red) !important;
+        color: #FFFFFF !important;
+        border-color: var(--red) !important;
+        box-shadow: 0 4px 12px rgba(217, 56, 58, 0.25) !important;
+      }
+      .guru-tab-btn:last-child {
+        grid-column: span 2 !important;
+      }
+      .master-card {
+        padding: 1.15rem 0.9rem;
+        border-radius: 16px;
+        margin-bottom: 1.2rem;
+      }
+      .master-card-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+      }
+      .master-card-title h3 {
+        font-size: 1.15rem;
+      }
+      .master-card-title p {
+        font-size: 0.8rem;
+      }
+      .master-card-header > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .btn-guru-primary,
+      .btn-preset {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .master-toolbar-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+        padding: 10px;
+      }
+      .toolbar-search-box {
+        width: 100%;
+        min-width: 100%;
+      }
+      .toolbar-filter-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .toolbar-filter-group select {
+        flex: 1;
+      }
+      /* ===== RESPONSIVE MOBILE DATA CARDS (NO CUTOFFS) ===== */
+      .guru-table-wrap,
+      .admin-table-wrap {
+        overflow-x: visible !important;
+        border: none !important;
+        background: transparent !important;
+        width: 100% !important;
+      }
       .guru-table {
         min-width: 100% !important;
         width: 100% !important;
@@ -649,7 +1398,48 @@
         border-radius: 8px !important;
       }
 
-      /* Quest Item Action Bar on Mobile */
+      .levels-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem !important;
+      }
+      .admin-games-selector {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      .admin-game-chip {
+        padding: 0.5rem 0.85rem !important;
+        font-size: 0.8rem !important;
+        border-radius: 10px !important;
+        flex: 1 !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+      .admin-settings-card {
+        padding: 1rem 0.85rem !important;
+        border-radius: 14px !important;
+      }
+      .admin-card-head {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.8rem !important;
+      }
+      .admin-soal-toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+      }
+      .admin-soal-filter-pills {
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 4px !important;
+        scrollbar-width: none !important;
+      }
+      .admin-soal-filter-pills::-webkit-scrollbar {
+        display: none !important;
+      }
       .quest-admin-item {
         padding: 1rem 0.85rem !important;
       }
@@ -670,16 +1460,6 @@
         text-align: center !important;
         padding: 0.45rem 0.65rem !important;
       }
-
-      /* Kotak Level Cards on Mobile */
-      .levels-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.85rem !important;
-      }
-      .level-admin-card {
-        padding: 1rem 0.85rem !important;
-      }
-
       /* Modals on Mobile - Pop-up Tengah */
       .guru-modal-backdrop {
         padding: 1rem !important;
@@ -699,41 +1479,14 @@
         box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4) !important;
       }
       .modal-btn-row {
-        flex-direction: column-reverse !important;
-        gap: 0.5rem !important;
+        flex-direction: column-reverse;
+        gap: 0.5rem;
       }
       .modal-btn-row button,
       .modal-btn-row a {
-        width: 100% !important;
-        justify-content: center !important;
-        text-align: center !important;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .guru-navbar {
-        padding: 0.55rem 0.65rem !important;
-        row-gap: 0.5rem !important;
-        column-gap: 0.4rem !important;
-      }
-      .guru-brand-text {
-        font-size: 1.05rem !important;
-      }
-      .badge-master-guru {
-        font-size: 0.64rem !important;
-        padding: 0.22rem 0.45rem !important;
-      }
-      .btn-return-app {
-        font-size: 0.72rem !important;
-        padding: 0.28rem 0.55rem !important;
-      }
-      .guru-name {
-        max-width: 60px !important;
-        font-size: 0.75rem !important;
-      }
-      .btn-logout-top {
-        padding: 0.25rem 0.5rem !important;
-        font-size: 0.7rem !important;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
       }
     }
     /* OVERRIDE MUTLAK: POPUP EDIT PROFIL GURU & SUKSES WAJIB DI TENGAH LAYAR */
@@ -770,30 +1523,6 @@
       transform: none !important;
       align-self: center !important;
       border-radius: 20px !important;
-    }
-
-    /* Custom Styled Select Dropdown (Zero Ugly Browser Default Chevron) */
-    select.form-control,
-    .guru-filter-bar select,
-    .guru-modal-box select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-color: #FFFFFF;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat !important;
-      background-position: right 0.85rem center !important;
-      background-size: 15px 15px !important;
-      padding-right: 2.5rem !important;
-      cursor: pointer;
-    }
-    select.form-control:focus,
-    .guru-filter-bar select:focus,
-    .guru-modal-box select:focus {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat !important;
-      background-position: right 0.85rem center !important;
-      background-size: 15px 15px !important;
     }
   </style>
 </head>
@@ -866,23 +1595,30 @@
 
     <!-- TAB NAVIGASI UTAMA -->
     <div class="guru-tabs-nav">
-      <button class="guru-tab-btn" onclick="switchGuruTab('levels')">
-        <span>Kotak Level Materi</span>
+      <button class="guru-tab-btn active" data-tab="levels" onclick="switchGuruTab('levels', this)">
+        <span class="tab-emoji">📚</span>
+        <span class="tab-text">1. Tingkat Level</span>
+        <span class="tab-badge">2 Level</span>
       </button>
-      <button class="guru-tab-btn active" onclick="switchGuruTab('lessons')">
-        <span>Modul Pelajaran</span>
+      <button class="guru-tab-btn" data-tab="lessons" onclick="switchGuruTab('lessons', this)">
+        <span class="tab-emoji">📖</span>
+        <span class="tab-text">2. Modul Pelajaran</span>
+        <span class="tab-badge" id="tab-badge-lessons">8 Modul</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('quests')">
-        <span>Bank Soal &amp; Kuis</span>
+      <button class="guru-tab-btn" data-tab="quests" onclick="switchGuruTab('quests', this)">
+        <span class="tab-emoji">✍️</span>
+        <span class="tab-text">3. Bank Soal Quest</span>
+        <span class="tab-badge" id="tab-badge-quests">23 Soal</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('students')">
-        <span>Pantauan Siswa &amp; Nilai</span>
+      <button class="guru-tab-btn" data-tab="minigames" onclick="switchGuruTab('minigames', this)">
+        <span class="tab-emoji">🎮</span>
+        <span class="tab-text">4. Kelola Mini Games</span>
+        <span class="tab-badge">6 Game</span>
       </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('minigames')">
-        <span>Kelola Mini Games &amp; Bank Soal</span>
-      </button>
-      <button class="guru-tab-btn" onclick="switchGuruTab('japan-cities')">
-        <span>Kota Jepang &amp; 3 Aksara</span>
+      <button class="guru-tab-btn" data-tab="students" onclick="switchGuruTab('students', this)">
+        <span class="tab-emoji">📊</span>
+        <span class="tab-text">5. Pantauan Nilai &amp; Siswa</span>
+        <span class="tab-badge" id="tab-badge-students">2 Siswa</span>
       </button>
     </div>
 
