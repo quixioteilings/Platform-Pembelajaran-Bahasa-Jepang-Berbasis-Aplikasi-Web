@@ -441,51 +441,314 @@
       display: block;
     }
 
-    /* Callout Panduan Letak di Tiap Tab */
-    .guru-guide-callout {
+    
+    /* Visual Blueprint Letak Layar Siswa (Tanpa Icon/Emoji) */
+    .guru-live-blueprint {
+      background: #FFFFFF;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.6rem;
+      box-shadow: 0 4px 14px rgba(45, 37, 32, 0.03);
+    }
+    .blueprint-header {
       display: flex;
-      align-items: flex-start;
-      gap: 0.85rem;
-      padding: 0.95rem 1.25rem;
-      border-radius: 14px;
-      margin-bottom: 1.4rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .blueprint-badge {
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: var(--guru-primary);
+      text-transform: uppercase;
+      background: #FAF1EE;
+      border: 1px solid #F1D6CF;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .blueprint-sub {
+      font-size: 0.82rem;
+      color: var(--guru-text-soft);
+      font-weight: 600;
+    }
+    .blueprint-screen {
+      background: var(--guru-bg);
+      border: 1.5px solid var(--guru-border);
+      border-radius: 12px;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    .screen-navbar-mock {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      background: #FFFFFF;
+      padding: 0.55rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--guru-border);
+      margin-bottom: 0.85rem;
+    }
+    .mock-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--guru-primary);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .mock-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--guru-text);
+    }
+    .mock-btn-link {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--guru-indigo);
+      text-decoration: none;
+      border: 1px solid #D1DFE9;
+      background: #EFF4F8;
+      padding: 3px 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .mock-btn-link:hover {
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+    }
+    .pointer-tag {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--guru-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+    .mock-tabs-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .mock-level-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1px solid var(--guru-border);
+      color: var(--guru-text);
+    }
+    .mock-level-pill.active-pill {
+      background: var(--guru-primary);
+      color: #FFFFFF;
+      border-color: var(--guru-primary);
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(186, 84, 68, 0.25);
+    }
+    .mock-level-pill-ghost {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      background: transparent;
+      border: 1px dashed var(--guru-border);
+      color: var(--guru-text-soft);
+    }
+    .mock-cards-wireframe {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+    }
+    .wire-card {
+      background: #FFFFFF;
+      border: 1px solid var(--guru-border);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+    }
+    .wire-title {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--guru-text);
+      margin-bottom: 2px;
+    }
+    .wire-sub {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--guru-text-soft);
+    }
+
+    /* Lesson Card Blueprint */
+    .mock-lesson-card-preview {
+      background: #FFFFFF;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+    }
+    .mock-lcard-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+    .mock-lcard-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: #FAF1EE;
+      color: var(--guru-primary);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .mock-lcard-status {
+      font-size: 0.72rem;
+      color: var(--guru-text-soft);
+      font-weight: 600;
+    }
+    .mock-lcard-body strong {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--guru-text);
+      margin-bottom: 3px;
+    }
+    .mock-lcard-body p {
+      font-size: 0.8rem;
+      color: var(--guru-text-soft);
+      margin: 0 0 0.7rem;
+      line-height: 1.4;
+    }
+    .mock-steps-mini-bar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .s-dot {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      background: #F2ECE3;
+      color: var(--guru-text-soft);
+      border-radius: 4px;
+    }
+    .s-dot.active {
+      background: var(--guru-indigo);
+      color: #FFFFFF;
+    }
+    .s-dot.quest-step {
+      background: #FDF5ED;
+      color: var(--guru-amber);
+      border: 1px solid #F3E0CC;
+    }
+
+    /* Quest Blueprint */
+    .mock-quest-box {
+      background: #FFFFFF;
+      border: 1.5px solid var(--guru-border);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+    }
+    .mock-q-header {
       font-size: 0.88rem;
-      line-height: 1.55;
+      font-weight: 800;
+      color: var(--guru-text);
+      margin-bottom: 0.65rem;
     }
-    .callout-icon {
-      font-size: 1.25rem;
-      line-height: 1;
-      flex-shrink: 0;
-      margin-top: 2px;
+    .mock-q-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
     }
-    .callout-body strong {
+    .mock-opt {
+      font-size: 0.8rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      background: var(--guru-bg);
+      border: 1px solid var(--guru-border);
+      color: var(--guru-text);
+    }
+    .mock-opt.correct-opt {
+      background: #F0F6F2;
+      border-color: #D0E4D7;
+      color: #274D35;
       font-weight: 800;
     }
-    .callout-blue {
+    .mock-q-footer {
+      font-size: 0.76rem;
+      color: var(--guru-text-soft);
+      font-style: italic;
+    }
+
+    /* Flow Evaluation Blueprint */
+    .mock-flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .flow-box {
+      flex: 1;
+      min-width: 160px;
+      background: #FFFFFF;
+      border: 1px solid var(--guru-border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+    }
+    .flow-box.highlight-flow {
+      border-color: #D1DFE9;
       background: #EFF4F8;
-      border: 1.5px solid #D1DFE9;
-      color: #264A62;
     }
-    .callout-orange {
-      background: #FAF1EE;
-      border: 1.5px solid #F1D6CF;
-      color: #7A3428;
+    .flow-num {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--guru-primary);
+      margin-bottom: 2px;
     }
-    .callout-yellow {
-      background: #FDF5ED;
-      border: 1.5px solid #F3E0CC;
-      color: #78491E;
+    .flow-box strong {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--guru-text);
+      margin-bottom: 2px;
     }
-    .callout-green {
-      background: #F0F6F2;
-      border: 1.5px solid #D0E4D7;
-      color: #274D35;
+    .flow-desc {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--guru-text-soft);
     }
-    .callout-purple {
-      background: #F7F1F8;
-      border: 1.5px solid #E5D6E8;
-      color: #4D3352;
+    .flow-connector {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--guru-text-muted);
     }
+
+    /* Games Blueprint */
+    .mock-games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.5rem;
+    }
+    .mock-game-chip {
+      background: #FFFFFF;
+      border: 1px solid var(--guru-border);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--guru-text);
+      text-align: center;
+    }
+
+    
 
     /* Box Card Standard */
     .master-card {
@@ -1542,7 +1805,7 @@
       </div>
       <span class="badge-master-guru">DASHBOARD GURU MASTER</span>
       <a href="{{ route('home') }}" target="_blank" class="btn-return-app" title="Buka pratinjau tampilan murid di tab baru">
-        <span>👁️ Pratinjau Layar Siswa &nearr;</span>
+        <span>Pratinjau Layar Siswa ↗</span>
       </a>
       <a href="{{ route('home') }}" class="btn-preset" title="Kembali ke Beranda Siswa" onclick="try{sessionStorage.setItem('sijapanese_active_page','home');sessionStorage.removeItem('sijapanese_active_lesson_id');sessionStorage.removeItem('sijapanese_active_step');}catch(e){}">
         <span>Kembali ke Beranda</span>
@@ -1617,14 +1880,14 @@
           <span class="badge-dot"></span>
           <span>Pusat Kendali Kurikulum &amp; Pantauan Belajar Siswa</span>
         </div>
-        <h2 class="welcome-title">Selamat datang di Panel Master Guru, {{ auth()->user()->name }} Sensei! 🌸</h2>
+        <h2 class="welcome-title">Selamat datang di Panel Master Guru, {{ auth()->user()->name }} Sensei</h2>
         <p class="welcome-desc">
           Panel ini dirancang berurutan sesuai alur mengajar bahasa Jepang: mulai dari mengatur tingkat level (N5 &bull; N4), membuat modul komik cerita, menyusun bank soal quest, mengelola kosakata mini games, hingga memantau rekap nilai siswa secara otomatis.
         </p>
       </div>
       <div class="welcome-right">
         <a href="{{ route('home') }}" target="_blank" class="btn-guru-primary" style="text-decoration:none;">
-          <span>👁️ Buka Layar Siswa &nearr;</span>
+          <span>Buka Layar Siswa ↗</span>
         </a>
       </div>
     </div>
@@ -1658,84 +1921,27 @@
       </div>
     </section>
 
-    <!-- PETA ALUR KERJA MASTER (AGAR GURU MUDAH MEMAHAMI LETAK PENGATURAN) -->
-    <div class="guru-workflow-card">
-      <div class="workflow-header">
-        <div class="workflow-title">
-          <span>🗺️</span>
-          <span>Panduan Cepat: Urutan Pengaturan Materi &amp; Evaluasi Kelas</span>
-        </div>
-        <span class="workflow-hint">Klik langkah di bawah untuk langsung menuju tab pengaturan yang sesuai</span>
-      </div>
-      <div class="workflow-steps">
-        <div class="workflow-step-pill" onclick="switchGuruTab('levels')">
-          <span class="step-num">1</span>
-          <div class="step-body">
-            <span class="step-label">Tingkat Level</span>
-            <span class="step-sub">N5 &bull; N4 &bull; Kustom</span>
-          </div>
-        </div>
-        <span class="workflow-arrow">&rarr;</span>
-        <div class="workflow-step-pill" onclick="switchGuruTab('lessons')">
-          <span class="step-num">2</span>
-          <div class="step-body">
-            <span class="step-label">Modul &amp; Komik</span>
-            <span class="step-sub">Bab, cerita &amp; dialog</span>
-          </div>
-        </div>
-        <span class="workflow-arrow">&rarr;</span>
-        <div class="workflow-step-pill" onclick="switchGuruTab('quests')">
-          <span class="step-num">3</span>
-          <div class="step-body">
-            <span class="step-label">Bank Soal Quest</span>
-            <span class="step-sub">Kuis langkah evaluasi</span>
-          </div>
-        </div>
-        <span class="workflow-arrow">&rarr;</span>
-        <div class="workflow-step-pill" onclick="switchGuruTab('minigames')">
-          <span class="step-num">4</span>
-          <div class="step-body">
-            <span class="step-label">Mini Games</span>
-            <span class="step-sub">6 game hafalan &amp; kosakata</span>
-          </div>
-        </div>
-        <span class="workflow-arrow">&rarr;</span>
-        <div class="workflow-step-pill" onclick="switchGuruTab('students')">
-          <span class="step-num">5</span>
-          <div class="step-body">
-            <span class="step-label">Pantau Nilai</span>
-            <span class="step-sub">Rekap progres &amp; kuis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- TAB NAVIGASI UTAMA -->
     <div class="guru-tabs-nav">
       <button class="guru-tab-btn active" data-tab="levels" onclick="switchGuruTab('levels', this)">
-        <span class="tab-emoji">📚</span>
-        <span class="tab-text">1. Tingkat Level</span>
-        <span class="tab-badge">{{ $stats['total_levels'] ?? 2 }} Level</span>
+        <span class="tab-text">Tingkat Level</span>
+        <span class="tab-badge">{{ $stats['total_levels'] ?? 2 }}</span>
       </button>
       <button class="guru-tab-btn" data-tab="lessons" onclick="switchGuruTab('lessons', this)">
-        <span class="tab-emoji">📖</span>
-        <span class="tab-text">2. Modul Pelajaran</span>
-        <span class="tab-badge">{{ $stats['total_lessons'] ?? 49 }} Modul</span>
+        <span class="tab-text">Modul Pelajaran</span>
+        <span class="tab-badge">{{ $stats['total_lessons'] ?? 49 }}</span>
       </button>
       <button class="guru-tab-btn" data-tab="quests" onclick="switchGuruTab('quests', this)">
-        <span class="tab-emoji">✍️</span>
-        <span class="tab-text">3. Bank Soal Quest</span>
-        <span class="tab-badge">{{ $stats['total_quests'] ?? 0 }} Soal</span>
+        <span class="tab-text">Bank Soal Quest</span>
+        <span class="tab-badge">{{ $stats['total_quests'] ?? 0 }}</span>
       </button>
       <button class="guru-tab-btn" data-tab="minigames" onclick="switchGuruTab('minigames', this)">
-        <span class="tab-emoji">🎮</span>
-        <span class="tab-text">4. Kelola Mini Games</span>
-        <span class="tab-badge">6 Game</span>
+        <span class="tab-text">Kelola Mini Games</span>
+        <span class="tab-badge">6</span>
       </button>
       <button class="guru-tab-btn" data-tab="students" onclick="switchGuruTab('students', this)">
-        <span class="tab-emoji">📊</span>
-        <span class="tab-text">5. Pantauan Nilai &amp; Siswa</span>
-        <span class="tab-badge">{{ $stats['total_students'] ?? 0 }} Siswa</span>
+        <span class="tab-text">Pantauan Nilai &amp; Siswa</span>
+        <span class="tab-badge">{{ $stats['total_students'] ?? 0 }}</span>
       </button>
     </div>
 
@@ -1743,12 +1949,36 @@
          TAB 1: MANAJEMEN KOTAK LEVEL (N5, N4, N3, N2, N1)
          ============================================== -->
     <div class="guru-tab-content active" id="guru-tab-levels">
-      <div class="guru-guide-callout callout-blue">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Panduan Letak di Layar Murid:</strong> Pengaturan kotak level ini langsung menjadi pilihan tab filter tingkat kemampuan (misal: <em>N5 Dasar</em>, <em>N4 Pemula</em>) di menu <strong>Materi</strong> pada antarmuka murid. Siswa akan memilih level ini sebelum membuka modul-modul di dalamnya.
+            <!-- PRATINJAU VISUAL TATA LETAK DI LAYAR SISWA -->
+      <div class="guru-live-blueprint">
+        <div class="blueprint-header">
+          <span class="blueprint-badge">PRATINJAU TATA LETAK DI LAYAR SISWA</span>
+          <span class="blueprint-sub">Bagian ini menentukan tombol filter level di halaman Materi siswa</span>
+        </div>
+        <div class="blueprint-screen">
+          <div class="screen-navbar-mock">
+            <div>
+              <span class="mock-dot"></span>
+              <span class="mock-title">Menu Materi Pembelajaran Siswa</span>
+            </div>
+            <a href="{{ route('home') }}" target="_blank" class="mock-btn-link">Buka Halaman Siswa ↗</a>
+          </div>
+          <div class="screen-content-mock">
+            <span class="pointer-tag">DATA LEVEL ANDA MUNCUL DI SINI SEBAGAI PILIHAN KELAS:</span>
+            <div class="mock-tabs-row">
+              <div class="mock-level-pill active-pill">N5 Dasar</div>
+              <div class="mock-level-pill">N4 Pemula</div>
+              <div class="mock-level-pill-ghost">+ Level yang Anda tambahkan</div>
+            </div>
+            <div class="mock-cards-wireframe">
+              <div class="wire-card"><span class="wire-title">Modul 1: Aisatsu</span><span class="wire-sub">Di bawah level N5</span></div>
+              <div class="wire-card"><span class="wire-title">Modul 2: Angka &amp; Belanja</span><span class="wire-sub">Di bawah level N5</span></div>
+              <div class="wire-card"><span class="wire-title">Modul 3: Keluarga</span><span class="wire-sub">Di bawah level N5</span></div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -1802,12 +2032,45 @@
          TAB 2: MANAJEMEN MODUL PELAJARAN
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-lessons">
-      <div class="guru-guide-callout callout-orange">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Panduan Letak di Layar Murid:</strong> Modul yang didaftarkan di sini tampil sebagai kartu pelajaran berurutan di menu <strong>Materi</strong> murid. Setiap modul tersusun dari 9 langkah belajar interaktif: cerita komik 4-panel, audio pelafalan asli Jepang, tips Sensei Tanaka, kupas kosakata kalimat, dan evaluasi quest.
+            <!-- PRATINJAU VISUAL TATA LETAK DI LAYAR SISWA -->
+      <div class="guru-live-blueprint">
+        <div class="blueprint-header">
+          <span class="blueprint-badge">PRATINJAU TATA LETAK DI LAYAR SISWA</span>
+          <span class="blueprint-sub">Modul yang Anda buat otomatis menjadi kartu pelajaran berurutan di menu Materi</span>
+        </div>
+        <div class="blueprint-screen">
+          <div class="screen-navbar-mock">
+            <div>
+              <span class="mock-dot"></span>
+              <span class="mock-title">Daftar Modul &amp; 9 Langkah Belajar Siswa</span>
+            </div>
+            <a href="{{ route('home') }}" target="_blank" class="mock-btn-link">Buka Halaman Siswa ↗</a>
+          </div>
+          <div class="screen-content-mock">
+            <span class="pointer-tag">KARTU MODUL YANG DILIHAT DAN DIJALANKAN SISWA:</span>
+            <div class="mock-lesson-card-preview">
+              <div class="mock-lcard-head">
+                <span class="mock-lcard-badge">MODUL 01</span>
+                <span class="mock-lcard-status">9 Langkah Terstruktur</span>
+              </div>
+              <div class="mock-lcard-body">
+                <strong>[Judul Modul Anda]</strong>
+                <p>Cerita komik 4-panel &bull; Audio dialog asli &bull; Penjelasan kalimat &bull; Latihan quest kuis</p>
+              </div>
+              <div class="mock-steps-mini-bar">
+                <span class="s-dot active">1. Mulai</span>
+                <span class="s-dot">2. Komik</span>
+                <span class="s-dot">3. Audio</span>
+                <span class="s-dot">4. Kalimat</span>
+                <span class="s-dot">...</span>
+                <span class="s-dot quest-step">8. Quest</span>
+                <span class="s-dot">9. Selesai</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -1932,12 +2195,36 @@
          TAB 3: BANK SOAL QUEST & KUIS INTERAKTIF
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-quests">
-      <div class="guru-guide-callout callout-yellow">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Panduan Letak di Layar Murid:</strong> Soal quest di bawah ini ditampilkan di <strong>Langkah 8 (Quest Kuis)</strong> pada setiap modul yang dipelajari murid. Murid akan memilih jawaban (A, B, C, D) dan langsung melihat animasi skor perolehan serta pembahasan kuis.
+            <!-- PRATINJAU VISUAL TATA LETAK DI LAYAR SISWA -->
+      <div class="guru-live-blueprint">
+        <div class="blueprint-header">
+          <span class="blueprint-badge">PRATINJAU TATA LETAK DI LAYAR SISWA</span>
+          <span class="blueprint-sub">Soal di bawah ini langsung muncul pada Langkah 8 (Kuis Evaluasi Modul)</span>
+        </div>
+        <div class="blueprint-screen">
+          <div class="screen-navbar-mock">
+            <div>
+              <span class="mock-dot"></span>
+              <span class="mock-title">Langkah 8: Tantangan Quest Kuis Siswa</span>
+            </div>
+            <a href="{{ route('home') }}" target="_blank" class="mock-btn-link">Buka Halaman Siswa ↗</a>
+          </div>
+          <div class="screen-content-mock">
+            <span class="pointer-tag">BENTUK TAMPILAN SOAL DI LAYAR SISWA:</span>
+            <div class="mock-quest-box">
+              <div class="mock-q-header">Pertanyaan: [Pertanyaan Soal yang Anda Masukkan]</div>
+              <div class="mock-q-options">
+                <div class="mock-opt correct-opt">A. [Kunci Jawaban Benar] &bull; Nilai Masuk Otomatis</div>
+                <div class="mock-opt">B. [Pilihan Salah 1]</div>
+                <div class="mock-opt">C. [Pilihan Salah 2]</div>
+                <div class="mock-opt">D. [Pilihan Salah 3]</div>
+              </div>
+              <div class="mock-q-footer">Hasil pilihan siswa langsung dikoreksi sistem dan direkap ke tab Pantauan Nilai</div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -2076,12 +2363,35 @@
          TAB 4: PANTAUAN SISWA & REKAP PENILAIAN LATIHAN
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-students">
-      <div class="guru-guide-callout callout-purple">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Panduan Rekap Nilai &amp; Hasil Evaluasi:</strong> Tabel ini memantau progres belajar setiap murid secara otomatis. Sensei dapat memeriksa rincian berapa soal yang dijawab <strong>Benar</strong> vs <strong>Salah</strong>, nilai skala 0–100, persentase kelulusan, dan status evaluasi tiap siswa.
+            <!-- ALUR REKAPITULASI EVALUASI KELAS -->
+      <div class="guru-live-blueprint">
+        <div class="blueprint-header">
+          <span class="blueprint-badge">ALUR REKAPITULASI EVALUASI KELAS</span>
+          <span class="blueprint-sub">Sistem mencatat jawaban siswa tanpa perlu koreksi manual</span>
+        </div>
+        <div class="blueprint-screen">
+          <div class="mock-flow-row">
+            <div class="flow-box">
+              <span class="flow-num">Tahap 1</span>
+              <strong>Siswa Menyelesaikan Modul</strong>
+              <span class="flow-desc">Murid menjawab soal di Langkah 8</span>
+            </div>
+            <span class="flow-connector">&rarr;</span>
+            <div class="flow-box">
+              <span class="flow-num">Tahap 2</span>
+              <strong>Koreksi Otomatis</strong>
+              <span class="flow-desc">Sistem menghitung Benar / Salah</span>
+            </div>
+            <span class="flow-connector">&rarr;</span>
+            <div class="flow-box highlight-flow">
+              <span class="flow-num">Tahap 3</span>
+              <strong>Rekap Nilai Masuk ke Tabel</strong>
+              <span class="flow-desc">Nilai 0-100 &amp; riwayat tersaji di tabel bawah</span>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
@@ -2376,12 +2686,34 @@
          TAB 5: KELOLA MINI GAMES & BANK SOAL GAME
          ============================================== -->
     <div class="guru-tab-content" id="guru-tab-minigames">
-      <div class="guru-guide-callout callout-green">
-        <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Panduan Letak di Layar Murid:</strong> Pengaturan durasi dan bank soal kosakata di bawah ini dipakai langsung saat siswa bermain di menu <strong>Games</strong> (Kana Blast, Sky Atk Defense, Flash Card, Speed Quiz, Word Builder). Kosakata yang Sensei tambahkan akan muncul acak dalam permainan.
+            <!-- PRATINJAU VISUAL TATA LETAK DI LAYAR SISWA -->
+      <div class="guru-live-blueprint">
+        <div class="blueprint-header">
+          <span class="blueprint-badge">PRATINJAU TATA LETAK DI LAYAR SISWA</span>
+          <span class="blueprint-sub">Bank soal kosakata yang Anda atur otomatis dipakai pada 6 Mini Games</span>
+        </div>
+        <div class="blueprint-screen">
+          <div class="screen-navbar-mock">
+            <div>
+              <span class="mock-dot"></span>
+              <span class="mock-title">Menu Mini Games Edukasi Siswa</span>
+            </div>
+            <a href="{{ route('home') }}" target="_blank" class="mock-btn-link">Buka Menu Games ↗</a>
+          </div>
+          <div class="screen-content-mock">
+            <span class="pointer-tag">6 MODE GAME YANG MENGGUNAKAN BANK KOSAKATA INI:</span>
+            <div class="mock-games-grid">
+              <div class="mock-game-chip">Kana Blast</div>
+              <div class="mock-game-chip">Sky Atk Defense</div>
+              <div class="mock-game-chip">Flash Card</div>
+              <div class="mock-game-chip">Memory Match</div>
+              <div class="mock-game-chip">Speed Quiz</div>
+              <div class="mock-game-chip">Word Builder</div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="master-card">
         <div class="master-card-header">
           <div class="master-card-title">
