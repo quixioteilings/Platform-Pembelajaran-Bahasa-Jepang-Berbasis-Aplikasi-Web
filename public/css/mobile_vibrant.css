@@ -586,21 +586,28 @@ body {
 
   /* ===== MODUL & MATERI PEMBELAJARAN (KURIKULUM BERANDA 1 KOLOM / SATU-SATU DI MOBILE) ===== */
   .features-section {
-    padding: 24px 14px 36px !important;
+    padding: 36px 14px 40px !important;
   }
 
   .features-section .section-header {
-    margin-bottom: 18px !important;
+    margin-bottom: 36px !important;
     text-align: center !important;
   }
 
+  .features-section .section-header .section-tag {
+    margin-bottom: 6px !important;
+  }
+
   .features-section .section-header h2 {
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
     line-height: 1.25 !important;
+    margin-bottom: 8px !important;
   }
 
   .features-section .section-header p {
-    font-size: 0.88rem !important;
+    font-size: 0.92rem !important;
+    margin-bottom: 0 !important;
+    color: var(--text-soft, #786C62) !important;
   }
 
   .feature-cards {

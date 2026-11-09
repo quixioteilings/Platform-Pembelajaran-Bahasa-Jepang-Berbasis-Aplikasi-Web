@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css?v=20261109_singlecol" />
   <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
   <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261109_singlecol" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261109_spacing" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     html, body {
