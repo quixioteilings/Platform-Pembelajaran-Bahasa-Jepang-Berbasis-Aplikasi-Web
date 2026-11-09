@@ -325,7 +325,18 @@ class GuruMasterController extends Controller
             'accent_color' => ['nullable', 'string', 'max:20'],
             'comic_image' => ['nullable', 'string', 'max:255'],
             'comic_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:3072'],
+            'comic_file_panel1' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:3072'],
+            'comic_file_panel2' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:3072'],
+            'comic_file_panel3' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:3072'],
+            'comic_file_panel4' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:3072'],
+            'comic_file_full' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:5120'],
+            'comic_mode' => ['nullable', 'string'],
+            'comic_template' => ['nullable', 'string'],
             'remove_comic_image' => ['nullable', 'string'],
+            'reset_panel1' => ['nullable', 'string'],
+            'reset_panel2' => ['nullable', 'string'],
+            'reset_panel3' => ['nullable', 'string'],
+            'reset_panel4' => ['nullable', 'string'],
             'audio_text' => ['nullable', 'string'],
             'audio_label' => ['nullable', 'string', 'max:100'],
             'mascot_tip' => ['nullable', 'string'],
@@ -350,45 +361,86 @@ class GuruMasterController extends Controller
 
         // Decode existing comic panels if JSON, or map string to panel1
         $comicData = [];
+        $isSingleFull = false;
         if (!empty($lesson->comic_image)) {
             $parsed = json_decode($lesson->comic_image, true);
             if (is_array($parsed)) {
                 $comicData = $parsed;
+                if (!empty($comicData['full'])) {
+                    $isSingleFull = true;
+                }
             } else {
                 $comicData['panel1'] = $lesson->comic_image;
             }
         }
 
+        // 1. Cek reset total komik
         if ($request->input('remove_comic_image') === '1' || $request->input('remove_comic_image') === 'true') {
-            $targetToRemove = $request->input('remove_target', 'all');
-            if ($targetToRemove === 'all') {
-                $updateData['comic_image'] = null;
-            } else {
-                unset($comicData[$targetToRemove]);
-                $updateData['comic_image'] = !empty($comicData) ? json_encode($comicData) : null;
-            }
-        } elseif ($request->hasFile('comic_file')) {
-            $file = $request->file('comic_file');
-            $filename = 'lesson_' . $lesson->id . '_' . $targetPanel . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/lessons'), $filename);
-
-            if ($targetPanel === 'full') {
-                $updateData['comic_image'] = 'uploads/lessons/' . $filename;
-            } else {
-                $comicData[$targetPanel] = 'uploads/lessons/' . $filename;
-                $updateData['comic_image'] = json_encode($comicData);
-            }
-        } elseif (array_key_exists('comic_image', $validated)) {
-            $val = !empty($validated['comic_image']) ? trim($validated['comic_image']) : null;
-            if ($val && !str_starts_with($val, '{')) {
-                if ($targetPanel !== 'full') {
-                    $comicData[$targetPanel] = $val;
-                    $updateData['comic_image'] = json_encode($comicData);
-                } else {
-                    $updateData['comic_image'] = $val;
+            $updateData['comic_image'] = null;
+        } else {
+            // 2. Cek upload per panel (Panel 1, 2, 3, 4)
+            for ($p = 1; $p <= 4; $p++) {
+                $inputName = 'comic_file_panel' . $p;
+                if ($request->hasFile($inputName)) {
+                    $file = $request->file($inputName);
+                    $filename = 'lesson_' . $lesson->id . '_panel' . $p . '_' . time() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('uploads/lessons'), $filename);
+                    $comicData['panel' . $p] = 'uploads/lessons/' . $filename;
                 }
+
+                // Cek reset per panel
+                if ($request->input('reset_panel' . $p) === '1' || $request->input('reset_panel' . $p) === 'true') {
+                    unset($comicData['panel' . $p]);
+                }
+            }
+
+            // 3. Cek upload 1 lembar komik penuh (Full Manga Strip)
+            if ($request->hasFile('comic_file_full')) {
+                $file = $request->file('comic_file_full');
+                $filename = 'lesson_' . $lesson->id . '_full_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/lessons'), $filename);
+                $comicData = ['full' => 'uploads/lessons/' . $filename];
+                $isSingleFull = true;
+            } elseif ($request->hasFile('comic_file')) {
+                // Kompatibilitas dengan input single sebelumnya
+                $file = $request->file('comic_file');
+                $filename = 'lesson_' . $lesson->id . '_' . $targetPanel . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/lessons'), $filename);
+
+                if ($targetPanel === 'full') {
+                    $comicData = ['full' => 'uploads/lessons/' . $filename];
+                    $isSingleFull = true;
+                } else {
+                    $comicData[$targetPanel] = 'uploads/lessons/' . $filename;
+                }
+            } elseif ($request->filled('comic_template') && $request->input('comic_template') !== '__custom__') {
+                $tmpl = trim($request->input('comic_template'));
+                if (!empty($tmpl)) {
+                    $comicData = ['full' => $tmpl];
+                    $isSingleFull = true;
+                }
+            } elseif (array_key_exists('comic_image', $validated)) {
+                $val = !empty($validated['comic_image']) ? trim($validated['comic_image']) : null;
+                if ($val && !str_starts_with($val, '{')) {
+                    if ($targetPanel !== 'full') {
+                        $comicData[$targetPanel] = $val;
+                    } else {
+                        $comicData = ['full' => $val];
+                        $isSingleFull = true;
+                    }
+                } elseif ($val && str_starts_with($val, '{')) {
+                    $parsed = json_decode($val, true);
+                    if (is_array($parsed)) $comicData = $parsed;
+                }
+            }
+
+            // Simpan format yang tepat
+            if ($isSingleFull && isset($comicData['full'])) {
+                $updateData['comic_image'] = $comicData['full'];
+            } elseif (!empty($comicData)) {
+                $updateData['comic_image'] = json_encode($comicData);
             } else {
-                $updateData['comic_image'] = $val;
+                $updateData['comic_image'] = null;
             }
         }
 

@@ -2312,64 +2312,145 @@
         </div>
 
         <!--  Gambar Komik Pembahasan Awal -->
+        <!--  Pengaturan Ilustrasi Komik Cerita Petualangan (Langkah 2) -->
         <div style="background:#F8FAFC; padding:1.2rem; border-radius:14px; border:1.5px solid #E2E8F0; margin-bottom:1.2rem;">
-          <label style="font-weight:800; color:#0F172A; display:block; margin-bottom:0.3rem;">
-            Gambar Ilustrasi Komik Pembahasan Awal (Langkah 2):
-          </label>
-          <p style="font-size:0.8rem; color:#64748B; margin:0 0 0.8rem;">Pilih template komik cerita petualangan Jepang atau upload file gambar sendiri dari komputer</p>
-
-          <div class="form-group">
-            <label style="font-size:0.8rem; color:#475569;">Pilih Template Komik Cerita:</label>
-            <select name="comic_image" id="edit-lesson-comic-image" class="form-control" onchange="handleLessonComicTemplateChange()">
-              <option value="">-- Gunakan Ilustrasi Komik Bawaan Default --</option>
-              <option value="img/comic_ramen.svg">Kedai Ramen Katakana Tokyo (ラーメン)</option>
-              <option value="img/comic_aisatsu.svg">Suasana Kelas Salam Aisatsu (おはようございます)</option>
-              <option value="img/comic_station.svg">Papan Stasiun Kereta Tokyo (東京 / とうきょう)</option>
-              <option value="img/comic_konbini.svg">Minimarket Konbini & Uang Yen (¥150)</option>
-              <option value="img/comic_hotel.svg">Check-in Hotel / Ryokan (ホテル)</option>
-              <option value="img/comic_directions.svg">Petunjuk Arah Wisata & Stasiun (まっすぐ)</option>
-              <option value="img/comic_souvenir.svg">Toko Suvenir Asakusa (おみやげ)</option>
-              <option value="img/comic_emergency.svg">Situasi Darurat & Bantuan (トイレ / 英語)</option>
-              <option value="__custom__">-- Masukkan Path / URL Gambar Kustom --</option>
-            </select>
-          </div>
-
-          <div class="form-group" style="margin-bottom:0.85rem;">
-            <label style="font-size:0.82rem; font-weight:800; color:#1E293B;">Target Panel Komik yang Ingin Diupload / Diganti:</label>
-            <select name="target_panel" id="edit-lesson-target-panel" class="form-control" onchange="handleTargetPanelChange()">
-              <option value="panel1" selected>Panel 1: Kedatangan di Bandara / Kota Tokyo</option>
-              <option value="panel2">Panel 2: Kedai Ramen (Mengenal Katakana ラーメン)</option>
-              <option value="panel3">Panel 3: Stasiun Kereta (Mengenal Kanji 東京)</option>
-              <option value="panel4">Panel 4: Kedai Sushi (Mengenal Hiragana すし)</option>
-              <option value="full">Komik 1 Lembar Penuh (Full Manga Strip)</option>
-            </select>
-            <p style="font-size:0.75rem; color:#64748B; margin:0.25rem 0 0;">Pilih nomor panel yang ingin Anda upload / ganti gambarnya, sehingga panel lainnya tetap tersimpan utuh.</p>
-          </div>
-
-          <div class="form-group" id="edit-lesson-custom-url-group" style="display:none;">
-            <label style="font-size:0.8rem; color:#475569;">Path / URL Gambar Kustom:</label>
-            <input type="text" id="edit-lesson-custom-url" class="form-control" placeholder="Contoh: img/comic_ramen.svg atau https://..." oninput="handleLessonCustomUrlInput()" />
-          </div>
-
-          <div class="form-group" style="margin-bottom:0.8rem;">
-            <label style="font-size:0.8rem; color:#475569;">Upload File Gambar untuk Panel Ini (PNG, JPG, SVG, WebP):</label>
-            <input type="file" name="comic_file" id="edit-lesson-comic-file" class="form-control" accept="image/*" onchange="previewLessonUploadedImage(this)" />
-          </div>
-
-          <!-- Live Preview & Checkbox Hapus -->
-          <div id="edit-lesson-preview-wrap" style="display:flex; align-items:center; gap:1rem; padding:0.6rem; background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px;">
-            <div style="width:100px; height:65px; border-radius:8px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-              <img id="edit-lesson-preview-img" src="" alt="Preview Komik" style="width:100%; height:100%; object-fit:cover; display:none;" />
-              <span id="edit-lesson-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Komik Default</span>
-            </div>
-            <div style="flex:1;">
-              <div id="edit-lesson-preview-text" style="font-size:0.82rem; font-weight:700; color:#334155;">Ilustrasi Komik Default</div>
-              <label style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.8rem; color:#DC2626; cursor:pointer; margin-top:0.35rem;">
-                <input type="checkbox" name="remove_comic_image" value="1" id="edit-lesson-remove-comic" onchange="handleRemoveLessonComicCheckbox()" />
-                <span>Reset gambar komik (kembali ke ilustrasi komik bawaan)</span>
-              </label>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
+            <label style="font-weight:800; color:#0F172A; margin:0;">
+              Ilustrasi Komik Cerita Petualangan (Langkah 2):
+            </label>
+            <div style="display:flex; gap:0.4rem; background:#E2E8F0; padding:3px; border-radius:8px;">
+              <button type="button" id="btn-comic-mode-multi" class="btn-preset" style="padding:0.25rem 0.65rem; font-size:0.75rem; font-weight:700; border-radius:6px; background:#FFFFFF; color:#0F172A; border:none; box-shadow:0 1px 3px rgba(0,0,0,0.1);" onclick="setComicMode('multi')">Mode 4 Panel Komik</button>
+              <button type="button" id="btn-comic-mode-full" class="btn-preset" style="padding:0.25rem 0.65rem; font-size:0.75rem; font-weight:700; border-radius:6px; background:transparent; color:#64748B; border:none;" onclick="setComicMode('full')">Komik 1 Halaman Penuh</button>
             </div>
           </div>
+          <p style="font-size:0.8rem; color:#64748B; margin:0 0 1rem;">Anda dapat mengedit setiap gambar panel komik satu per satu atau mengembalikan ke gambar bawaan default.</p>
+          <input type="hidden" name="comic_mode" id="edit-lesson-comic-mode" value="multi" />
+
+          <!-- MODE 4 PANEL -->
+          <div id="comic-mode-multi-wrap">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">
+              
+              <!-- PANEL 1 -->
+              <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-weight:800; font-size:0.8rem; color:#1E293B;">Panel 1: Bandara / Kedatangan</span>
+                  <span id="p1-badge" style="font-size:0.7rem; font-weight:700; padding:2px 6px; border-radius:4px; background:#EFF6FF; color:#2563EB;">Bawaan</span>
+                </div>
+                <div style="height:85px; border-radius:6px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; display:flex; align-items:center; justify-content:center;">
+                  <img id="p1-preview-img" src="" alt="Panel 1" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                  <span id="p1-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Ilustrasi Bawaan (Bandara)</span>
+                </div>
+                <div>
+                  <label style="font-size:0.72rem; color:#64748B; display:block; margin-bottom:2px;">Upload File Baru Panel 1:</label>
+                  <input type="file" name="comic_file_panel1" id="p1-file-input" class="form-control" style="font-size:0.75rem; padding:0.3rem;" accept="image/*" onchange="previewIndividualPanelFile(this, 1)" />
+                </div>
+                <label style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.74rem; color:#DC2626; cursor:pointer;">
+                  <input type="checkbox" name="reset_panel1" value="1" id="p1-reset-chk" onchange="handlePanelResetChange(1)" />
+                  <span>Kembalikan ke ilustrasi bawaan</span>
+                </label>
+              </div>
+
+              <!-- PANEL 2 -->
+              <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-weight:800; font-size:0.8rem; color:#1E293B;">Panel 2: Kedai Ramen (ラーメン)</span>
+                  <span id="p2-badge" style="font-size:0.7rem; font-weight:700; padding:2px 6px; border-radius:4px; background:#EFF6FF; color:#2563EB;">Bawaan</span>
+                </div>
+                <div style="height:85px; border-radius:6px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; display:flex; align-items:center; justify-content:center;">
+                  <img id="p2-preview-img" src="" alt="Panel 2" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                  <span id="p2-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Ilustrasi Bawaan (Kedai Ramen)</span>
+                </div>
+                <div>
+                  <label style="font-size:0.72rem; color:#64748B; display:block; margin-bottom:2px;">Upload File Baru Panel 2:</label>
+                  <input type="file" name="comic_file_panel2" id="p2-file-input" class="form-control" style="font-size:0.75rem; padding:0.3rem;" accept="image/*" onchange="previewIndividualPanelFile(this, 2)" />
+                </div>
+                <label style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.74rem; color:#DC2626; cursor:pointer;">
+                  <input type="checkbox" name="reset_panel2" value="1" id="p2-reset-chk" onchange="handlePanelResetChange(2)" />
+                  <span>Kembalikan ke ilustrasi bawaan</span>
+                </label>
+              </div>
+
+              <!-- PANEL 3 -->
+              <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-weight:800; font-size:0.8rem; color:#1E293B;">Panel 3: Stasiun Tokyo (東京)</span>
+                  <span id="p3-badge" style="font-size:0.7rem; font-weight:700; padding:2px 6px; border-radius:4px; background:#EFF6FF; color:#2563EB;">Bawaan</span>
+                </div>
+                <div style="height:85px; border-radius:6px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; display:flex; align-items:center; justify-content:center;">
+                  <img id="p3-preview-img" src="" alt="Panel 3" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                  <span id="p3-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Ilustrasi Bawaan (Stasiun Kereta)</span>
+                </div>
+                <div>
+                  <label style="font-size:0.72rem; color:#64748B; display:block; margin-bottom:2px;">Upload File Baru Panel 3:</label>
+                  <input type="file" name="comic_file_panel3" id="p3-file-input" class="form-control" style="font-size:0.75rem; padding:0.3rem;" accept="image/*" onchange="previewIndividualPanelFile(this, 3)" />
+                </div>
+                <label style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.74rem; color:#DC2626; cursor:pointer;">
+                  <input type="checkbox" name="reset_panel3" value="1" id="p3-reset-chk" onchange="handlePanelResetChange(3)" />
+                  <span>Kembalikan ke ilustrasi bawaan</span>
+                </label>
+              </div>
+
+              <!-- PANEL 4 -->
+              <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-weight:800; font-size:0.8rem; color:#1E293B;">Panel 4: Kedai Sushi (すし)</span>
+                  <span id="p4-badge" style="font-size:0.7rem; font-weight:700; padding:2px 6px; border-radius:4px; background:#EFF6FF; color:#2563EB;">Bawaan</span>
+                </div>
+                <div style="height:85px; border-radius:6px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; display:flex; align-items:center; justify-content:center;">
+                  <img id="p4-preview-img" src="" alt="Panel 4" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                  <span id="p4-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Ilustrasi Bawaan (Kedai Sushi)</span>
+                </div>
+                <div>
+                  <label style="font-size:0.72rem; color:#64748B; display:block; margin-bottom:2px;">Upload File Baru Panel 4:</label>
+                  <input type="file" name="comic_file_panel4" id="p4-file-input" class="form-control" style="font-size:0.75rem; padding:0.3rem;" accept="image/*" onchange="previewIndividualPanelFile(this, 4)" />
+                </div>
+                <label style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.74rem; color:#DC2626; cursor:pointer;">
+                  <input type="checkbox" name="reset_panel4" value="1" id="p4-reset-chk" onchange="handlePanelResetChange(4)" />
+                  <span>Kembalikan ke ilustrasi bawaan</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- MODE 1 HALAMAN PENUH -->
+          <div id="comic-mode-full-wrap" style="display:none;">
+            <div class="form-group">
+              <label style="font-size:0.8rem; color:#475569;">Pilih Template Komik Cerita:</label>
+              <select name="comic_template" id="edit-lesson-comic-template" class="form-control" onchange="handleFullTemplateChange()">
+                <option value="">-- Tanpa Template (Upload Sendiri di Bawah) --</option>
+                <option value="img/comic_ramen.svg">Kedai Ramen Katakana Tokyo (ラーメン)</option>
+                <option value="img/comic_aisatsu.svg">Suasana Kelas Salam Aisatsu (おはようございます)</option>
+                <option value="img/comic_station.svg">Papan Stasiun Kereta Tokyo (東京 / とうきょう)</option>
+                <option value="img/comic_konbini.svg">Minimarket Konbini & Uang Yen (¥150)</option>
+                <option value="img/comic_hotel.svg">Check-in Hotel / Ryokan (ホテル)</option>
+                <option value="img/comic_directions.svg">Petunjuk Arah Wisata & Stasiun (まっすぐ)</option>
+                <option value="img/comic_souvenir.svg">Toko Suvenir Asakusa (おみやげ)</option>
+                <option value="img/comic_emergency.svg">Situasi Darurat & Bantuan (トイレ / 英語)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0.8rem;">
+              <label style="font-size:0.8rem; color:#475569;">Upload File Komik 1 Halaman Penuh (PNG, JPG, SVG, WebP):</label>
+              <input type="file" name="comic_file_full" id="edit-lesson-comic-file-full" class="form-control" accept="image/*" onchange="previewFullComicFile(this)" />
+            </div>
+
+            <!-- Full Preview -->
+            <div style="display:flex; align-items:center; gap:1rem; padding:0.6rem; background:#FFFFFF; border:1px solid #CBD5E1; border-radius:10px;">
+              <div style="width:100px; height:65px; border-radius:8px; overflow:hidden; background:#F1F5F9; border:1px solid #E2E8F0; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                <img id="full-preview-img" src="" alt="Preview Komik" style="width:100%; height:100%; object-fit:cover; display:none;" />
+                <span id="full-preview-none" style="font-size:0.75rem; color:#94A3B8; text-align:center;">Komik Bawaan</span>
+              </div>
+              <div style="flex:1;">
+                <div id="full-preview-text" style="font-size:0.82rem; font-weight:700; color:#334155;">Ilustrasi Komik Bawaan</div>
+                <label style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.8rem; color:#DC2626; cursor:pointer; margin-top:0.35rem;">
+                  <input type="checkbox" name="remove_comic_image" value="1" id="edit-lesson-remove-comic" onchange="handleRemoveAllComicCheckbox()" />
+                  <span>Reset seluruh gambar komik ke bawaan sistem</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- Audio  Audio Pelafalan Percakapan Komik -->
@@ -2925,6 +3006,232 @@
       openModal('modal-add-lesson');
     }
 
+    function setComicMode(mode) {
+      const modeMulti = document.getElementById('comic-mode-multi-wrap');
+      const modeFull = document.getElementById('comic-mode-full-wrap');
+      const btnMulti = document.getElementById('btn-comic-mode-multi');
+      const btnFull = document.getElementById('btn-comic-mode-full');
+      const modeInp = document.getElementById('edit-lesson-comic-mode');
+      if (modeInp) modeInp.value = mode;
+
+      if (mode === 'multi') {
+        if (modeMulti) modeMulti.style.display = 'block';
+        if (modeFull) modeFull.style.display = 'none';
+        if (btnMulti) {
+          btnMulti.style.background = '#FFFFFF';
+          btnMulti.style.color = '#0F172A';
+          btnMulti.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        }
+        if (btnFull) {
+          btnFull.style.background = 'transparent';
+          btnFull.style.color = '#64748B';
+          btnFull.style.boxShadow = 'none';
+        }
+      } else {
+        if (modeMulti) modeMulti.style.display = 'none';
+        if (modeFull) modeFull.style.display = 'block';
+        if (btnFull) {
+          btnFull.style.background = '#FFFFFF';
+          btnFull.style.color = '#0F172A';
+          btnFull.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        }
+        if (btnMulti) {
+          btnMulti.style.background = 'transparent';
+          btnMulti.style.color = '#64748B';
+          btnMulti.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    function previewIndividualPanelFile(input, panelNum) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById(`p${panelNum}-preview-img`);
+          const noneTxt = document.getElementById(`p${panelNum}-preview-none`);
+          const badge = document.getElementById(`p${panelNum}-badge`);
+          const resetChk = document.getElementById(`p${panelNum}-reset-chk`);
+          if (resetChk) resetChk.checked = false;
+          if (img) {
+            img.src = e.target.result;
+            img.style.display = 'block';
+          }
+          if (noneTxt) noneTxt.style.display = 'none';
+          if (badge) {
+            badge.textContent = 'File Baru Terpilih';
+            badge.style.background = '#FEF3C7';
+            badge.style.color = '#B45309';
+          }
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handlePanelResetChange(panelNum) {
+      const resetChk = document.getElementById(`p${panelNum}-reset-chk`);
+      const fileInp = document.getElementById(`p${panelNum}-file-input`);
+      const img = document.getElementById(`p${panelNum}-preview-img`);
+      const noneTxt = document.getElementById(`p${panelNum}-preview-none`);
+      const badge = document.getElementById(`p${panelNum}-badge`);
+
+      if (resetChk && resetChk.checked) {
+        if (fileInp) fileInp.value = '';
+        if (img) { img.src = ''; img.style.display = 'none'; }
+        if (noneTxt) noneTxt.style.display = 'block';
+        if (badge) {
+          badge.textContent = 'Akan Direset Bawaan';
+          badge.style.background = '#FEE2E2';
+          badge.style.color = '#DC2626';
+        }
+      } else {
+        const lesId = window.currentEditingLessonId;
+        const les = allLessonsData.find(item => item.id == lesId);
+        populatePanelData(les);
+      }
+    }
+
+    function previewFullComicFile(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('full-preview-img');
+          const noneTxt = document.getElementById('full-preview-none');
+          const prevTxt = document.getElementById('full-preview-text');
+          const remChk = document.getElementById('edit-lesson-remove-comic');
+          if (remChk) remChk.checked = false;
+          if (img) { img.src = e.target.result; img.style.display = 'block'; }
+          if (noneTxt) noneTxt.style.display = 'none';
+          if (prevTxt) prevTxt.textContent = 'File baru: ' + input.files[0].name;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleFullTemplateChange() {
+      const sel = document.getElementById('edit-lesson-comic-template');
+      const img = document.getElementById('full-preview-img');
+      const noneTxt = document.getElementById('full-preview-none');
+      const prevTxt = document.getElementById('full-preview-text');
+      const val = sel.value;
+      if (val) {
+        const src = (val.startsWith('http') || val.startsWith('/')) ? val : ('/' + val);
+        if (img) { img.src = src; img.style.display = 'block'; }
+        if (noneTxt) noneTxt.style.display = 'none';
+        if (prevTxt) prevTxt.textContent = 'Template: ' + val;
+      } else {
+        if (img) { img.src = ''; img.style.display = 'none'; }
+        if (noneTxt) noneTxt.style.display = 'block';
+        if (prevTxt) prevTxt.textContent = 'Komik Bawaan Default';
+      }
+    }
+
+    function handleRemoveAllComicCheckbox() {
+      const remChk = document.getElementById('edit-lesson-remove-comic');
+      const fullFile = document.getElementById('edit-lesson-comic-file-full');
+      const tmplSel = document.getElementById('edit-lesson-comic-template');
+      const img = document.getElementById('full-preview-img');
+      const noneTxt = document.getElementById('full-preview-none');
+      const prevTxt = document.getElementById('full-preview-text');
+      if (remChk && remChk.checked) {
+        if (fullFile) fullFile.value = '';
+        if (tmplSel) tmplSel.value = '';
+        if (img) { img.src = ''; img.style.display = 'none'; }
+        if (noneTxt) noneTxt.style.display = 'block';
+        if (prevTxt) prevTxt.textContent = 'Seluruh gambar akan direset ke bawaan';
+      }
+    }
+
+    function populatePanelData(les) {
+      if (!les) return;
+      let pObj = {};
+      let isFull = false;
+
+      if (les.comic_image) {
+        try {
+          const parsed = JSON.parse(les.comic_image);
+          if (parsed && typeof parsed === 'object') {
+            pObj = parsed;
+            if (pObj.full) isFull = true;
+          }
+        } catch(e) {
+          if (les.id === 1) {
+            pObj.panel1 = les.comic_image;
+          } else {
+            isFull = true;
+            pObj.full = les.comic_image;
+          }
+        }
+      }
+
+      setComicMode(isFull ? 'full' : 'multi');
+
+      const panelDefs = [
+        { num: 1, name: 'Bandara / Kedatangan Tokyo', defSvg: '' },
+        { num: 2, name: 'Kedai Ramen (ラーメン)', defSvg: '/img/comic_ramen.svg' },
+        { num: 3, name: 'Stasiun Kereta (東京)', defSvg: '/img/comic_station.svg' },
+        { num: 4, name: 'Kedai Sushi (すし)', defSvg: '' }
+      ];
+
+      panelDefs.forEach(p => {
+        const imgEl = document.getElementById(`p${p.num}-preview-img`);
+        const noneEl = document.getElementById(`p${p.num}-preview-none`);
+        const badgeEl = document.getElementById(`p${p.num}-badge`);
+        const fileEl = document.getElementById(`p${p.num}-file-input`);
+        const resetEl = document.getElementById(`p${p.num}-reset-chk`);
+
+        if (fileEl) fileEl.value = '';
+        if (resetEl) resetEl.checked = false;
+
+        const currentVal = pObj[`panel${p.num}`];
+        if (currentVal && typeof currentVal === 'string' && !currentVal.startsWith('{')) {
+          const src = (currentVal.startsWith('http') || currentVal.startsWith('/') || currentVal.startsWith('data:')) ? currentVal : ('/' + currentVal);
+          if (imgEl) { imgEl.src = src; imgEl.style.display = 'block'; }
+          if (noneEl) noneEl.style.display = 'none';
+          if (badgeEl) {
+            badgeEl.textContent = 'Kustom';
+            badgeEl.style.background = '#DCFCE7';
+            badgeEl.style.color = '#15803D';
+          }
+        } else {
+          if (p.defSvg) {
+            if (imgEl) { imgEl.src = p.defSvg; imgEl.style.display = 'block'; }
+            if (noneEl) noneEl.style.display = 'none';
+          } else {
+            if (imgEl) { imgEl.src = ''; imgEl.style.display = 'none'; }
+            if (noneEl) noneEl.style.display = 'block';
+          }
+          if (badgeEl) {
+            badgeEl.textContent = 'Bawaan';
+            badgeEl.style.background = '#EFF6FF';
+            badgeEl.style.color = '#2563EB';
+          }
+        }
+      });
+
+      // Full strip preview
+      const fullImg = document.getElementById('full-preview-img');
+      const fullNone = document.getElementById('full-preview-none');
+      const fullTxt = document.getElementById('full-preview-text');
+      const tmplSel = document.getElementById('edit-lesson-comic-template');
+      const fullFile = document.getElementById('edit-lesson-comic-file-full');
+      const fullRem = document.getElementById('edit-lesson-remove-comic');
+      if (fullFile) fullFile.value = '';
+      if (fullRem) fullRem.checked = false;
+
+      if (isFull && pObj.full) {
+        const src = (pObj.full.startsWith('http') || pObj.full.startsWith('/')) ? pObj.full : ('/' + pObj.full);
+        if (fullImg) { fullImg.src = src; fullImg.style.display = 'block'; }
+        if (fullNone) fullNone.style.display = 'none';
+        if (fullTxt) fullTxt.textContent = 'Komik 1 Lembar: ' + pObj.full;
+        if (tmplSel) tmplSel.value = pObj.full;
+      } else {
+        if (fullImg) { fullImg.src = ''; fullImg.style.display = 'none'; }
+        if (fullNone) fullNone.style.display = 'block';
+        if (fullTxt) fullTxt.textContent = 'Komik Bawaan Default';
+        if (tmplSel) tmplSel.value = '';
+      }
+    }
+
     function openEditLessonModal(id) {
       const les = allLessonsData.find(item => item.id == id);
       if (!les) {
@@ -2933,9 +3240,6 @@
       }
 
       window.currentEditingLessonId = les.id;
-      const targetPanelSel = document.getElementById('edit-lesson-target-panel');
-      if (targetPanelSel) targetPanelSel.value = 'panel1';
-
       document.getElementById('form-edit-lesson').action = '/guru/lessons/' + les.id;
       document.getElementById('edit-lesson-modal-title').textContent = 'Edit Modul: ' + les.title;
       document.getElementById('edit-lesson-title').value = les.title || '';
@@ -2943,49 +3247,7 @@
       document.getElementById('edit-lesson-badge').value = les.badge || '';
       document.getElementById('edit-lesson-minutes').value = les.est_minutes || 15;
 
-      // Comic image setup
-      const sel = document.getElementById('edit-lesson-comic-image');
-      const customGrp = document.getElementById('edit-lesson-custom-url-group');
-      const customInp = document.getElementById('edit-lesson-custom-url');
-      const fileInp = document.getElementById('edit-lesson-comic-file');
-      const removeChk = document.getElementById('edit-lesson-remove-comic');
-      const prevImg = document.getElementById('edit-lesson-preview-img');
-      const prevNone = document.getElementById('edit-lesson-preview-none');
-      const prevTxt = document.getElementById('edit-lesson-preview-text');
-
-      if (fileInp) fileInp.value = '';
-      if (removeChk) removeChk.checked = false;
-
-      const img = les.comic_image || '';
-      let matchedOption = false;
-      if (sel) {
-        for (let i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].value === img) {
-            sel.selectedIndex = i;
-            matchedOption = true;
-            break;
-          }
-        }
-        if (!matchedOption && img) {
-          sel.value = '__custom__';
-          if (customGrp) customGrp.style.display = 'block';
-          if (customInp) customInp.value = img;
-        } else {
-          if (customGrp) customGrp.style.display = 'none';
-          if (customInp) customInp.value = '';
-        }
-      }
-
-      if (img) {
-        const src = (img.startsWith('http') || img.startsWith('/')) ? img : ('/' + img);
-        if (prevImg) { prevImg.src = src; prevImg.style.display = 'block'; }
-        if (prevNone) prevNone.style.display = 'none';
-        if (prevTxt) prevTxt.textContent = img;
-      } else {
-        if (prevImg) { prevImg.src = ''; prevImg.style.display = 'none'; }
-        if (prevNone) prevNone.style.display = 'block';
-        if (prevTxt) prevTxt.textContent = 'Ilustrasi Komik Bawaan Default';
-      }
+      populatePanelData(les);
 
       // Audio & Mascot Tip
       const audLabel = document.getElementById('edit-lesson-audio-label');
@@ -2997,121 +3259,6 @@
       if (tipText) tipText.value = les.mascot_tip || '';
 
       openModal('modal-edit-lesson');
-    }
-
-    function handleLessonComicTemplateChange() {
-      const sel = document.getElementById('edit-lesson-comic-image');
-      const customGrp = document.getElementById('edit-lesson-custom-url-group');
-      const customInp = document.getElementById('edit-lesson-custom-url');
-      const prevImg = document.getElementById('edit-lesson-preview-img');
-      const prevNone = document.getElementById('edit-lesson-preview-none');
-      const prevTxt = document.getElementById('edit-lesson-preview-text');
-      const removeChk = document.getElementById('edit-lesson-remove-comic');
-      if (removeChk) removeChk.checked = false;
-
-      const val = sel.value;
-      if (val === '__custom__') {
-        if (customGrp) customGrp.style.display = 'block';
-        if (customInp) customInp.focus();
-      } else {
-        if (customGrp) customGrp.style.display = 'none';
-        if (val) {
-          const src = (val.startsWith('http') || val.startsWith('/')) ? val : ('/' + val);
-          if (prevImg) { prevImg.src = src; prevImg.style.display = 'block'; }
-          if (prevNone) prevNone.style.display = 'none';
-          if (prevTxt) prevTxt.textContent = val;
-        } else {
-          if (prevImg) { prevImg.src = ''; prevImg.style.display = 'none'; }
-          if (prevNone) prevNone.style.display = 'block';
-          if (prevTxt) prevTxt.textContent = 'Ilustrasi Komik Bawaan Default';
-        }
-      }
-    }
-
-    function handleLessonCustomUrlInput() {
-      const customInp = document.getElementById('edit-lesson-custom-url');
-      const prevImg = document.getElementById('edit-lesson-preview-img');
-      const prevNone = document.getElementById('edit-lesson-preview-none');
-      const prevTxt = document.getElementById('edit-lesson-preview-text');
-      const url = customInp.value.trim();
-      if (url) {
-        const src = (url.startsWith('http') || url.startsWith('/')) ? url : ('/' + url);
-        if (prevImg) { prevImg.src = src; prevImg.style.display = 'block'; }
-        if (prevNone) prevNone.style.display = 'none';
-        if (prevTxt) prevTxt.textContent = url;
-      } else {
-        if (prevImg) { prevImg.src = ''; prevImg.style.display = 'none'; }
-        if (prevNone) prevNone.style.display = 'block';
-        if (prevTxt) prevTxt.textContent = 'Ilustrasi Komik Bawaan Default';
-      }
-    }
-
-    function handleTargetPanelChange() {
-      const panel = document.getElementById('edit-lesson-target-panel')?.value || 'panel1';
-      const prevImg = document.getElementById('edit-lesson-preview-img');
-      const prevNone = document.getElementById('edit-lesson-preview-none');
-      const prevTxt = document.getElementById('edit-lesson-preview-text');
-      const fileInp = document.getElementById('edit-lesson-comic-file');
-      if (fileInp) fileInp.value = '';
-
-      const lesId = window.currentEditingLessonId;
-      const les = allLessonsData.find(item => item.id == lesId);
-      if (!les) return;
-
-      let pObj = {};
-      try {
-        const parsed = JSON.parse(les.comic_image);
-        if (parsed && typeof parsed === 'object') pObj = parsed;
-      } catch(e) {
-        if (les.comic_image) pObj.panel1 = les.comic_image;
-      }
-
-      const currentPanelImg = pObj[panel] || (panel === 'panel1' ? les.comic_image : '');
-      if (currentPanelImg && !currentPanelImg.startsWith('{')) {
-        if (prevImg) {
-          prevImg.src = (currentPanelImg.startsWith('http') || currentPanelImg.startsWith('data:') ? currentPanelImg : '/' + currentPanelImg);
-          prevImg.style.display = 'block';
-        }
-        if (prevNone) prevNone.style.display = 'none';
-        if (prevTxt) prevTxt.textContent = 'Gambar ' + panel.toUpperCase() + ': ' + currentPanelImg;
-      } else {
-        if (prevImg) prevImg.style.display = 'none';
-        if (prevNone) prevNone.style.display = 'block';
-        if (prevTxt) prevTxt.textContent = 'Panel ' + panel.toUpperCase() + ' (Menggunakan Ilustrasi Bawaan)';
-      }
-    }
-
-    function previewLessonUploadedImage(input) {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const prevImg = document.getElementById('edit-lesson-preview-img');
-          const prevNone = document.getElementById('edit-lesson-preview-none');
-          const prevTxt = document.getElementById('edit-lesson-preview-text');
-          const removeChk = document.getElementById('edit-lesson-remove-comic');
-          if (removeChk) removeChk.checked = false;
-          if (prevImg) { prevImg.src = e.target.result; prevImg.style.display = 'block'; }
-          if (prevNone) prevNone.style.display = 'none';
-          if (prevTxt) prevTxt.textContent = 'Upload file: ' + input.files[0].name + ' (' + Math.round(input.files[0].size/1024) + ' KB)';
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    function handleRemoveLessonComicCheckbox() {
-      const removeChk = document.getElementById('edit-lesson-remove-comic');
-      const prevImg = document.getElementById('edit-lesson-preview-img');
-      const prevNone = document.getElementById('edit-lesson-preview-none');
-      const prevTxt = document.getElementById('edit-lesson-preview-text');
-      const sel = document.getElementById('edit-lesson-comic-image');
-      const fileInp = document.getElementById('edit-lesson-comic-file');
-      if (removeChk && removeChk.checked) {
-        if (sel) sel.value = '';
-        if (fileInp) fileInp.value = '';
-        if (prevImg) { prevImg.src = ''; prevImg.style.display = 'none'; }
-        if (prevNone) prevNone.style.display = 'block';
-        if (prevTxt) prevTxt.textContent = 'Gambar komik akan direset ke bawaan default';
-      }
     }
 
     async function deleteLesson(id, title) {

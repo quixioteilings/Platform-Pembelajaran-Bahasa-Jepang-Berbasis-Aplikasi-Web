@@ -2094,6 +2094,14 @@ function goToLessonStep(stepIndex) {
   const nextStepName = !isLast ? steps[currentLessonStepIndex + 1].name : 'Selesai';
   const nextLessonId = lesson.nextLessonId || (lesson.id + 1);
 
+  // Label tombol yang rapi dan terarah
+  let nextBtnText = `Lanjut: ${escapeHtml(nextStepName)} &rarr;`;
+  if (isFirst) {
+    nextBtnText = `Mulai Belajar (${escapeHtml(nextStepName)}) &rarr;`;
+  } else if (isLast) {
+    nextBtnText = `Lanjut ke Pelajaran ${nextLessonId} &rarr;`;
+  }
+
   const bottomNavHtml = `
     <div class="nihongo-step-bottom-nav">
       <button type="button" class="btn-step-nav-prev" onclick="goToLessonStep(${currentLessonStepIndex - 1})" ${isFirst ? 'disabled' : ''}>
@@ -2103,7 +2111,7 @@ function goToLessonStep(stepIndex) {
         <span>Langkah ${currentLessonStepIndex + 1} dari ${steps.length} (${escapeHtml(stepDef.name)})</span>
       </div>
       <button type="button" class="btn-step-nav-next" onclick="${isLast ? `openLesson(${nextLessonId})` : `goToLessonStep(${currentLessonStepIndex + 1})`}">
-        <span>${isLast ? `Lanjut ke Pelajaran ${nextLessonId}` : `Lanjut: ${escapeHtml(nextStepName)}`} &rarr;</span>
+        <span>${nextBtnText}</span>
       </button>
     </div>
   `;
@@ -2175,10 +2183,7 @@ function renderStepMulai(lesson) {
 
       <div class="study-cta-box" style="margin-top:1.5rem;">
         <div class="study-cta-title">Siap Memulai Pelajaran Ini?</div>
-        <div class="study-cta-desc">Pelajari langkah demi langkah dari pengantar kasus hingga latihan interaktif dan klaim bonus poinnya.</div>
-        <button type="button" class="btn-step-nav-next" style="padding:1rem 2rem; font-size:1rem;" onclick="goToLessonStep(1)">
-          <span>Mulai Belajar (Lanjut ke Kasus) &rarr;</span>
-        </button>
+        <div class="study-cta-desc">Pelajari langkah demi langkah dari cerita petualangan komik, pengenalan huruf, tata bahasa, hingga latihan interaktif. Tekan tombol <strong>Mulai Belajar</strong> di bawah untuk membuka komik kasus!</div>
       </div>
     </div>
   `;
