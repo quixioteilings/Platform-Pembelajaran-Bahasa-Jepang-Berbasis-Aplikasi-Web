@@ -1580,13 +1580,25 @@
             </select>
           </div>
 
+          <div class="form-group" style="margin-bottom:0.85rem;">
+            <label style="font-size:0.82rem; font-weight:800; color:#1E293B;">Target Panel Komik yang Ingin Diupload / Diganti:</label>
+            <select name="target_panel" id="edit-lesson-target-panel" class="form-control" onchange="handleTargetPanelChange()">
+              <option value="panel1" selected>Panel 1: Kedatangan di Bandara / Kota Tokyo</option>
+              <option value="panel2">Panel 2: Kedai Ramen (Mengenal Katakana ラーメン)</option>
+              <option value="panel3">Panel 3: Stasiun Kereta (Mengenal Kanji 東京)</option>
+              <option value="panel4">Panel 4: Kedai Sushi (Mengenal Hiragana すし)</option>
+              <option value="full">Komik 1 Lembar Penuh (Full Manga Strip)</option>
+            </select>
+            <p style="font-size:0.75rem; color:#64748B; margin:0.25rem 0 0;">Pilih nomor panel yang ingin Anda upload / ganti gambarnya, sehingga panel lainnya tetap tersimpan utuh.</p>
+          </div>
+
           <div class="form-group" id="edit-lesson-custom-url-group" style="display:none;">
             <label style="font-size:0.8rem; color:#475569;">Path / URL Gambar Kustom:</label>
             <input type="text" id="edit-lesson-custom-url" class="form-control" placeholder="Contoh: img/comic_ramen.svg atau https://..." oninput="handleLessonCustomUrlInput()" />
           </div>
 
           <div class="form-group" style="margin-bottom:0.8rem;">
-            <label style="font-size:0.8rem; color:#475569;">Atau Upload File Gambar Komik Baru (PNG, JPG, SVG, WebP):</label>
+            <label style="font-size:0.8rem; color:#475569;">Upload File Gambar untuk Panel Ini (PNG, JPG, SVG, WebP):</label>
             <input type="file" id="edit-lesson-comic-file" class="form-control" accept="image/*" onchange="previewLessonUploadedImage(this)" />
           </div>
 
@@ -3024,6 +3036,10 @@
         return;
       }
 
+      window.currentEditingLessonId = les.id;
+      const targetPanelSel = document.getElementById('edit-lesson-target-panel');
+      if (targetPanelSel) targetPanelSel.value = 'panel1';
+
       currentUploadedLessonComic = null;
       document.getElementById('edit-lesson-id').value = les.id;
       document.getElementById('edit-lesson-modal-title').textContent = 'Edit Modul: ' + les.title;
@@ -3128,6 +3144,41 @@
         if (prevImg) { prevImg.src = ''; prevImg.style.display = 'none'; }
         if (prevNone) prevNone.style.display = 'block';
         if (prevTxt) prevTxt.textContent = 'Ilustrasi Komik Bawaan Default';
+      }
+    }
+
+    function handleTargetPanelChange() {
+      const panel = document.getElementById('edit-lesson-target-panel')?.value || 'panel1';
+      const prevImg = document.getElementById('edit-lesson-preview-img');
+      const prevNone = document.getElementById('edit-lesson-preview-none');
+      const prevTxt = document.getElementById('edit-lesson-preview-text');
+      const fileInp = document.getElementById('edit-lesson-comic-file');
+      if (fileInp) fileInp.value = '';
+
+      const lesId = window.currentEditingLessonId;
+      const les = stateLessons.find(item => item.id == lesId);
+      if (!les) return;
+
+      let pObj = {};
+      try {
+        const parsed = JSON.parse(les.comic_image);
+        if (parsed && typeof parsed === 'object') pObj = parsed;
+      } catch(e) {
+        if (les.comic_image) pObj.panel1 = les.comic_image;
+      }
+
+      const currentPanelImg = pObj[panel] || (panel === 'panel1' ? les.comic_image : '');
+      if (currentPanelImg && !currentPanelImg.startsWith('{')) {
+        if (prevImg) {
+          prevImg.src = (currentPanelImg.startsWith('http') || currentPanelImg.startsWith('data:') ? currentPanelImg : '/' + currentPanelImg);
+          prevImg.style.display = 'block';
+        }
+        if (prevNone) prevNone.style.display = 'none';
+        if (prevTxt) prevTxt.textContent = 'Gambar ' + panel.toUpperCase() + ': ' + currentPanelImg;
+      } else {
+        if (prevImg) prevImg.style.display = 'none';
+        if (prevNone) prevNone.style.display = 'block';
+        if (prevTxt) prevTxt.textContent = 'Panel ' + panel.toUpperCase() + ' (Menggunakan Ilustrasi Bawaan)';
       }
     }
 

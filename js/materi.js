@@ -2185,7 +2185,7 @@ function renderStepMulai(lesson) {
 }
 
 // ----------------------------------------------------
-// STEP 2: KOMIK / KASUS DIALOG
+// STEP 2: KOMIK / KASUS DIALOG (MULTI-PANEL COMIC STRIP)
 // ----------------------------------------------------
 function renderStepKomik(lesson) {
   // Ambil data database terbaru jika tersedia
@@ -2194,16 +2194,88 @@ function renderStepKomik(lesson) {
   const audioText = dbLesson.audio_text || lesson.audio_text;
   const audioLabel = dbLesson.audio_label || lesson.audio_label || 'Dengarkan Pelafalan Komik';
 
-  // 1. Jika ada gambar komik yang diunggah guru (misal file uploads/ atau gambar kustom bukan default SVG Pelajaran 1)
-  const hasCustomUpload = comicImage && (
-    comicImage.startsWith('uploads/') || 
-    comicImage.startsWith('data:') || 
-    comicImage.startsWith('http') ||
-    (comicImage.startsWith('img/') && comicImage !== 'img/comic_ramen.svg' && lesson.id === 1) ||
-    (lesson.id !== 1 && !comicImage.includes('default'))
-  );
+  // Parse panel data (jika berupa JSON multi-panel atau string tunggal)
+  let panel1 = null, panel2 = null, panel3 = null, panel4 = null;
+  let isSingleFullComic = false;
 
-  if (hasCustomUpload) {
+  if (comicImage) {
+    try {
+      const parsed = JSON.parse(comicImage);
+      if (parsed && typeof parsed === 'object') {
+        panel1 = parsed.panel1 || parsed['1'] || null;
+        panel2 = parsed.panel2 || parsed['2'] || null;
+        panel3 = parsed.panel3 || parsed['3'] || null;
+        panel4 = parsed.panel4 || parsed['4'] || null;
+        if (parsed.full) isSingleFullComic = true;
+      }
+    } catch (e) {
+      // String biasa:
+      // Jika Modul 1: string upload otomatis dipetakan ke Panel 1 agar Panel 2, 3, dan 4 tetap utuh!
+      if (lesson.id === 1) {
+        panel1 = comicImage;
+      } else {
+        isSingleFullComic = true;
+      }
+    }
+  }
+
+  // 1. Modul 1 (atau modul yang memiliki template strip komik ber-panel)
+  if (lesson.id === 1) {
+    const sourceEl = document.getElementById('step-content-komik');
+    let comicHtml = '';
+    if (sourceEl) {
+      const clone = sourceEl.cloneNode(true);
+      const artWraps = clone.querySelectorAll('.manga-panel-art-wrap');
+
+      // Ganti gambar Panel 1 jika ada upload kustom
+      if (panel1 && artWraps[0]) {
+        artWraps[0].innerHTML = `<img src="${escapeHtml(panel1)}" alt="Panel 1" class="manga-panel-img" /><div class="manga-panel-num-tag">1</div>`;
+      }
+      // Ganti gambar Panel 2 jika ada upload kustom
+      if (panel2 && artWraps[1]) {
+        artWraps[1].innerHTML = `<img src="${escapeHtml(panel2)}" alt="Panel 2" class="manga-panel-img" /><div class="manga-panel-num-tag">2</div>`;
+      }
+      // Ganti gambar Panel 3 jika ada upload kustom
+      if (panel3 && artWraps[2]) {
+        artWraps[2].innerHTML = `<img src="${escapeHtml(panel3)}" alt="Panel 3" class="manga-panel-img" /><div class="manga-panel-num-tag">3</div>`;
+      }
+      // Ganti gambar Panel 4 jika ada upload kustom
+      if (panel4 && artWraps[3]) {
+        artWraps[3].innerHTML = `<img src="${escapeHtml(panel4)}" alt="Panel 4" class="manga-panel-img" /><div class="manga-panel-num-tag">4</div>`;
+      }
+
+      comicHtml = clone.innerHTML;
+    }
+
+    return `
+      <div class="step-header-banner">
+        <span class="step-label-pill">Langkah 2 • Komik</span>
+        <h2 class="step-main-title">${escapeHtml(dbLesson.title || lesson.title)}</h2>
+        <p class="step-desc-text">${escapeHtml(dbLesson.subtitle || lesson.subtitle || 'Simak cerita petualangan Rin di Jepang:')}</p>
+      </div>
+
+      <div class="nihongo-study-card">
+        ${comicHtml}
+
+        ${audioText ? `
+          <div style="background:#FFFBF6; border:1.5px solid #FDE68A; border-radius:14px; padding:0.9rem 1.1rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.4rem; text-align:left;">
+            <div>
+              <div style="font-size:0.75rem; font-weight:800; color:#B45309; text-transform:uppercase; letter-spacing:0.5px;">Audio Percakapan Komik</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#2D2520;">${escapeHtml(audioLabel)}</div>
+            </div>
+            <button type="button" class="btn-audio-listen" onclick="speakJapanese('${escapeHtml(audioText).replace(/'/g, "\\'")}')" style="background:#D9383A; color:#FFFFFF; border:none; border-radius:10px; padding:0.55rem 1rem; font-size:0.82rem; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem; flex-shrink:0;">
+              <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:#FFFFFF; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              <span>Dengar Dialog</span>
+            </button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  // 2. Jika Pelajaran selain 1 dan ada gambar komik kustom (single image)
+  if (comicImage && (comicImage.startsWith('uploads/') || comicImage.startsWith('data:') || comicImage.startsWith('http') || isSingleFullComic)) {
+    const singleImg = (comicImage.startsWith('{') && panel1) ? panel1 : comicImage;
     return `
       <div class="step-header-banner">
         <span class="step-label-pill">Langkah 2 • Komik</span>
@@ -2214,7 +2286,7 @@ function renderStepKomik(lesson) {
       <div class="nihongo-study-card">
         <div class="manga-custom-comic-box" style="background:#FFFFFF; border:2px solid #E2E8F0; border-radius:18px; padding:1.2rem; text-align:center; box-shadow:0 4px 16px rgba(15,23,42,0.06);">
           <div style="margin-bottom:1rem; border-radius:14px; overflow:hidden; border:1.5px solid #CBD5E1; background:#F8FAFC;">
-            <img src="${escapeHtml(comicImage)}" alt="Komik Materi" style="width:100%; max-width:850px; height:auto; display:block; margin:0 auto; object-fit:contain;" />
+            <img src="${escapeHtml(singleImg)}" alt="Komik Materi" style="width:100%; max-width:850px; height:auto; display:block; margin:0 auto; object-fit:contain;" />
           </div>
 
           ${audioText ? `
@@ -2234,26 +2306,7 @@ function renderStepKomik(lesson) {
     `;
   }
 
-  // 2. Hanya gunakan komik bawaan SVG multi-panel jika Pelajaran 1 tanpa upload kustom
-  if (lesson.id === 1) {
-    const sourceEl = document.getElementById('step-content-komik');
-    let comicHtml = '';
-    if (sourceEl) comicHtml = sourceEl.innerHTML;
-
-    return `
-      <div class="step-header-banner">
-        <span class="step-label-pill">Langkah 2 • Komik</span>
-        <h2 class="step-main-title">Pengalaman Pertama Rin di Jepang</h2>
-        <p class="step-desc-text">Rin si shiba akhirnya tiba di Jepang, dengan surat tua kakeknya dan sebuah foto lama di dalam ranselnya!</p>
-      </div>
-
-      <div class="nihongo-study-card">
-        ${comicHtml}
-      </div>
-    `;
-  }
-
-  // 3. Pelajaran 2 dan seterusnya: Render kasus percakapan Rin & Guru Kucing yang sesuai modul
+  // 3. Fallback: Dialog percakapan interaktif Rin & Guru Kucing
   return renderLessonDynamicComic(dbLesson);
 }
 

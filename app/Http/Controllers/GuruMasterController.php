@@ -346,15 +346,50 @@ class GuruMasterController extends Controller
             $updateData['accent_color'] = $validated['accent_color'];
         }
 
+        $targetPanel = $request->input('target_panel', 'panel1');
+
+        // Decode existing comic panels if JSON, or map string to panel1
+        $comicData = [];
+        if (!empty($lesson->comic_image)) {
+            $parsed = json_decode($lesson->comic_image, true);
+            if (is_array($parsed)) {
+                $comicData = $parsed;
+            } else {
+                $comicData['panel1'] = $lesson->comic_image;
+            }
+        }
+
         if ($request->input('remove_comic_image') === '1' || $request->input('remove_comic_image') === 'true') {
-            $updateData['comic_image'] = null;
+            $targetToRemove = $request->input('remove_target', 'all');
+            if ($targetToRemove === 'all') {
+                $updateData['comic_image'] = null;
+            } else {
+                unset($comicData[$targetToRemove]);
+                $updateData['comic_image'] = !empty($comicData) ? json_encode($comicData) : null;
+            }
         } elseif ($request->hasFile('comic_file')) {
             $file = $request->file('comic_file');
-            $filename = 'lesson_' . $lesson->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $filename = 'lesson_' . $lesson->id . '_' . $targetPanel . '_' . time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads/lessons'), $filename);
-            $updateData['comic_image'] = 'uploads/lessons/' . $filename;
+
+            if ($targetPanel === 'full') {
+                $updateData['comic_image'] = 'uploads/lessons/' . $filename;
+            } else {
+                $comicData[$targetPanel] = 'uploads/lessons/' . $filename;
+                $updateData['comic_image'] = json_encode($comicData);
+            }
         } elseif (array_key_exists('comic_image', $validated)) {
-            $updateData['comic_image'] = !empty($validated['comic_image']) ? trim($validated['comic_image']) : null;
+            $val = !empty($validated['comic_image']) ? trim($validated['comic_image']) : null;
+            if ($val && !str_starts_with($val, '{')) {
+                if ($targetPanel !== 'full') {
+                    $comicData[$targetPanel] = $val;
+                    $updateData['comic_image'] = json_encode($comicData);
+                } else {
+                    $updateData['comic_image'] = $val;
+                }
+            } else {
+                $updateData['comic_image'] = $val;
+            }
         }
 
         $lesson->update($updateData);
