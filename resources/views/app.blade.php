@@ -7,10 +7,10 @@
   <title>SIJapanese - Belajar Bahasa Jepang Interaktif</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@500;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20261103_sakura" />
+  <link rel="stylesheet" href="css/style.css?v=20261109_singlecol" />
   <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
   <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261109_singlecol" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     html, body {
