@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Sensei Tanaka',
                 'password' => Hash::make('password'),
                 'role' => 'guru',
-                'avatar' => 'avatar_tanaka.svg',
+                'avatar' => 'img/avatar_default.svg',
                 'score' => 999,
             ]
         );
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Kenji Pratama',
                 'password' => Hash::make('password'),
                 'role' => 'siswa',
-                'avatar' => 'avatar_anggata.svg',
+                'avatar' => 'img/avatar_default.svg',
                 'score' => 150,
                 'completed_lessons' => [1],
             ]
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Aoi Sakura',
                 'password' => Hash::make('password'),
                 'role' => 'siswa',
-                'avatar' => 'avatar_aoi.svg',
+                'avatar' => 'img/avatar_default.svg',
                 'score' => 75,
                 'completed_lessons' => [],
             ]
@@ -73,7 +73,8 @@ class DatabaseSeeder extends Seeder
         );
 
         // 3. Modul Pelajaran (8 Modul)
-        $lessonsData = [
+        $lessonsData = json_decode(<<<'JSON'
+        [
         {
                 "id": 1,
                 "level_id": 1,
@@ -1174,7 +1175,9 @@ class DatabaseSeeder extends Seeder
                         }
                 ]
         }
-];
+]
+JSON
+, true);
 
         foreach ($lessonsData as $ld) {
             MateriLesson::updateOrCreate(['id' => $ld['id']], [
@@ -1199,7 +1202,8 @@ class DatabaseSeeder extends Seeder
 
         // 4. Soal Quest Kuis (23 Soal Lengkap Bergambar & Dialog Audio)
         LessonQuest::query()->delete();
-        $questsData = [
+        $questsData = json_decode(<<<'JSON'
+        [
         {
                 "id": 1,
                 "lesson_id": 1,
@@ -1982,7 +1986,9 @@ class DatabaseSeeder extends Seeder
                 "explanation": "Saat menghadapi kendala bahasa di Jepang, bertanyalah dengan sopan: 「英語が話せますか？」(Apakah Anda bisa bahasa Inggris?).",
                 "points": 25
         }
-];
+]
+JSON
+, true);
 
         foreach ($questsData as $q) {
             LessonQuest::create([

@@ -11,7 +11,7 @@ const DEMO_ACCOUNTS = {
     email: 'guru@sijapanese.sch.id',
     password: 'password',
     role: 'guru',
-    avatar: 'img/avatar_tanaka.svg',
+    avatar: 'img/avatar_default.svg',
     reg_no: 'SIJ-2026-GURU01',
     nationality: 'JAPAN',
     gender: 'Laki-laki (MALE)',
@@ -98,8 +98,7 @@ function getSavedUser() {
       const parsed = JSON.parse(saved);
       if (parsed && parsed.email) {
         if (!parsed.avatar || parsed.avatar.length <= 4) {
-          if (parsed.role === 'guru') parsed.avatar = 'img/avatar_tanaka.svg';
-          else parsed.avatar = 'img/avatar_default.svg';
+          parsed.avatar = 'img/avatar_default.svg';
         }
         return parsed;
       }
@@ -168,7 +167,7 @@ function renderUserWidget() {
 
   const isGuru = currentUser.role === 'guru';
   const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'User';
-  const avatarPath = currentUser.avatar || (isGuru ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg');
+  const avatarPath = currentUser.avatar || 'img/avatar_default.svg';
 
   container.innerHTML = `
     <div class="nav-auth-wrap">
@@ -511,7 +510,7 @@ function pickNextAvatar() {
 }
 
 function setAnonymousAvatar() {
-  const defaultAvatar = currentUser?.role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg';
+  const defaultAvatar = 'img/avatar_default.svg';
   if (currentUser) {
     currentUser.avatar = defaultAvatar;
   }

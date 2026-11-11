@@ -135,7 +135,7 @@ class AuthController extends Controller
                 'email' => $targetEmail,
                 'password' => Hash::make('password'),
                 'role' => $role,
-                'avatar' => $role === 'guru' ? 'img/avatar_tanaka.svg' : 'img/avatar_anggata.svg',
+                'avatar' => 'img/avatar_default.svg',
                 'reg_no' => $role === 'guru' ? 'SIJ-2026-GURU01' : 'JFT-2026-51720',
                 'class_room' => $role === 'guru' ? 'Master Pengajar' : 'Kelas X-A',
                 'score' => $role === 'guru' ? 999 : 150,

@@ -1816,7 +1816,7 @@
       <div onclick="openModal('modal-edit-guru-profile')" title="Klik untuk edit profil guru" style="display:inline-flex; align-items:center; gap:0.55rem; background:#F8FAFC; border:1.5px solid #E2E8F0; padding:0.35rem 0.75rem; border-radius:var(--radius-pill); cursor:pointer; transition:all 0.2s ease;" onmouseover="this.style.borderColor='#BA3D27'; this.style.background='#FFFBF6'" onmouseout="this.style.borderColor='#E2E8F0'; this.style.background='#F8FAFC'">
         <div class="guru-avatar-circle" style="overflow:hidden;">
           @php
-            $gAvatar = auth()->user()->avatar ?? 'img/avatar_tanaka.svg';
+            $gAvatar = auth()->user()->avatar ?? 'img/avatar_default.svg';
           @endphp
           @if(str_contains($gAvatar, '/') || str_contains($gAvatar, '.svg') || str_contains($gAvatar, '.png'))
             <img src="{{ asset($gAvatar) }}" alt="Sensei Tanaka" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;" />
@@ -2501,7 +2501,7 @@
                     <div style="display:flex; align-items:center; gap:0.65rem;">
                       <div style="width:36px; height:36px; border-radius:50%; overflow:hidden; flex-shrink:0; border:1.5px solid #CBD5E1; background:#F8FAFC; display:flex; align-items:center; justify-content:center;">
                         @php
-                          $sAv = $asm->user->avatar ?? 'img/avatar_anggata.svg';
+                          $sAv = $asm->user->avatar ?? 'img/avatar_default.svg';
                         @endphp
                         @if(str_contains($sAv, '/') || str_contains($sAv, '.svg') || str_contains($sAv, '.png'))
                           <img src="{{ asset($sAv) }}" alt="{{ $asm->user->name ?? 'Siswa' }}" style="width:100%; height:100%; object-fit:cover;" />
@@ -2630,7 +2630,7 @@
                     <div style="display:flex; align-items:center; gap:0.65rem;">
                       <div style="width:36px; height:36px; border-radius:50%; overflow:hidden; flex-shrink:0; border:1.5px solid #CBD5E1; background:#F8FAFC; display:flex; align-items:center; justify-content:center;">
                         @php
-                          $stdAv = $std->avatar ?? 'img/avatar_anggata.svg';
+                          $stdAv = $std->avatar ?? 'img/avatar_default.svg';
                         @endphp
                         @if(str_contains($stdAv, '/') || str_contains($stdAv, '.svg') || str_contains($stdAv, '.png'))
                           <img src="{{ asset($stdAv) }}" alt="{{ $std->name }}" style="width:100%; height:100%; object-fit:cover;" />
@@ -2781,7 +2781,7 @@
         <div style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; margin-bottom:1.4rem; padding:1.1rem; background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:18px;">
           <div style="width:84px; height:84px; border-radius:50%; border:3px solid #BA3D27; overflow:hidden; box-shadow:0 4px 14px rgba(186,61,39,0.2); background:#FFFFFF; display:flex; align-items:center; justify-content:center;">
             @php
-              $curAvatar = auth()->user()->avatar ?? 'img/avatar_tanaka.svg';
+              $curAvatar = auth()->user()->avatar ?? 'img/avatar_default.svg';
               if (!str_starts_with($curAvatar, 'img/') && !str_starts_with($curAvatar, '/')) {
                 $curAvatar = 'img/' . $curAvatar;
               }
@@ -2790,6 +2790,7 @@
           </div>
           <div style="font-size:0.82rem; font-weight:800; color:#334155;">Pasfoto Formal Guru Pengajar (3x4)</div>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+            <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_default.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Foto Anonim</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_tanaka.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Tanaka</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_anggata.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Angga</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_aoi.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Aoi</button>

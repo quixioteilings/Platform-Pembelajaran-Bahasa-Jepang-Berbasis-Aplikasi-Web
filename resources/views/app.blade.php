@@ -2537,7 +2537,7 @@
     @if(auth()->check())
       @php
         $authUser = auth()->user();
-        $avatarRaw = $authUser->avatar ?: ($authUser->isGuru() ? 'img/avatar_tanaka.svg' : 'img/avatar_default.svg');
+        $avatarRaw = $authUser->avatar ?: 'img/avatar_default.svg';
         $avatarUrl = (str_starts_with($avatarRaw, 'http://') || str_starts_with($avatarRaw, 'https://') || str_starts_with($avatarRaw, 'data:'))
           ? $avatarRaw 
           : asset($avatarRaw);

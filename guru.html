@@ -1812,7 +1812,7 @@
     <div class="guru-profile-bar">
       <div onclick="openModal('modal-edit-guru-profile')" title="Klik untuk edit profil guru" style="display:inline-flex; align-items:center; gap:0.55rem; background:#F8FAFC; border:1.5px solid #E2E8F0; padding:0.35rem 0.75rem; border-radius:9999px; cursor:pointer; transition:all 0.2s ease;">
         <div class="guru-avatar-circle" style="overflow:hidden;">
-          <img id="nav-guru-avatar-img" src="img/avatar_tanaka.svg" alt="Sensei Tanaka" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;" />
+          <img id="nav-guru-avatar-img" src="img/avatar_default.svg" alt="Sensei Tanaka" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;" />
         </div>
         <div class="guru-info-text">
           <span class="guru-name">
@@ -2239,15 +2239,16 @@
         <!-- Pasfoto Formal Guru 3x4 -->
         <div style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; margin-bottom:1.4rem; padding:1.1rem; background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:18px;">
           <div style="width:84px; height:84px; border-radius:50%; border:3px solid #BA3D27; overflow:hidden; box-shadow:0 4px 14px rgba(186,61,39,0.2); background:#FFFFFF; display:flex; align-items:center; justify-content:center;">
-            <img id="guru-profile-avatar-preview" src="img/avatar_tanaka.svg" alt="Avatar Preview" style="width:100%; height:100%; object-fit:cover;" />
+            <img id="guru-profile-avatar-preview" src="img/avatar_default.svg" alt="Avatar Preview" style="width:100%; height:100%; object-fit:cover;" />
           </div>
           <div style="font-size:0.82rem; font-weight:800; color:#334155;">Pasfoto Formal Guru Pengajar (3x4)</div>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+            <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_default.svg')">Foto Anonim</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_tanaka.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Tanaka</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_anggata.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Angga</button>
             <button type="button" class="btn-preset" onclick="setGuruAvatar('img/avatar_aoi.svg')" style="font-size:0.8rem; padding:0.4rem 0.85rem; font-weight:700;">Sensei Aoi</button>
           </div>
-          <input type="hidden" id="guru-avatar-input" value="img/avatar_tanaka.svg" />
+          <input type="hidden" id="guru-avatar-input" value="img/avatar_default.svg" />
         </div>
 
         <div class="form-group" style="margin-bottom:1.1rem;">
@@ -3534,7 +3535,7 @@
       e.preventDefault();
       const name = (document.getElementById('guru-name-input')?.value || '').trim();
       const email = (document.getElementById('guru-email-input')?.value || '').trim();
-      const avatar = document.getElementById('guru-avatar-input')?.value || 'img/avatar_tanaka.svg';
+      const avatar = document.getElementById('guru-avatar-input')?.value || 'img/avatar_default.svg';
       const password = document.getElementById('guru-password-input')?.value || '';
 
       if (!name) {
