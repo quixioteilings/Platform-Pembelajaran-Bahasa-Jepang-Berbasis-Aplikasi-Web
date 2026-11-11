@@ -1044,6 +1044,9 @@ function getVocabListByCategory(catKey) {
 }
 
 function initVocabularySystem() {
+  if (!currentVocabCategory || !VOCAB_CATEGORIES_CONFIG.some(c => c.key === currentVocabCategory)) {
+    currentVocabCategory = 'all';
+  }
   renderVocabCategoriesBar();
   switchVocabMode(activeVocabMode || 'explore');
 }
@@ -1094,6 +1097,11 @@ function renderVocabCategoriesBar() {
 }
 
 function selectVocabCategory(catKey) {
+  if (catKey === 'numbers') catKey = 'numbers_time';
+  if (catKey === 'jlpt_n5') catKey = 'all';
+  if (!catKey || !VOCAB_CATEGORIES_CONFIG.some(c => c.key === catKey)) {
+    catKey = 'all';
+  }
   currentVocabCategory = catKey;
   renderVocabCategoriesBar();
   renderVocabExplore();
@@ -5616,5 +5624,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFloatingCards();
   renderCharGrid('hiragana', 'Semua');
   renderCharGrid('katakana', 'Semua');
-  showVocabCategory('numbers');
+  initVocabularySystem();
 });
