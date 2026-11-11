@@ -793,18 +793,13 @@
                 <span>ア</span>
                 <span>Latihan Katakana (104 Aksara)</span>
               </button>
-              <button class="btn-mission-shortcut shortcut-travel" onclick="selectLevelTab('n5')">
-                <span></span>
-                <span>Modul Kursus N5 SMK</span>
-              </button>
             </div>
           </div>
 
-          <!-- Level Navigation (Fokus Kurikulum N5 Fondasi Siswa SMK) -->
+          <!-- Level Navigation -->
           <div class="materi-level-nav" id="materi-level-nav">
             <button class="materi-level-btn lvl-n5 active" onclick="selectLevelTab('n5')">
-              <span class="lvl-name">Level JLPT N5</span>
-              <span class="lvl-sub">Kurikulum Dasar Terstruktur untuk Siswa SMK</span>
+              <span class="lvl-name">N5</span>
             </button>
           </div>
 
