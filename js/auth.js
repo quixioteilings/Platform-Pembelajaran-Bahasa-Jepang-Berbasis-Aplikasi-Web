@@ -449,7 +449,7 @@ function openProfileModal() {
   if (roleIconWrap) {
     roleIconWrap.innerHTML = renderAvatarHtml(currentUser.avatar, currentUser.name, 'prof-role-avatar-thumb');
   }
-  if (roleTitle) roleTitle.textContent = isGuru ? 'Guru Pengajar (Master)' : 'Siswa Belajar';
+  if (roleTitle) roleTitle.textContent = isGuru ? 'Guru Pengajar' : 'Siswa Belajar';
   if (roleEmail) roleEmail.textContent = currentUser.email || '';
   if (roleBadge) {
     roleBadge.textContent = isGuru ? 'Guru' : 'Siswa Aktif';

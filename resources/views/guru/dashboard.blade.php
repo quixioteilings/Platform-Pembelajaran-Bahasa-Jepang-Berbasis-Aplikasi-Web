@@ -2847,7 +2847,7 @@
         {{ session('success') ?? 'Data profil Guru Anda telah berhasil disimpan ke database.' }}
       </p>
       <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; text-align: left;">
-        <div style="font-size: 0.78rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; margin-bottom: 0.35rem;">Informasi Akun Master Terkini:</div>
+        <div style="font-size: 0.78rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; margin-bottom: 0.35rem;">Informasi Akun Guru Terkini:</div>
         <div style="font-size: 0.95rem; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 0.5rem;">
           <span>Nama:</span>
           <span id="modal-profile-success-name">{{ auth()->user()->name ?? 'Sensei Tanaka' }}</span>
