@@ -2551,10 +2551,8 @@
         score: {{ $authUser->score ?? 0 }},
         reg_no: {!! json_encode($authUser->reg_no ?: ($authUser->isGuru() ? 'SIJ-2026-GURU01' : 'JFT-2026-51720')) !!},
         class_room: {!! json_encode($authUser->class_room ?: ($authUser->isGuru() ? 'Master Guru' : 'Kelas X-A')) !!},
-        nationality: {!! json_encode($authUser->nationality ?: ($authUser->isGuru() ? 'JAPAN' : 'INDONESIA')) !!},
         gender: {!! json_encode($authUser->gender ?: 'Laki-laki (MALE)') !!},
-        birthdate: {!! json_encode($authUser->birthdate ?: '2007-09-16') !!},
-        target_level: {!! json_encode($authUser->target_level ?: ($authUser->isGuru() ? 'Pengajar (N1 - N5)' : 'JLPT N5 (Dasar 1)')) !!}
+        birthdate: {!! json_encode($authUser->birthdate ?: '2007-09-16') !!}
       };
     @else
       window.LARAVEL_USER = null;

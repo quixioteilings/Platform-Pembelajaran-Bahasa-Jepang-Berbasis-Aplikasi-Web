@@ -13,10 +13,8 @@ const DEMO_ACCOUNTS = {
     role: 'guru',
     avatar: 'img/avatar_default.svg',
     reg_no: 'SIJ-2026-GURU01',
-    nationality: 'JAPAN',
     gender: 'Laki-laki (MALE)',
     birthdate: '1988/04/12',
-    target_level: 'Pengajar (N1 - N5)',
     class_room: 'Master Guru',
     score: 999,
     completed_quests: 12
@@ -29,10 +27,8 @@ const DEMO_ACCOUNTS = {
     role: 'siswa',
     avatar: 'img/avatar_anggata.svg',
     reg_no: 'JFT-2026-51720',
-    nationality: 'INDONESIA',
     gender: 'Laki-laki (MALE)',
     birthdate: '2007/09/16',
-    target_level: 'JLPT N5 (Dasar 1)',
     class_room: 'Kelas X-A',
     score: 1250,
     completed_quests: 4
@@ -45,10 +41,8 @@ const DEMO_ACCOUNTS = {
     role: 'siswa',
     avatar: 'img/avatar_aoi.svg',
     reg_no: 'JFT-2026-51721',
-    nationality: 'INDONESIA',
     gender: 'Perempuan (FEMALE)',
     birthdate: '2008/01/20',
-    target_level: 'JLPT N4 (Dasar 2)',
     class_room: 'Kelas X-B',
     score: 480,
     completed_quests: 2
@@ -336,22 +330,6 @@ function injectAuthModals() {
               </div>
             </div>
 
-            <div class="sij-form-row">
-              <div class="sij-form-group">
-                <label for="prof-nat">Kewarganegaraan:</label>
-                <input type="text" id="prof-nat" class="sij-form-input" value="INDONESIA" />
-              </div>
-              <div class="sij-form-group">
-                <label for="prof-level">Target Tingkat Belajar:</label>
-                <select id="prof-level" class="sij-form-input sij-form-select">
-                  <option value="JLPT N5 (Dasar 1)">JLPT N5 (Dasar 1)</option>
-                  <option value="JLPT N4 (Dasar 2)">JLPT N4 (Dasar 2)</option>
-                  <option value="JLPT N3 (Menengah)">JLPT N3 (Menengah)</option>
-                  <option value="Pengajar (N1 - N5)">Pengajar (N1 - N5)</option>
-                </select>
-              </div>
-            </div>
-
             <!-- Akses Master Guru jika akun guru -->
             <div id="guru-shortcut-area" style="display:none;" class="guru-access-box">
               <div>
@@ -437,9 +415,7 @@ function openProfileModal() {
 
   document.getElementById('prof-nama').value = currentUser.name || '';
   document.getElementById('prof-reg').value = currentUser.reg_no || (isGuru ? 'SIJ-2026-GURU01' : 'JFT-2026-51720');
-  document.getElementById('prof-nat').value = currentUser.nationality || (isGuru ? 'JAPAN' : 'INDONESIA');
   document.getElementById('prof-gender').value = currentUser.gender || 'Laki-laki (MALE)';
-  document.getElementById('prof-level').value = currentUser.target_level || (isGuru ? 'Pengajar (N1 - N5)' : 'JLPT N5 (Dasar 1)');
   
   const classField = document.getElementById('prof-class');
   if (classField) {
@@ -525,9 +501,7 @@ async function saveProfileModal(e) {
 
   currentUser.name = document.getElementById('prof-nama').value.trim();
   currentUser.reg_no = document.getElementById('prof-reg').value.trim();
-  currentUser.nationality = document.getElementById('prof-nat').value.trim();
   currentUser.gender = document.getElementById('prof-gender').value;
-  currentUser.target_level = document.getElementById('prof-level').value;
   
   const classField = document.getElementById('prof-class');
   if (classField) {
