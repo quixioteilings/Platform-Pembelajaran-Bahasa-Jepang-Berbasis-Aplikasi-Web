@@ -139,7 +139,7 @@
             <div class="stat-divider"></div>
             <div class="stat-item">
               <span class="stat-number">200+</span>
-              <span class="stat-label">Kosakata Praktis N5</span>
+              <span class="stat-label">Kosakata</span>
             </div>
           </div>
         </div>
@@ -227,10 +227,10 @@
               <div class="feature-icon-wrap yellow-icon">
                 <svg viewBox="0 0 24 24" class="svg-icon-large"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
               </div>
-              <div class="feature-badge yellow-badge">200+ Kosakata N5</div>
+              <div class="feature-badge yellow-badge">200+ Kosakata</div>
             </div>
-            <h3>Kosakata Praktis N5</h3>
-            <p>Pelajari kosakata sehari-hari N5: salam, kata tanya, makanan &amp; minuman, kata kerja harian, kata sifat, sekolah, angka &amp; waktu.</p>
+            <h3>Kosakata</h3>
+            <p>Pelajari kosakata sehari-hari: salam, kata tanya, makanan &amp; minuman, kata kerja harian, kata sifat, sekolah, angka &amp; waktu.</p>
             <div class="feature-footer">
               <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -460,7 +460,7 @@
             <div class="vocab-deck-selector-row">
               <label class="vocab-control-label">Pilih Kategori Deck:</label>
               <select id="vocab-flashcard-deck-select" class="vocab-select-control" onchange="changeFlashcardDeck(this.value)">
-                <option value="all" selected>Semua Kosakata N5</option>
+                <option value="all" selected>Semua Kosakata</option>
                 <option value="greetings">Salam &amp; Sapaan</option>
                 <option value="questions">Kata Tanya &amp; Bertanya</option>
                 <option value="food">Makanan &amp; Minuman</option>
@@ -622,8 +622,8 @@
 
             <div class="vocab-packet-card" onclick="selectVocabQuizPacket('mixed')">
               <div class="vocab-packet-badge">TANTANGAN</div>
-              <h3>Campuran Semua Kosakata N5</h3>
-              <p>10 Soal acak komprehensif dari seluruh perbendaharaan N5.</p>
+              <h3>Campuran Semua Kosakata</h3>
+              <p>10 Soal acak komprehensif dari seluruh perbendaharaan kosakata.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>

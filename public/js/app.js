@@ -1006,7 +1006,7 @@ let currentVocabCategory = 'all';
 let currentVocabSearchQuery = '';
 
 const VOCAB_CATEGORIES_CONFIG = [
-  { key: 'all', label: 'Semua Kosakata N5' },
+  { key: 'all', label: 'Semua Kosakata' },
   { key: 'greetings', label: 'Salam & Sapaan' },
   { key: 'questions', label: 'Kata Tanya' },
   { key: 'food', label: 'Makanan & Minuman' },
@@ -1380,7 +1380,7 @@ const VOCAB_QUIZ_PACKET_NAMES = {
   numbers_time: 'Angka, Hari & Waktu',
   family: 'Keluarga & Panggilan',
   places: 'Tempat & Transportasi',
-  mixed: 'Tantangan Campuran Semua N5'
+  mixed: 'Campuran Semua Kosakata'
 };
 
 function backToVocabLobby() {
