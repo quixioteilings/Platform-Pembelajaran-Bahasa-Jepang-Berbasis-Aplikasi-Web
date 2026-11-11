@@ -527,6 +527,7 @@ function updateProgressBars() {
   const vo = state.learnedVocab.size;
   const totalHi = (typeof HIRAGANA !== 'undefined') ? HIRAGANA.length : 104;
   const totalKa = (typeof KATAKANA !== 'undefined') ? KATAKANA.length : 104;
+  const totalVo = (typeof getAllVocabList === 'function') ? Math.max(getAllVocabList().length, 1) : 200;
 
   const hit = document.getElementById('hiragana-progress-text');
   const kat = document.getElementById('katakana-progress-text');
@@ -534,7 +535,7 @@ function updateProgressBars() {
 
   if (hit) hit.textContent = hi + ' / ' + totalHi;
   if (kat) kat.textContent = ka + ' / ' + totalKa;
-  if (vot) vot.textContent = vo + ' / 50';
+  if (vot) vot.textContent = vo + ' / ' + totalVo;
 
   const hib = document.getElementById('hiragana-progress-bar');
   const kab = document.getElementById('katakana-progress-bar');
@@ -550,7 +551,7 @@ function updateProgressBars() {
   setTimeout(() => {
     if (hib) hib.style.width = Math.min(hi / totalHi * 100, 100) + '%';
     if (kab) kab.style.width = Math.min(ka / totalKa * 100, 100) + '%';
-    if (vob) vob.style.width = Math.min(vo / 50 * 100, 100) + '%';
+    if (vob) vob.style.width = Math.min(vo / totalVo * 100, 100) + '%';
     if (gamesb) {
       const activeScoreCount = (msHigh > 0 ? 1 : 0) + (blastHigh > 0 ? 1 : 0);
       gamesb.style.width = (activeScoreCount * 50) + '%';
@@ -1016,16 +1017,16 @@ let currentVocabCategory = 'all';
 let currentVocabSearchQuery = '';
 
 const VOCAB_CATEGORIES_CONFIG = [
-  { key: 'all', label: 'Semua Kosakata' },
-  { key: 'jlpt_n5', label: 'JLPT N5' },
-  { key: 'jlpt_n4', label: 'JLPT N4' },
-  { key: 'travel', label: 'Wisata & Stasiun' },
-  { key: 'verbs', label: 'Kata Kerja' },
+  { key: 'all', label: 'Semua Kosakata N5' },
+  { key: 'greetings', label: 'Salam & Sapaan' },
+  { key: 'questions', label: 'Kata Tanya' },
+  { key: 'food', label: 'Makanan & Minuman' },
+  { key: 'verbs', label: 'Kata Kerja Harian' },
   { key: 'adjectives', label: 'Kata Sifat' },
-  { key: 'food', label: 'Makanan' },
-  { key: 'greetings', label: 'Sapaan' },
+  { key: 'school', label: 'Sekolah & Benda Kelas' },
+  { key: 'numbers_time', label: 'Angka & Waktu' },
   { key: 'family', label: 'Keluarga' },
-  { key: 'numbers', label: 'Angka' }
+  { key: 'places', label: 'Tempat & Transportasi' }
 ];
 
 function getAllVocabList() {
@@ -1236,7 +1237,7 @@ let isFlashcardFlipped = false;
 
 function initFlashcardMode() {
   const select = document.getElementById('vocab-flashcard-deck-select');
-  const deckKey = select ? select.value : 'jlpt_n5';
+  const deckKey = select ? select.value : 'all';
   changeFlashcardDeck(deckKey);
 }
 window.initFlashcardMode = initFlashcardMode;
@@ -1376,17 +1377,21 @@ let currentVocabQuizIndex = 0;
 let vocabQuizLiveScore = 0;
 let vocabQuizCorrectCount = 0;
 let vocabQuizWrongCount = 0;
-let vocabQuizActivePacket = 'jlpt_n5';
-let vocabQuizActivePacketTitle = 'Kosakata Dasar';
+let vocabQuizActivePacket = 'greetings';
+let vocabQuizActivePacketTitle = 'Salam & Sapaan Sehari-hari';
 let isVocabQuizAnswerLocked = false;
 
 const VOCAB_QUIZ_PACKET_NAMES = {
-  jlpt_n5: 'Kosakata Dasar Sehari-hari',
-  jlpt_n4: 'Percakapan & Situasi Praktis',
-  travel: 'Wisata, Stasiun & Jalan',
-  verbs: 'Kata Kerja Sehari-hari',
-  adjectives: 'Kata Sifat & Keadaan',
-  mixed: 'Campuran Semua Kosakata'
+  greetings: 'Salam & Sapaan Sehari-hari',
+  questions: 'Kata Tanya & Interaksi',
+  food: 'Makanan & Minuman Praktis',
+  verbs: 'Kata Kerja Harian N5',
+  adjectives: 'Kata Sifat & Kondisi',
+  school: 'Sekolah & Perlengkapan Belajar',
+  numbers_time: 'Angka, Hari & Waktu',
+  family: 'Keluarga & Panggilan',
+  places: 'Tempat & Transportasi',
+  mixed: 'Tantangan Campuran Semua N5'
 };
 
 function backToVocabLobby() {

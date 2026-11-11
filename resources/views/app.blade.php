@@ -138,8 +138,8 @@
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
-              <span class="stat-number">100+</span>
-              <span class="stat-label">Kosakata Praktis</span>
+              <span class="stat-number">200+</span>
+              <span class="stat-label">Kosakata Praktis N5</span>
             </div>
           </div>
         </div>
@@ -227,10 +227,10 @@
               <div class="feature-icon-wrap yellow-icon">
                 <svg viewBox="0 0 24 24" class="svg-icon-large"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
               </div>
-              <div class="feature-badge yellow-badge">100+ Kosakata</div>
+              <div class="feature-badge yellow-badge">200+ Kosakata N5</div>
             </div>
-            <h3>Kosakata Praktis</h3>
-            <p>Pelajari kosakata sehari-hari: angka, warna, anggota keluarga, kuliner, dan ungkapan salam.</p>
+            <h3>Kosakata Praktis N5</h3>
+            <p>Pelajari kosakata sehari-hari N5: salam, kata tanya, makanan &amp; minuman, kata kerja harian, kata sifat, sekolah, angka &amp; waktu.</p>
             <div class="feature-footer">
               <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -295,7 +295,7 @@
                 <span class="progress-dot yellow-dot"></span>
                 <span class="progress-name">Kosakata Dikuasai</span>
               </div>
-              <span id="vocab-progress-text" class="progress-count">0 / 50</span>
+              <span id="vocab-progress-text" class="progress-count">0 / 200</span>
             </div>
             <div class="progress-bar-wrap">
               <div class="progress-bar yellow" id="vocab-progress-bar" style="width:0%"></div>
@@ -460,16 +460,16 @@
             <div class="vocab-deck-selector-row">
               <label class="vocab-control-label">Pilih Kategori Deck:</label>
               <select id="vocab-flashcard-deck-select" class="vocab-select-control" onchange="changeFlashcardDeck(this.value)">
-                <option value="all">Semua Kosakata (Semua Level)</option>
-                <option value="jlpt_n5" selected>JLPT N5 (Dasar 1)</option>
-                <option value="jlpt_n4">JLPT N4 (Dasar 2)</option>
-                <option value="travel">Wisata, Transportasi &amp; Arah</option>
-                <option value="verbs">Kata Kerja Penting</option>
-                <option value="adjectives">Kata Sifat &amp; Kondisi</option>
+                <option value="all" selected>Semua Kosakata N5</option>
+                <option value="greetings">Salam &amp; Sapaan</option>
+                <option value="questions">Kata Tanya &amp; Bertanya</option>
                 <option value="food">Makanan &amp; Minuman</option>
-                <option value="greetings">Salam &amp; Ungkapan</option>
-                <option value="family">Anggota Keluarga</option>
-                <option value="numbers">Angka &amp; Hitungan</option>
+                <option value="verbs">Kata Kerja Harian</option>
+                <option value="adjectives">Kata Sifat &amp; Kondisi</option>
+                <option value="school">Sekolah &amp; Benda Kelas</option>
+                <option value="numbers_time">Angka, Hari &amp; Waktu</option>
+                <option value="family">Keluarga</option>
+                <option value="places">Tempat &amp; Transportasi</option>
               </select>
             </div>
             <div class="vocab-flashcard-progress-bar-wrap">
@@ -550,30 +550,30 @@
           </div>
 
           <div class="vocab-quiz-packets-grid">
-            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('jlpt_n5')">
-              <div class="vocab-packet-badge">JLPT N5</div>
-              <h3>Kosakata Dasar Fondasi</h3>
-              <p>10 Soal acak seputar kata ganti, waktu, tempat, dan benda dasar.</p>
+            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('greetings')">
+              <div class="vocab-packet-badge">SALAM &amp; SAPAAN</div>
+              <h3>Salam &amp; Ungkapan Sehari-hari</h3>
+              <p>10 Soal pemahaman salam pagi, terima kasih, perkenalan, dan etika.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>
               </div>
             </div>
 
-            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('jlpt_n4')">
-              <div class="vocab-packet-badge">JLPT N4</div>
-              <h3>Kosakata Percakapan N4</h3>
-              <p>10 Soal acak rencana, pengalaman, janji, dan situasi sehari-hari.</p>
+            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('questions')">
+              <div class="vocab-packet-badge">KATA TANYA</div>
+              <h3>Pola &amp; Kata Tanya Fondasi</h3>
+              <p>10 Soal penggunaan apa, siapa, di mana, kapan, kenapa, dan berapa.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>
               </div>
             </div>
 
-            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('travel')">
-              <div class="vocab-packet-badge">WISATA</div>
-              <h3>Wisata, Stasiun &amp; Arah</h3>
-              <p>10 Soal seputar stasiun, tiket, hotel, bandara, dan petunjuk arah.</p>
+            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('food')">
+              <div class="vocab-packet-badge">KULINER</div>
+              <h3>Makanan &amp; Minuman N5</h3>
+              <p>10 Soal seputar hidangan, minuman, memesan makanan, dan rasa.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>
@@ -582,7 +582,7 @@
 
             <div class="vocab-packet-card" onclick="selectVocabQuizPacket('verbs')">
               <div class="vocab-packet-badge">KATA KERJA</div>
-              <h3>Kata Kerja (Doushi)</h3>
+              <h3>Kata Kerja Harian (Doushi)</h3>
               <p>10 Soal pemahaman makan, minum, pergi, melihat, menulis, dll.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
@@ -592,8 +592,28 @@
 
             <div class="vocab-packet-card" onclick="selectVocabQuizPacket('adjectives')">
               <div class="vocab-packet-badge">KATA SIFAT</div>
-              <h3>Kata Sifat (Keiyoushi)</h3>
+              <h3>Kata Sifat Dasar (Keiyoushi)</h3>
               <p>10 Soal antonim, rasa makanan, kondisi, dan sifat benda.</p>
+              <div class="vocab-packet-footer">
+                <span class="packet-kkm">KKM: 70</span>
+                <span class="btn-packet-start">Mulai Latihan</span>
+              </div>
+            </div>
+
+            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('school')">
+              <div class="vocab-packet-badge">SEKOLAH</div>
+              <h3>Sekolah &amp; Benda Kelas</h3>
+              <p>10 Soal seputar alat tulis, ruang kelas, guru, dan teman belajar.</p>
+              <div class="vocab-packet-footer">
+                <span class="packet-kkm">KKM: 70</span>
+                <span class="btn-packet-start">Mulai Latihan</span>
+              </div>
+            </div>
+
+            <div class="vocab-packet-card" onclick="selectVocabQuizPacket('numbers_time')">
+              <div class="vocab-packet-badge">ANGKA &amp; WAKTU</div>
+              <h3>Angka, Hari &amp; Waktu</h3>
+              <p>10 Soal menghitung angka, harga Yen, jam, dan nama-nama hari.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>
@@ -602,8 +622,8 @@
 
             <div class="vocab-packet-card" onclick="selectVocabQuizPacket('mixed')">
               <div class="vocab-packet-badge">TANTANGAN</div>
-              <h3>Campuran Semua Kategori</h3>
-              <p>10 Soal gabungan acak dari seluruh perbendaharaan kosakata.</p>
+              <h3>Campuran Semua Kosakata N5</h3>
+              <p>10 Soal acak komprehensif dari seluruh perbendaharaan N5.</p>
               <div class="vocab-packet-footer">
                 <span class="packet-kkm">KKM: 70</span>
                 <span class="btn-packet-start">Mulai Latihan</span>
@@ -775,32 +795,16 @@
               </button>
               <button class="btn-mission-shortcut shortcut-travel" onclick="selectLevelTab('n5')">
                 <span></span>
-                <span>Modul Wisata N5 &amp; N4</span>
+                <span>Modul Kursus N5 SMK</span>
               </button>
             </div>
           </div>
 
-          <!-- Level Tabs (Gaya Nihongo to Japan) -->
+          <!-- Level Navigation (Fokus Kurikulum N5 Fondasi Siswa SMK) -->
           <div class="materi-level-nav" id="materi-level-nav">
             <button class="materi-level-btn lvl-n5 active" onclick="selectLevelTab('n5')">
-              <span class="lvl-name">N5</span>
-              <span class="lvl-sub">49 pelajaran</span>
-            </button>
-            <button class="materi-level-btn lvl-n4" onclick="selectLevelTab('n4')">
-              <span class="lvl-name">N4</span>
-              <span class="lvl-sub">49 pelajaran</span>
-            </button>
-            <button class="materi-level-btn lvl-n3" onclick="selectLevelTab('n3')">
-              <span class="lvl-name">N3</span>
-              <span class="lvl-sub">43 pelajaran</span>
-            </button>
-            <button class="materi-level-btn lvl-n2" onclick="selectLevelTab('n2')">
-              <span class="lvl-name">N2</span>
-              <span class="lvl-sub">24 pelajaran</span>
-            </button>
-            <button class="materi-level-btn lvl-n1" onclick="selectLevelTab('n1')">
-              <span class="lvl-name">N1</span>
-              <span class="lvl-sub">26 pelajaran</span>
+              <span class="lvl-name">Level JLPT N5</span>
+              <span class="lvl-sub">Kurikulum Dasar Terstruktur untuk Siswa SMK</span>
             </button>
           </div>
 
