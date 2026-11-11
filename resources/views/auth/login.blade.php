@@ -6,7 +6,7 @@
   <title>Masuk Portal Siswa &amp; Guru - SIJapanese</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       /* Warm Japanese Terracotta (Akane-iro) */
@@ -48,7 +48,7 @@
       padding: 0;
     }
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Montserrat', 'Noto Sans JP', sans-serif; font-weight: 500;
       background: radial-gradient(circle at 10% 20%, #FAF1EE 0%, #F5EFE6 50%, #F8F4EC 100%);
       min-height: 100vh;
       display: flex;

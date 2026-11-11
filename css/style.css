@@ -104,7 +104,8 @@ img {
 }
 
 body {
-  font-family: 'Nunito', 'Plus Jakarta Sans', 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+  font-weight: 500;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -258,7 +259,7 @@ body {
   border: 1px solid transparent;
   padding: 8px 14px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-soft);
@@ -558,7 +559,7 @@ body {
   border: none;
   padding: 13px 26px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -580,7 +581,7 @@ body {
   border: 1px solid var(--border);
   padding: 13px 22px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -601,7 +602,7 @@ body {
   border: 1px solid #4338CA;
   padding: 13px 24px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -1126,7 +1127,7 @@ body {
   color: white;
   padding: 8px 16px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
@@ -1150,7 +1151,7 @@ body {
   color: white;
 }
 .sub-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.72em;
   font-weight: 600;
   opacity: 0.95;
@@ -1175,7 +1176,7 @@ body {
   color: rgba(255, 255, 255, 0.8);
   padding: 7px 16px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.86rem;
   font-weight: 700;
   cursor: pointer;
@@ -1250,7 +1251,7 @@ body {
   color: var(--text-soft);
   padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -1708,7 +1709,7 @@ body {
   border: 2px solid var(--border);
   padding: 16px;
   border-radius: var(--radius-sm);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
@@ -1776,7 +1777,7 @@ body {
   border: none;
   padding: 13px 28px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -1878,7 +1879,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 12px 18px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
@@ -1894,7 +1895,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0 18px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-soft);
@@ -1917,7 +1918,7 @@ body {
   border: 1.5px solid var(--border);
   padding: 8px 16px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-soft);
@@ -2116,7 +2117,7 @@ body {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 8px 34px 8px 14px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--text);
@@ -2280,7 +2281,7 @@ body {
   border: 1.5px solid var(--border);
   padding: 8px 20px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.86rem;
   font-weight: 800;
   color: var(--text);
@@ -2305,7 +2306,7 @@ body {
   border: 1.5px solid var(--border);
   padding: 10px 18px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-soft);
@@ -2321,7 +2322,7 @@ body {
   border: 1.5px solid #CBD5E1;
   padding: 10px 18px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 800;
   color: var(--text);
@@ -2336,7 +2337,7 @@ body {
   border: 1.5px solid #FECACA;
   padding: 10px 18px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 800;
   color: #DC2626;
@@ -2351,7 +2352,7 @@ body {
   border: 1.5px solid #A7F3D0;
   padding: 10px 20px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 800;
   color: #059669;
@@ -2568,7 +2569,7 @@ body {
   border: 1.5px solid var(--border);
   padding: 7px 18px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--text);
@@ -2590,7 +2591,7 @@ body {
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 16px 14px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   color: var(--text);
@@ -2719,7 +2720,7 @@ body {
   border: none;
   padding: 14px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
@@ -2734,7 +2735,7 @@ body {
   border: 1.5px solid var(--border);
   padding: 12px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
@@ -2748,7 +2749,7 @@ body {
   color: var(--text-soft);
   border: none;
   padding: 8px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -2902,7 +2903,7 @@ body {
   color: var(--text-soft);
   padding: 3px 10px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   cursor: pointer;
@@ -2948,7 +2949,7 @@ body {
   background: var(--card);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-soft);
@@ -3148,7 +3149,7 @@ body {
   padding: 12px 24px;
   border-radius: var(--radius-pill);
   border: 1.5px solid var(--border);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
@@ -3237,7 +3238,7 @@ body {
 .flash-empty-btn {
   padding: 10px 20px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -3300,7 +3301,7 @@ body {
   gap: 8px;
   padding: 12px 20px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
@@ -3390,7 +3391,7 @@ body {
   background: var(--red);
   color: #fff;
   border: 1px solid var(--red);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -3408,7 +3409,7 @@ body {
   background: var(--card-inner);
   color: var(--text);
   border: 1px solid var(--border);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -3648,7 +3649,7 @@ body {
 .wb-btn {
   padding: 12px 24px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
@@ -3685,7 +3686,7 @@ body {
   color: white;
   padding: 7px 14px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
@@ -3763,7 +3764,7 @@ body {
   border: 1px solid var(--border);
   background: var(--card-inner);
   color: var(--text-soft);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
@@ -3813,7 +3814,7 @@ body {
   border: none;
   padding: 14px 36px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 1.05rem;
   font-weight: 800;
   cursor: pointer;
@@ -4255,7 +4256,7 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  font-family: 'Plus Jakarta Sans', monospace;
+  font-family: 'Montserrat', monospace;
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--text);
@@ -4424,7 +4425,7 @@ body {
   color: var(--text);
   padding: 8px 18px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.86rem;
   font-weight: 700;
   cursor: pointer;
@@ -4461,7 +4462,7 @@ body {
   width: 100%;
   padding: 12px 20px;
   border-radius: var(--radius-pill);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
@@ -4544,7 +4545,7 @@ body {
   color: var(--text-soft);
   font-size: 0.72rem;
   font-weight: 700;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   cursor: pointer;
   padding: 4px 6px;
   border-radius: 8px;
@@ -5201,7 +5202,7 @@ body {
   flex-shrink: 0;
 }
 .holo-target-romaji {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: #FFFFFF;
@@ -5632,7 +5633,7 @@ body {
 }
 
 .blast-target-romaji {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
   font-size: 1.65rem;
   font-weight: 900;
   color: #FFFFFF;
