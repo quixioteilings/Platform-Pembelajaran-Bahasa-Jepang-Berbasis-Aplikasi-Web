@@ -181,7 +181,6 @@ function renderUserWidget() {
       <button class="nav-profile-bubble-btn ${isGuru ? 'is-guru' : ''}" onclick="openProfileModal()" title="Profil: ${escapeHtml(currentUser.name)} - Klik untuk melihat rapor &amp; identitas">
         <div class="bubble-avatar-circle">
           ${renderAvatarHtml(avatarPath, currentUser.name)}
-          <span class="bubble-online-status"></span>
         </div>
         <span class="bubble-name-text">${escapeHtml(firstName)}</span>
         <svg viewBox="0 0 24 24" class="svg-caret-mini"><polyline points="6 9 12 15 18 9"/></svg>
@@ -283,13 +282,13 @@ function injectAuthModals() {
 
           <form id="form-sij-profile" onsubmit="saveProfileModal(event)">
             
-            <!-- Pasfoto Formal 3x4 Siswa -->
+            <!-- Foto Profil Resmi Siswa -->
             <div class="sij-pasfoto-wrapper">
               <div class="sij-pasfoto-box" id="profile-avatar-display-box">
                 ${renderAvatarHtml(currentUser ? currentUser.avatar : '', currentUser ? currentUser.name : '', 'profile-modal-avatar-img')}
               </div>
               <div class="sij-pasfoto-badge-row">
-                <span>Pasfoto Resmi Siswa (3x4):</span>
+                <span>Foto Profil Akun:</span>
                 <span class="sij-badge-foto-kustom">Foto Identitas</span>
               </div>
               <div class="sij-pasfoto-buttons">
