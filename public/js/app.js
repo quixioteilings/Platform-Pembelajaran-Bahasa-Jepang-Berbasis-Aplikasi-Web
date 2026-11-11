@@ -540,21 +540,10 @@ function updateProgressBars() {
   const kab = document.getElementById('katakana-progress-bar');
   const vob = document.getElementById('vocab-progress-bar');
 
-  // Mini games & Arcade stats
-  const gamest = document.getElementById('games-progress-text');
-  const gamesb = document.getElementById('games-progress-bar');
-  const msHigh = (typeof msState !== 'undefined' && msState.highScore) ? msState.highScore : 0;
-  const blastHigh = (typeof blastState !== 'undefined' && blastState.highScore) ? blastState.highScore : 0;
-  if (gamest) gamest.textContent = `Rekor: Sky Atk (${msHigh} Poin) | Blast (${blastHigh} Poin)`;
-
   setTimeout(() => {
     if (hib) hib.style.width = Math.min(hi / totalHi * 100, 100) + '%';
     if (kab) kab.style.width = Math.min(ka / totalKa * 100, 100) + '%';
     if (vob) vob.style.width = Math.min(vo / 50 * 100, 100) + '%';
-    if (gamesb) {
-      const activeScoreCount = (msHigh > 0 ? 1 : 0) + (blastHigh > 0 ? 1 : 0);
-      gamesb.style.width = (activeScoreCount * 50) + '%';
-    }
   }, 50);
 
   updateSaveStatusUI();
