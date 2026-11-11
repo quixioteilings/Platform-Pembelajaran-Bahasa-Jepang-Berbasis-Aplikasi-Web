@@ -1,10 +1,10 @@
 // ====================================================
 // SIJapanese - Kurikulum Materi Sederhana (Gaya Nihongo to Japan)
 // Simpel, Terstruktur dari Nol, Ramah Pemula, Zero Icon, Zero Emoji
-// Terintegrasi dengan Penilaian Master Guru & Web Speech Audio
+// Terintegrasi dengan Penilaian Guru & Web Speech Audio
 // ====================================================
 
-// Data Default Kota-Kota Terkenal Jepang (Dapat diedit oleh Guru Master)
+// Data Default Kota-Kota Terkenal Jepang (Dapat diedit oleh Guru)
 const DEFAULT_JAPAN_CITIES = [
   {
     id: 'tokyo',
@@ -86,7 +86,7 @@ const DEFAULT_JAPAN_CITIES = [
   }
 ];
 
-// Helper Mengambil Kota Jepang Aktif (Mendukung Override Guru Master)
+// Helper Mengambil Kota Jepang Aktif (Mendukung Override Guru)
 function getActiveJapanCities() {
   try {
     const saved = localStorage.getItem('sijapanese_japan_cities');
@@ -2631,7 +2631,7 @@ function renderStepRomaji(lesson) {
 
     <div class="nihongo-study-card">
       <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:16px; padding:1.6rem; margin-bottom:1.5rem;">
-        <h4 style="font-size:1.1rem; color:#92400E; margin:0 0 0.6rem 0;">Tips Guru Master:</h4>
+        <h4 style="font-size:1.1rem; color:#92400E; margin:0 0 0.6rem 0;">Tips Guru:</h4>
         <p style="color:#78350F; line-height:1.6; margin:0 0 0.8rem 0;">
           ${escapeHtml(lesson.cultureTip || 'Pahami pola kalimat dengan baik dan lafalkan dialog dengan suara lantang agar kebiasaan berbicara terasah secara alami.')}
         </p>
@@ -3203,7 +3203,7 @@ function renderStepKuis(lesson) {
     <div class="step-header-banner">
       <span class="step-label-pill">Langkah 7 • Kuis</span>
       <h2 class="step-main-title">Kuis Pemahaman Modul 1</h2>
-      <p class="step-desc-text">Pilihlah salah satu jawaban yang paling tepat. Hasil penilaian akan otomatis tercatat ke laporan evaluasi Master Guru.</p>
+      <p class="step-desc-text">Pilihlah salah satu jawaban yang paling tepat. Hasil penilaian akan otomatis tercatat ke laporan evaluasi Guru.</p>
     </div>
 
     <div class="nihongo-quiz-wrapper">
@@ -3925,7 +3925,7 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
     window.addPointsToUser(pointsEarned, lesson.id);
   }
 
-  // Rekapitulasi evaluasi untuk Master Guru
+  // Rekapitulasi evaluasi untuk Guru
   try {
     const localAssessments = JSON.parse(localStorage.getItem('sijapanese_student_assessments') || '[]');
     const activeUser = JSON.parse(localStorage.getItem('sijapanese_active_user') || '{}');
@@ -3983,7 +3983,7 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
     if (pointsEl) pointsEl.textContent = `+${pointsEarned} Poin`;
     if (descEl) {
       descEl.textContent = score >= 70
-        ? `Luar biasa! Kamu berhasil lulus dengan nilai ${score} / 100. Poin dan rekapan nilai otomatis terkirim ke Master Guru.`
+        ? `Luar biasa! Kamu berhasil lulus dengan nilai ${score} / 100. Poin dan rekapan nilai otomatis terkirim ke Guru.`
         : `Latihan selesai dengan nilai ${score} / 100. Kamu bisa mengulangi latihan untuk meningkatkan nilai.`;
     }
 

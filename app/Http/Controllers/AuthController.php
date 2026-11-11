@@ -450,7 +450,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Hasil penilaian latihan berhasil dicatat ke Master Guru!',
+            'message' => 'Hasil penilaian latihan berhasil dicatat ke Guru!',
             'assessment' => $assessment,
             'new_score' => $user->score,
             'completed_lessons' => $user->completed_lessons,

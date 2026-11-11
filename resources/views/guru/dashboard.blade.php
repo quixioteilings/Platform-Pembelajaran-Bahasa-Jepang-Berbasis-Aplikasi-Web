@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <title>Dashboard Master Guru - SIJapanese</title>
+  <title>Dashboard Guru - SIJapanese</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/materi.css') }}" />
   <style>
-    /* Styling Khusus Guru Master Dashboard - Harmonized Warm Japanese Theme */
+    /* Styling Khusus Guru Dashboard - Harmonized Warm Japanese Theme */
     :root {
       --guru-bg: #FAF6F0;
       --guru-card: #FFFFFF;
@@ -1803,7 +1803,7 @@
         </span>
         <span class="guru-brand-text">SI<span style="color:var(--guru-primary);">Japanese</span></span>
       </div>
-      <span class="badge-master-guru">DASHBOARD GURU MASTER</span>
+      <span class="badge-master-guru">DASHBOARD GURU</span>
       <a href="{{ route('home') }}" target="_blank" class="btn-return-app" title="Buka pratinjau tampilan murid di tab baru">
         <span>Pratinjau Layar Siswa ↗</span>
       </a>
@@ -1828,7 +1828,7 @@
           <span class="guru-name">
             <span>{{ auth()->user()->name }}</span>
           </span>
-          <span class="guru-role-sub">Guru Master &bull; Edit</span>
+          <span class="guru-role-sub">Guru &bull; Edit</span>
         </div>
       </div>
       <form action="{{ route('logout') }}" method="POST" style="margin:0;">
@@ -1880,7 +1880,7 @@
           <span class="badge-dot"></span>
           <span>Pusat Kendali Kurikulum &amp; Pantauan Belajar Siswa</span>
         </div>
-        <h2 class="welcome-title">Selamat datang di Panel Master Guru, {{ auth()->user()->name }} Sensei</h2>
+        <h2 class="welcome-title">Selamat datang di Panel Guru, {{ auth()->user()->name }} Sensei</h2>
         <p class="welcome-desc">
           Panel ini dirancang berurutan sesuai alur mengajar bahasa Jepang: mulai dari mengatur tingkat level (N5 &bull; N4), membuat modul komik cerita, menyusun bank soal quest, mengelola kosakata mini games, hingga memantau rekap nilai siswa secara otomatis.
         </p>
@@ -2762,14 +2762,14 @@
   </main>
 
   <!-- ==============================================
-       MODAL: EDIT PROFIL GURU MASTER (POPUP MODAL)
+       MODAL: EDIT PROFIL GURU (POPUP MODAL)
        ============================================== -->
   <div class="guru-modal-backdrop" id="modal-edit-guru-profile">
     <div class="guru-modal-box" style="max-width: 580px; max-height: 90vh; overflow-y: auto; border-radius: 24px; padding: 1.8rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
       <div class="guru-modal-header" style="border-bottom: 1.5px solid #E2E8F0; padding-bottom: 1rem; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between;">
         <div>
           <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0;">Pengaturan Profil Guru Pengajar</h3>
-          <p style="color: #64748B; font-size: 0.82rem; margin: 0.2rem 0 0;">Kelola nama tampilan, avatar karakter, email login, dan kata sandi Master Guru.</p>
+          <p style="color: #64748B; font-size: 0.82rem; margin: 0.2rem 0 0;">Kelola nama tampilan, avatar karakter, email login, dan kata sandi Guru.</p>
         </div>
         <button type="button" class="btn-close-modal" onclick="closeModal('modal-edit-guru-profile')" style="font-size: 1.5rem; line-height: 1; border: none; background: #F1F5F9; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; color: #64748B;">&times;</button>
       </div>
@@ -2806,13 +2806,13 @@
         <div class="form-group" style="margin-bottom:1.1rem;">
           <label style="font-weight:800; font-size:0.88rem; color:#334155; display:block; margin-bottom:0.4rem;">Alamat Email Akun Guru</label>
           <input type="email" name="email" id="guru-email-input" class="form-control" value="{{ auth()->user()->email }}" required style="width:100%; padding:0.8rem 1rem; border:1.5px solid #CBD5E1; border-radius:12px; font-size:0.95rem; font-weight:600; background:#FFFFFF; color:#0F172A;" />
-          <small style="color:#64748B; font-size:0.76rem; margin-top:0.3rem; display:block;">Email akun Master Guru dapat Anda ubah kapan saja sebagai kredensial login utama.</small>
+          <small style="color:#64748B; font-size:0.76rem; margin-top:0.3rem; display:block;">Email akun Guru dapat Anda ubah kapan saja sebagai kredensial login utama.</small>
         </div>
 
         <div class="form-group" style="margin-bottom:1.1rem;">
           <label style="font-weight:800; font-size:0.88rem; color:#334155; display:block; margin-bottom:0.4rem;">Status Hak Akses Akun</label>
           <div style="display:inline-flex; align-items:center; gap:0.45rem; padding:0.4rem 0.9rem; background:#FEF2F2; border:1.5px solid #FECACA; color:#BA3D27; font-weight:800; font-size:0.82rem; border-radius:9999px;">
-            <span>Master Guru &bull; Kelola Penuh Seluruh Modul, Tingkat &amp; Soal</span>
+            <span>Guru &bull; Kelola Penuh Seluruh Modul, Tingkat &amp; Soal</span>
           </div>
         </div>
 
@@ -2844,7 +2844,7 @@
       </div>
       <h3 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin: 0 0 0.5rem;" id="modal-profile-success-title">Profil Berhasil Diperbarui!</h3>
       <p style="color: #64748B; font-size: 0.92rem; line-height: 1.5; margin: 0 0 1.4rem;" id="modal-profile-success-msg">
-        {{ session('success') ?? 'Data profil Master Guru Anda telah berhasil disimpan ke database.' }}
+        {{ session('success') ?? 'Data profil Guru Anda telah berhasil disimpan ke database.' }}
       </p>
       <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; text-align: left;">
         <div style="font-size: 0.78rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; margin-bottom: 0.35rem;">Informasi Akun Master Terkini:</div>

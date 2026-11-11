@@ -473,8 +473,11 @@
             </div>
             <div class="vocab-flashcard-progress-bar-wrap">
               <div class="vocab-flashcard-progress-info">
-                <span id="flashcard-counter-text">Kartu 1 dari 16</span>
-                <span id="flashcard-mastered-text" class="text-green">0 Dikuasai</span>
+                <span id="flashcard-counter-text">Sisa 0 dari 0 kartu</span>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span style="font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px; background:#DCFCE7; color:#15803D;"><strong id="flashcard-mastered-text">0 Dikuasai</strong></span>
+                  <span style="font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px; background:#FEF3C7; color:#B45309;"><strong id="flashcard-review-badge">0x Diulang</strong></span>
+                </div>
               </div>
               <div class="vocab-progress-track">
                 <div class="vocab-progress-fill" id="flashcard-progress-fill" style="width:0%"></div>
@@ -535,6 +538,43 @@
               <span>Selanjutnya</span>
             </button>
           </div>
+
+          <!-- QUIZLET-STYLE COMPLETION CARD (OTOMATIS MASUK DATABASE GURU) -->
+          <div id="vocab-flashcard-complete" class="vocab-flashcard-complete hidden" style="background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 36px 24px; text-align: center; margin-top: 10px; box-shadow: 0 12px 32px rgba(45,37,32,0.08);">
+            <div style="width: 72px; height: 72px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <svg viewBox="0 0 24 24" style="width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <span style="display: inline-block; padding: 5px 16px; border-radius: 9999px; background: #DCFCE7; color: #15803D; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 12px;">SELESAI 100% &bull; TERSIMPAN KE DATABASE GURU</span>
+            <h2 style="font-size: 1.55rem; font-weight: 800; color: #2F2620; margin-bottom: 8px;">Semua Kartu Berhasil Dikuasai!</h2>
+            <p style="font-size: 0.95rem; color: #6E6157; max-width: 480px; margin: 0 auto 24px; line-height: 1.55;">Hebat! Kamu telah menghafal seluruh kosakata di deck ini persis seperti Quizlet. Semua kartu yang belum hafal telah diulang hingga tuntas, dan hasil latihanmu otomatis tercatat di database Guru.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; max-width: 520px; margin: 0 auto 28px;">
+              <div style="background: var(--card-warm); padding: 16px 12px; border-radius: 16px; border: 1.5px solid var(--border);">
+                <span style="font-size: 0.75rem; color: #6E6157; font-weight: 700; display: block; margin-bottom: 4px;">Total Kosakata</span>
+                <strong id="flash-result-total" style="font-size: 1.45rem; color: #2F2620;">0 Kartu</strong>
+              </div>
+              <div style="background: var(--card-warm); padding: 16px 12px; border-radius: 16px; border: 1.5px solid var(--border);">
+                <span style="font-size: 0.75rem; color: #6E6157; font-weight: 700; display: block; margin-bottom: 4px;">Pengulangan</span>
+                <strong id="flash-result-reviews" style="font-size: 1.45rem; color: #D97706;">0x Ulang</strong>
+              </div>
+              <div style="background: var(--card-warm); padding: 16px 12px; border-radius: 16px; border: 1.5px solid var(--border);">
+                <span style="font-size: 0.75rem; color: #6E6157; font-weight: 700; display: block; margin-bottom: 4px;">Poin Diperoleh</span>
+                <strong id="flash-result-points" style="font-size: 1.45rem; color: #16A34A;">+0 Poin</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+              <button type="button" class="btn-primary" onclick="restartCurrentFlashcardDeck()" style="padding: 12px 24px; font-weight: 700; border-radius: 12px;">
+                <span>Ulangi Deck Ini</span>
+              </button>
+              <button type="button" class="btn-secondary" onclick="switchVocabMode('explore')" style="padding: 12px 24px; font-weight: 700; border-radius: 12px;">
+                <span>Buka Kamus</span>
+              </button>
+              <button type="button" class="btn-secondary" onclick="switchVocabMode('quiz')" style="padding: 12px 24px; font-weight: 700; border-radius: 12px;">
+                <span>Lanjut ke Kuis</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -545,7 +585,7 @@
           <div class="vocab-quiz-intro-card">
             <span class="badge-pill-brand">EVALUASI AKADEMIK</span>
             <h2>Latihan &amp; Kuis Kosakata Interaktif</h2>
-            <p>Uji penguasaan kosakata bahasa Jepang Anda melalui paket soal pilihan ganda. Setiap paket berisi 10 soal dengan format arti kata, pembacaan kanji/kana, dan audio chokai. Nilai Anda akan otomatis direkapitulasi ke dalam laporan Master Guru.</p>
+            <p>Uji penguasaan kosakata bahasa Jepang Anda melalui paket soal pilihan ganda. Setiap paket berisi 10 soal dengan format arti kata, pembacaan kanji/kana, dan audio chokai. Nilai Anda akan otomatis direkapitulasi ke dalam laporan Guru.</p>
           </div>
 
           <div class="vocab-quiz-packets-grid">
@@ -695,7 +735,7 @@
               </div>
             </div>
             <div class="vocab-result-note">
-              <span>Hasil penilaian ini telah disinkronkan ke rekapitulasi evaluasi Master Guru.</span>
+              <span>Hasil penilaian ini telah disinkronkan ke rekapitulasi evaluasi Guru.</span>
             </div>
             <div class="vocab-result-actions">
               <button type="button" class="btn-result-restart" onclick="retryCurrentVocabQuiz()">
@@ -1849,7 +1889,7 @@
               <p style="color:var(--text-soft); font-size:0.92rem;">Jawab 3 soal tantangan orisinal berikut untuk mengklaim reward poin pembelajaran.</p>
             </div>
 
-                        <!-- Wadah Soal Dinamis dari Database Master Guru / SQLite -->
+                        <!-- Wadah Soal Dinamis dari Database Guru / SQLite -->
             <div id="dynamic-quests-container">
               <!-- Soal Quest Bersih Terpadu Scroll ke Bawah -->
               <div class="quest-card quest-box" data-quest-id="1" data-explanation="Dalam percakapan, Guru Kucing menjelaskan bahwa kata 東京 ditulis dengan Kanji, sedangkan ラーメン ditulis dengan Katakana." data-points="25">
@@ -2364,6 +2404,25 @@
       <span class="mob-label">Games</span>
     </button>
   </nav>
+
+  <!-- CUSTOM CONFIRMATION MODAL (ZERO BROWSER POPUP) -->
+  <div id="custom-confirm-modal" class="modal-overlay hidden" style="z-index: 999999;">
+    <div class="modal-card" style="max-width: 440px; padding: 28px 24px; text-align: center; border-radius: 24px; border: 1.5px solid var(--border); box-shadow: 0 16px 40px rgba(45,37,32,0.18);" onclick="event.stopPropagation()">
+      <div id="custom-confirm-icon-wrap" style="width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: #FAF1EE; color: #BA5444;">
+        <svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;"><circle cx="12" cy="12" r="10"/><line x1="12" cy="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h3 id="custom-confirm-title" style="font-size: 1.25rem; font-weight: 800; color: #2F2620; margin-bottom: 8px;">Konfirmasi</h3>
+      <p id="custom-confirm-msg" style="font-size: 0.92rem; color: #6E6157; line-height: 1.55; margin-bottom: 24px;">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button type="button" id="custom-confirm-cancel-btn" style="flex: 1; padding: 12px 18px; border-radius: 12px; border: 1.5px solid var(--border); background: #FAF6F0; color: #2F2620; font-weight: 700; cursor: pointer; transition: 0.2s;">
+          Batal
+        </button>
+        <button type="button" id="custom-confirm-ok-btn" style="flex: 1; padding: 12px 18px; border-radius: 12px; border: none; background: #BA5444; color: #FFFFFF; font-weight: 700; cursor: pointer; transition: 0.2s;">
+          Lanjutkan
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- CHARACTER DETAIL MODAL -->
   <div id="char-modal" class="modal-overlay hidden" onclick="closeModal()">

@@ -15,7 +15,7 @@ const DEMO_ACCOUNTS = {
     reg_no: 'SIJ-2026-GURU01',
     gender: 'Laki-laki (MALE)',
     birthdate: '1988/04/12',
-    class_room: 'Master Guru',
+    class_room: 'Guru',
     score: 999,
     completed_quests: 12
   },
@@ -318,7 +318,7 @@ function injectAuthModals() {
                   <option value="Kelas XI-B">Kelas XI-B</option>
                   <option value="Kelas XII">Kelas XII</option>
                   <option value="Siswa Umum">Siswa Umum / Mandiri</option>
-                  <option value="Master Guru">Master Guru</option>
+                  <option value="Guru">Guru</option>
                 </select>
               </div>
               <div class="sij-form-group">
@@ -330,7 +330,7 @@ function injectAuthModals() {
               </div>
             </div>
 
-            <!-- Akses Master Guru jika akun guru -->
+            <!-- Akses Guru jika akun guru -->
             <div id="guru-shortcut-area" style="display:none;" class="guru-access-box">
               <div>
                 <strong style="color:#B91C1C; font-size:0.86rem; display:block;">Hak Akses Guru Pengajar</strong>
@@ -419,7 +419,7 @@ function openProfileModal() {
   
   const classField = document.getElementById('prof-class');
   if (classField) {
-    const targetClass = currentUser.class_room || (isGuru ? 'Master Guru' : 'Kelas X-A');
+    const targetClass = currentUser.class_room || (isGuru ? 'Guru' : 'Kelas X-A');
     let exists = false;
     for (let i = 0; i < classField.options.length; i++) {
       if (classField.options[i].value === targetClass) {
@@ -452,7 +452,7 @@ function openProfileModal() {
   if (roleTitle) roleTitle.textContent = isGuru ? 'Guru Pengajar (Master)' : 'Siswa Belajar';
   if (roleEmail) roleEmail.textContent = currentUser.email || '';
   if (roleBadge) {
-    roleBadge.textContent = isGuru ? 'Master Guru' : 'Siswa Aktif';
+    roleBadge.textContent = isGuru ? 'Guru' : 'Siswa Aktif';
     roleBadge.style.background = isGuru ? '#FEF2F2' : '#EFF6FF';
     roleBadge.style.color = isGuru ? '#D9383A' : '#2563EB';
     roleBadge.style.borderColor = isGuru ? '#FECACA' : '#BFDBFE';
