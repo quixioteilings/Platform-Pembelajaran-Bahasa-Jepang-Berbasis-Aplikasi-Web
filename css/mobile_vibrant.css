@@ -404,8 +404,8 @@ body {
   /* ===== HERO & BERANDA ON MOBILE ===== */
   .hero {
     min-height: auto !important;
-    padding: 16px 14px 10px !important;
-    gap: 8px !important;
+    padding: 20px 16px 14px !important;
+    gap: 12px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -422,24 +422,26 @@ body {
   }
 
   .hero-badge {
-    margin-bottom: 8px !important;
-    padding: 4px 11px !important;
-    font-size: 0.74rem !important;
+    margin-bottom: 10px !important;
+    padding: 5px 14px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
   }
 
   .hero-title {
-    font-size: 1.35rem !important;
-    line-height: 1.25 !important;
-    margin-bottom: 6px !important;
+    font-size: 1.68rem !important;
+    line-height: 1.28 !important;
+    margin-bottom: 8px !important;
     letter-spacing: -0.01em !important;
+    font-weight: 800 !important;
   }
 
   .hero-subtitle {
-    font-size: 0.82rem !important;
-    line-height: 1.42 !important;
-    margin-bottom: 12px !important;
-    max-width: 360px !important;
-    color: #64554B !important;
+    font-size: 0.92rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 16px !important;
+    max-width: 420px !important;
+    color: #5A4D44 !important;
   }
 
   .hero-cta {
@@ -447,7 +449,7 @@ body {
     flex-direction: row !important;
     width: 100% !important;
     max-width: 380px !important;
-    gap: 8px !important;
+    gap: 10px !important;
     margin: 0 auto !important;
   }
 
@@ -456,16 +458,16 @@ body {
   .hero-cta .btn-secondary {
     width: auto !important;
     flex: 1 !important;
-    min-height: 42px !important;
-    height: 42px !important;
+    min-height: 48px !important;
+    height: 48px !important;
     justify-content: center !important;
-    font-size: 0.84rem !important;
+    font-size: 0.92rem !important;
     font-weight: 700 !important;
-    border-radius: 12px !important;
-    padding: 0 10px !important;
+    border-radius: 14px !important;
+    padding: 0 14px !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 8px !important;
   }
 
   .hero-cta .btn-primary {
@@ -491,11 +493,11 @@ body {
     justify-content: space-around !important;
     width: 100% !important;
     max-width: 380px !important;
-    margin: 10px auto 0 !important;
-    padding: 8px 10px !important;
+    margin: 14px auto 0 !important;
+    padding: 10px 12px !important;
     background: rgba(255, 255, 255, 0.92) !important;
     border: 1.5px solid var(--border-light, #EBE4D8) !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     box-shadow: 0 2px 8px rgba(60, 45, 30, 0.04) !important;
   }
 
@@ -508,14 +510,14 @@ body {
   }
 
   .stat-number {
-    font-size: 1.15rem !important;
+    font-size: 1.35rem !important;
     font-weight: 900 !important;
     color: var(--red, #BA3D27) !important;
     line-height: 1.1 !important;
   }
 
   .stat-label {
-    font-size: 0.68rem !important;
+    font-size: 0.74rem !important;
     font-weight: 700 !important;
     color: #786C62 !important;
     margin-top: 2px !important;
@@ -524,16 +526,16 @@ body {
 
   .stat-divider {
     width: 1px !important;
-    height: 20px !important;
+    height: 22px !important;
     background: #E5DEC9 !important;
   }
 
   .hero-visual {
-    margin-top: 6px !important;
+    margin-top: 10px !important;
     width: 100% !important;
-    max-width: 290px !important;
-    height: 130px !important;
-    min-height: 130px !important;
+    max-width: 320px !important;
+    height: 190px !important;
+    min-height: 190px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -542,15 +544,15 @@ body {
   }
 
   .floating-cards {
-    transform: scale(0.48) !important;
+    transform: scale(0.68) !important;
     transform-origin: center center !important;
     margin: 0 auto !important;
   }
 
   .hero-mascot-art {
-    bottom: -15px !important;
-    right: 5px !important;
-    transform: scale(0.62) !important;
+    bottom: -8px !important;
+    right: 2px !important;
+    transform: scale(0.78) !important;
     transform-origin: bottom right !important;
   }
 
@@ -758,6 +760,7 @@ body {
     color: #64554B !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
@@ -847,6 +850,7 @@ body {
     color: #64554B !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     flex: 1 !important;
