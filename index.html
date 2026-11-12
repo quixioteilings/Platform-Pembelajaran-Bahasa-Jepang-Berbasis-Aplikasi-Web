@@ -819,101 +819,116 @@
       </div>
     </div>
     <div id="page-materi" class="page">
-      <div class="materi-page-container">
 
-        <!-- 1. CATALOG / CURRICULUM VIEW -->
-        <div id="materi-catalog-view" class="materi-catalog-view">
-          <!-- Hero Banner Berwarna Orisinal -->
-          <div class="materi-hero-banner">
-            <div class="materi-banner-inner">
-              <div class="materi-banner-text">
-                <div class="materi-banner-badges">
-                  <span class="badge-pill-brand">MODUL PEMBELAJARAN</span>
-                  <span class="badge-pill-sub">Eksplorasi Budaya &amp; Bahasa</span>
-                </div>
-                <h1 class="materi-banner-title">
-                  Mengenal Bahasa &amp; Kehidupan Jepang
-                </h1>
-                <p class="materi-banner-desc">
-                  Gerbang awal untuk memahami Jepang lebih dekat. Pelajari cara berkomunikasi sehari-hari, pahami etika dan kebiasaan lokal, kuasai aksara langkah demi langkah, hingga siap berinteraksi langsung dengan percaya diri di berbagai situasi nyata.
-                </p>
-                <div class="materi-banner-cast">
-                  <div class="materi-cast-chip">
-                    <span class="materi-cast-avatar-box" style="background:#DBEAFE;"></span>
-                    <span>Kenji (Siswa)</span>
-                  </div>
-                  <div class="materi-cast-chip">
-                    <span class="materi-cast-avatar-box" style="background:#DCFCE7;"></span>
-                    <span>Kiko (Pemandu)</span>
-                  </div>
-                  <div class="materi-cast-chip">
-                    <span class="materi-cast-avatar-box" style="background:#FEE2E2;"></span>
-                    <span>Sensei Tanaka</span>
-                  </div>
-                </div>
-              </div>
-              <div class="materi-hero-artwork">
-                <svg viewBox="0 0 200 160" style="width:100%;height:100%;">
-                  <defs>
-                    <linearGradient id="sakuraBrandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#FAF1EE"/>
-                      <stop offset="50%" stop-color="#EFF4F8"/>
-                      <stop offset="100%" stop-color="#F0F6F2"/>
-                    </linearGradient>
-                  </defs>
-                  <circle cx="100" cy="80" r="70" fill="url(#sakuraBrandGrad)" opacity="0.8"/>
-                  <!-- Torii Gate Silhouette -->
-                  <rect x="70" y="38" width="60" height="7" rx="3" fill="#BA5444"/>
-                  <rect x="65" y="32" width="70" height="6" rx="2" fill="#BA5444"/>
-                  <line x1="78" y1="38" x2="78" y2="100" stroke="#BA5444" stroke-width="5" stroke-linecap="round"/>
-                  <line x1="122" y1="38" x2="122" y2="100" stroke="#BA5444" stroke-width="5" stroke-linecap="round"/>
-                  <!-- Mascot Character Emblem -->
-                  <circle cx="100" cy="95" r="30" fill="#3E6B89" stroke="#2E5169" stroke-width="2.5"/>
-                  <circle cx="100" cy="95" r="24" fill="#FFFFFF"/>
-                  <text x="100" y="103" font-size="20" font-family="'Noto Sans JP', sans-serif" font-weight="900" fill="#BA5444" text-anchor="middle">日</text>
-                  <!-- Cherry Blossom Petals -->
-                  <circle cx="50" cy="50" r="6" fill="#F3C4C9" opacity="0.7"/>
-                  <circle cx="155" cy="65" r="7" fill="#F3C4C9" opacity="0.7"/>
-                  <circle cx="140" cy="120" r="5" fill="#F3C4C9" opacity="0.7"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <!-- MISI UTAMA: HIRAGANA, KATAKANA & PERCAKAPAN LIBURAN KE JEPANG -->
-          <div class="materi-mission-card">
-            <div class="mission-text-wrap">
-              <span class="mission-tag">Misi Belajar Utama</span>
-              <h3 class="mission-title">Kuasai Hiragana, Katakana &amp; Percakapan Praktis Liburan ke Jepang!</h3>
-              <p class="mission-desc">Dirancang khusus agar Anda fasih membaca menu, papan stasiun, belanja di konbini, dan memesan makanan langsung ke orang Jepang dengan percaya diri.</p>
-            </div>
-            <div class="mission-actions-row">
-              <button class="btn-mission-shortcut shortcut-hira" onclick="showPage('hiragana')">
-                <span>あ</span>
-                <span>Latihan Hiragana (104 Aksara)</span>
-              </button>
-              <button class="btn-mission-shortcut shortcut-kata" onclick="showPage('katakana')">
-                <span>ア</span>
-                <span>Latihan Katakana (104 Aksara)</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Level Navigation -->
-          <div class="materi-level-nav" id="materi-level-nav">
-            <button class="materi-level-btn lvl-n5 active" onclick="selectLevelTab('n5')">
-              <span class="lvl-name">N5</span>
+      <!-- 1. CATALOG / CURRICULUM VIEW -->
+      <div id="materi-catalog-view" class="materi-catalog-view">
+        <!-- HEADER IDENTIK DENGAN HIRAGANA / KATAKANA / KOSAKATA (GAMBAR 2) -->
+        <div class="page-header red-header">
+          <div class="page-header-content">
+            <button class="back-btn" onclick="showPage('home')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              <span>Kembali</span>
             </button>
+            <div class="page-title-wrap">
+              <h1>日本語学習 <span class="sub-title">Materi Pembelajaran</span></h1>
+              <p>Gerbang awal mengenal bahasa, tata kalimat, dan kehidupan Jepang langkah demi langkah</p>
+            </div>
+            <div class="page-mode-toggle">
+              <button class="mode-btn active" id="materi-mode-catalog" onclick="closeLessonToCatalog()">
+                <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <span>Modul N5</span>
+              </button>
+              <button class="mode-btn" onclick="showPage('hiragana')">
+                <span>あ Hiragana</span>
+              </button>
+              <button class="mode-btn" onclick="showPage('katakana')">
+                <span>ア Katakana</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="materi-page-container">
+          <!-- Filter Kategori & Tokoh (Gaya Gambar 2) -->
+          <div class="char-filter-wrapper">
+            <div class="char-filter-section">
+              <div class="char-filter-label">Pilih Kategori Modul:</div>
+              <div class="char-filter-bar" id="materi-category-filter">
+                <button type="button" class="filter-pill active" data-cat="all" onclick="filterMateriCatalog('all', this)">
+                  <span>Semua Modul</span>
+                  <span class="pill-count">16</span>
+                </button>
+                <button type="button" class="filter-pill" data-cat="n5" onclick="filterMateriCatalog('n5', this)">
+                  <span>Kurikulum N5 Dasar</span>
+                  <span class="pill-count">16</span>
+                </button>
+                <button type="button" class="filter-pill" data-cat="aksara" onclick="filterMateriCatalog('aksara', this)">
+                  <span>Mengenal Aksara</span>
+                  <span class="pill-count">4</span>
+                </button>
+                <button type="button" class="filter-pill" data-cat="percakapan" onclick="filterMateriCatalog('percakapan', this)">
+                  <span>Tata Bahasa &amp; Percakapan</span>
+                  <span class="pill-count">12</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="char-filter-section sub-filter-section">
+              <div class="char-filter-label">Tokoh Cerita Pembelajaran:</div>
+              <div class="char-filter-bar">
+                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
+                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#3B82F6;"></span>
+                  <span>Kenji (Siswa)</span>
+                </span>
+                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
+                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981;"></span>
+                  <span>Kiko (Pemandu)</span>
+                </span>
+                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
+                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#F43F5E;"></span>
+                  <span>Sensei Tanaka</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Header (Gaya Gambar 2) -->
+          <div class="char-section-header" style="margin-bottom: 14px;">
+            <div class="section-title-wrap">
+              <span class="section-dot" style="background:#B55242;"></span>
+              <h2 style="font-size:1.15rem; font-weight:800; color:var(--text); margin:0;" id="materi-section-heading">Kurikulum Modul N5</h2>
+              <span class="section-badge" style="background:#FEE2E2; color:#B55242; border:1px solid #FECACA; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">Wajib Dasar</span>
+            </div>
+            <span class="section-count" id="materi-section-count" style="font-size:0.82rem; color:var(--text-soft); font-weight:600;">(16 Pelajaran)</span>
           </div>
 
           <!-- Lessons List -->
           <div class="materi-lesson-list" id="materi-lesson-items">
             <!-- Populated dynamically by js/materi.js -->
           </div>
-        </div>
 
-        <!-- 2. DETAIL LESSON VIEW (9-STEP STEPPER NIHONGOTOJAPAN) -->
-        <div id="materi-lesson-view" class="materi-lesson-view">
+          <!-- Misi Belajar Utama (CTA Banner Gaya Hiragana/Katakana) -->
+          <div class="kana-minigames-cta" style="margin-top: 28px;">
+            <div class="kana-cta-text-wrap">
+              <span class="kana-cta-badge">Misi Belajar Utama</span>
+              <h3 class="kana-cta-title">Kuasai Hiragana, Katakana &amp; Percakapan Liburan ke Jepang</h3>
+              <p class="kana-cta-desc">Dirancang khusus agar Anda fasih membaca menu, papan stasiun, belanja di konbini, dan memesan makanan langsung ke orang Jepang dengan percaya diri.</p>
+            </div>
+            <div class="kana-cta-btn-wrap">
+              <button class="kana-cta-btn-primary" onclick="showPage('hiragana')">
+                <span>あ Latihan Hiragana (104 Aksara)</span>
+              </button>
+              <button class="kana-cta-btn-primary" style="background:#3C6682;" onclick="showPage('katakana')">
+                <span>ア Latihan Katakana (104 Aksara)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DETAIL LESSON VIEW (9-STEP STEPPER NIHONGOTOJAPAN) -->
+      <div id="materi-lesson-view" class="materi-lesson-view">
+        <div class="materi-page-container">
           <!-- Top Navigation Header -->
           <div class="lesson-nav-top">
             <button class="btn-back-catalog" onclick="closeLessonToCatalog()" title="Kembali ke Daftar Modul">
@@ -2075,6 +2090,7 @@
                 </div>
               </div>
             </div>
+          </div>
           </div>
           </div>
           </div>

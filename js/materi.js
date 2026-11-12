@@ -1854,6 +1854,30 @@ function applyDbLessons(dbLessons) {
   });
 }
 
+let currentMateriFilter = 'all';
+
+function filterMateriCatalog(cat, btn) {
+  currentMateriFilter = cat;
+  const pills = document.querySelectorAll('#materi-category-filter .filter-pill');
+  pills.forEach(p => p.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const targetPill = document.querySelector(`#materi-category-filter .filter-pill[data-cat="${cat}"]`);
+    if (targetPill) targetPill.classList.add('active');
+  }
+
+  const headingEl = document.getElementById('materi-section-heading');
+  if (headingEl) {
+    if (cat === 'aksara') headingEl.textContent = 'Modul Pengenalan Aksara (Hiragana & Katakana)';
+    else if (cat === 'percakapan') headingEl.textContent = 'Modul Tata Bahasa & Percakapan Praktis';
+    else headingEl.textContent = 'Kurikulum Modul N5 Dasar';
+  }
+
+  renderLessonCatalogList();
+}
+window.filterMateriCatalog = filterMateriCatalog;
+
 function renderLessonCatalogList() {
   const container = document.getElementById('materi-lesson-items');
   if (!container) return;
@@ -1863,7 +1887,19 @@ function renderLessonCatalogList() {
     completedLessons = JSON.parse(localStorage.getItem('sijapanese_completed_lessons') || '[]');
   } catch (e) {}
 
-  container.innerHTML = LESSON_CATALOG_DATA.map(les => {
+  let filtered = LESSON_CATALOG_DATA;
+  if (currentMateriFilter === 'aksara') {
+    filtered = LESSON_CATALOG_DATA.filter(l => l.id <= 4);
+  } else if (currentMateriFilter === 'percakapan') {
+    filtered = LESSON_CATALOG_DATA.filter(l => l.id >= 5);
+  }
+
+  const countEl = document.getElementById('materi-section-count');
+  if (countEl) {
+    countEl.textContent = `(${filtered.length} Pelajaran)`;
+  }
+
+  container.innerHTML = filtered.map(les => {
     const isDone = completedLessons.includes(les.id);
     return `
       <div class="materi-nihongo-catalog-row ${isDone ? 'completed' : ''}" onclick="openLesson(${les.id})">

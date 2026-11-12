@@ -103,7 +103,7 @@ const LESSON_DETAIL_DATA = {
     id: 1,
     num: 1,
     level: 'N5',
-    title: 'Pelajaran 1: Fondasi Bahasa Jepang, 3 Aksara & Peta Kota Terkenal',
+    title: 'Pelajaran 1: Bahasa Jepang Itu Seperti Apa?',
     subtitle: 'Mengenal 3 Sistem Tulisan (Hiragana, Katakana, Konsep Kanji), Eksplorasi Peta Kota Jepang, dan Salam Sehari-hari (Aisatsu)',
     estMinutes: 12,
     rewardPoints: 50,
@@ -542,7 +542,7 @@ const LESSON_DETAIL_DATA = {
       { jp: 'きって', romaji: 'kitte', meaning: 'Perangko', audio: 'きって' },
       { jp: 'おちゃ', romaji: 'ocha', meaning: 'Teh hijau', audio: 'おちゃ' },
       { jp: 'ちょっと', romaji: 'chotto', meaning: 'Sebentar / Sedikit', audio: 'ちょっと' },
-      { jp: 'でんしゃ', romaji: 'densha', meaning: 'Kereta listrik', audio: 'densha' },
+      { jp: 'でんしゃ', romaji: 'densha', meaning: 'Kereta listrik', audio: 'でんしゃ' },
       { jp: 'ひこうき', romaji: 'hikouki', meaning: 'Pesawat terbang', audio: 'ひこうき' }
     ],
     cultureTip: 'Saat melafalkan kata dengan tsu kecil (っ) seperti "chotto" atau "kippu", tahan nafas sejenak seolah ada jeda satu ketukan drum sebelum konsonan berikutnya.',
@@ -792,7 +792,6 @@ const LESSON_DETAIL_DATA = {
       }
     ]
   },
-
   7: {
     id: 7,
     num: 7,
@@ -914,7 +913,7 @@ const LESSON_DETAIL_DATA = {
         title: '4 Pilar Kata Tanya: Nani, Dare, Doko, Itsu',
         desc: 'Untuk mencari informasi penting saat berada di Jepang, gunakan 4 kata tanya pokok berikut:',
         dialogues: [
-          { jp: 'これ は なん ですか？', romaji: 'Kore wa nan desu ka?', meaning: 'Ini apa ya? (なに / なん = Apa).', audio: 'これはなんですか' },
+          { jp: 'これ は なん ですか？', romaji: 'Kore wa nan desu ka?', meaning: 'Ini apa ya? (なに / なん = Apa).', audio: '这是什么' },
           { jp: 'あの ひと は だれ ですか？', romaji: 'Ano hito wa dare desu ka?', meaning: 'Orang di sebelah sana itu siapa ya? (だれ = Siapa).', audio: 'あのひとはだれですか' },
           { jp: 'えき は どこ ですか？', romaji: 'Eki wa doko desu ka?', meaning: 'Stasiun kereta api ada di mana? (どこ = Di mana).', audio: 'えきはどこですか' },
           { jp: 'テスト は いつ ですか？', romaji: 'Tesuto wa itsu desu ka?', meaning: 'Ujiannya kapan ya? (いつ = Kapan).', audio: 'テストはいつですか' }
@@ -1855,6 +1854,30 @@ function applyDbLessons(dbLessons) {
   });
 }
 
+let currentMateriFilter = 'all';
+
+function filterMateriCatalog(cat, btn) {
+  currentMateriFilter = cat;
+  const pills = document.querySelectorAll('#materi-category-filter .filter-pill');
+  pills.forEach(p => p.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const targetPill = document.querySelector(`#materi-category-filter .filter-pill[data-cat="${cat}"]`);
+    if (targetPill) targetPill.classList.add('active');
+  }
+
+  const headingEl = document.getElementById('materi-section-heading');
+  if (headingEl) {
+    if (cat === 'aksara') headingEl.textContent = 'Modul Pengenalan Aksara (Hiragana & Katakana)';
+    else if (cat === 'percakapan') headingEl.textContent = 'Modul Tata Bahasa & Percakapan Praktis';
+    else headingEl.textContent = 'Kurikulum Modul N5 Dasar';
+  }
+
+  renderLessonCatalogList();
+}
+window.filterMateriCatalog = filterMateriCatalog;
+
 function renderLessonCatalogList() {
   const container = document.getElementById('materi-lesson-items');
   if (!container) return;
@@ -1864,7 +1887,19 @@ function renderLessonCatalogList() {
     completedLessons = JSON.parse(localStorage.getItem('sijapanese_completed_lessons') || '[]');
   } catch (e) {}
 
-  container.innerHTML = LESSON_CATALOG_DATA.map(les => {
+  let filtered = LESSON_CATALOG_DATA;
+  if (currentMateriFilter === 'aksara') {
+    filtered = LESSON_CATALOG_DATA.filter(l => l.id <= 4);
+  } else if (currentMateriFilter === 'percakapan') {
+    filtered = LESSON_CATALOG_DATA.filter(l => l.id >= 5);
+  }
+
+  const countEl = document.getElementById('materi-section-count');
+  if (countEl) {
+    countEl.textContent = `(${filtered.length} Pelajaran)`;
+  }
+
+  container.innerHTML = filtered.map(les => {
     const isDone = completedLessons.includes(les.id);
     return `
       <div class="materi-nihongo-catalog-row ${isDone ? 'completed' : ''}" onclick="openLesson(${les.id})">
@@ -2824,7 +2859,7 @@ function renderKatakanaInteractiveStep(lesson) {
     { kana: 'タ', romaji: 'ta' }, { kana: 'チ', romaji: 'chi' }, { kana: 'ツ', romaji: 'tsu' }, { kana: 'テ', romaji: 'te' }, { kana: 'ト', romaji: 'to' },
     { kana: 'ナ', romaji: 'na' }, { kana: 'ニ', romaji: 'ni' }, { kana: 'ヌ', romaji: 'nu' }, { kana: 'ネ', romaji: 'ne' }, { kana: 'ノ', romaji: 'no' },
     { kana: 'ハ', romaji: 'ha' }, { kana: 'ヒ', romaji: 'hi' }, { kana: 'フ', romaji: 'fu' }, { kana: 'ヘ', romaji: 'he' }, { kana: 'ホ', romaji: 'ho' },
-    { kana: 'マ', romaji: 'ma' }, { kana: 'ミ', romaji: 'mi' }, { kana: 'む', romaji: 'mu' }, { kana: 'メ', romaji: 'me' }, { kana: 'モ', romaji: 'mo' },
+    { kana: 'マ', romaji: 'ma' }, { kana: 'ミ', romaji: 'mi' }, { kana: 'ム', romaji: 'mu' }, { kana: 'メ', romaji: 'me' }, { kana: 'モ', romaji: 'mo' },
     { kana: 'ヤ', romaji: 'ya' }, { kana: '', romaji: '' }, { kana: 'ユ', romaji: 'yu' }, { kana: '', romaji: '' }, { kana: 'ヨ', romaji: 'yo' },
     { kana: 'ラ', romaji: 'ra' }, { kana: 'リ', romaji: 'ri' }, { kana: 'ル', romaji: 'ru' }, { kana: 'レ', romaji: 're' }, { kana: 'ロ', romaji: 'ro' },
     { kana: 'ワ', romaji: 'wa' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: '', romaji: '' }, { kana: 'ヲ', romaji: 'wo' },
@@ -3067,7 +3102,7 @@ function renderKoreQuizPreviewStep(lesson) {
             <div style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:0.2rem 0;">はい、わたし の です。ありがとう ございます！</div>
             <div style="font-size:0.85rem; color:#64748B;">Ya, itu milik saya. Terima kasih banyak!</div>
           </div>
-          <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:0.9rem;">
+          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:12px; padding:0.9rem;">
             <span style="font-size:0.75rem; font-weight:800; color:#DC2626; text-transform:uppercase;">Jawaban Bukan</span>
             <div style="font-size:1.1rem; font-weight:800; color:#0F172A; margin:0.2rem 0;">いいえ、わたし の じゃ ありません。</div>
             <div style="font-size:0.85rem; color:#64748B;">Bukan, ini bukan milik saya.</div>
@@ -3256,97 +3291,127 @@ function renderStepKuis(lesson) {
 }
 
 // ----------------------------------------------------
-// STEP 8: LATIHAN TAMBAHAN & BUDAYA (PETA KOTA & OJIGI)
+// STEP 8: LATIHAN TAMBAHAN & BUDAYA (PETA KOTA / WAWASAN BUDAYA)
 // ----------------------------------------------------
 function renderStepTambahan(lesson) {
-  const cities = getActiveJapanCities();
-  const cityPills = cities.map(c => `
-    <button type="button" id="japan-city-btn-${c.id}" class="japan-city-tab-btn ${c.id === activeJapanCityId ? 'active' : ''}" onclick="selectJapanCity('${c.id}')">
-      <span>${escapeHtml(c.name)} (${escapeHtml(c.kanji)})</span>
-    </button>
-  `).join('');
+  // Hanya gunakan modul peta jika Pelajaran 1
+  if (lesson.id === 1) {
+    const cities = getActiveJapanCities();
+    const cityPills = cities.map(c => `
+      <button type="button" id="japan-city-btn-${c.id}" class="japan-city-tab-btn ${c.id === activeJapanCityId ? 'active' : ''}" onclick="selectJapanCity('${c.id}')">
+        <span>${escapeHtml(c.name)} (${escapeHtml(c.kanji)})</span>
+      </button>
+    `).join('');
 
-  const mapPins = cities.map(c => `
-    <g id="japan-pin-${c.id}" class="japan-map-pin ${c.id === activeJapanCityId ? 'active' : ''}" onclick="selectJapanCity('${c.id}')" style="cursor:pointer">
-      <circle cx="${c.pinX}" cy="${c.pinY}" r="11" class="pin-circle-halo"></circle>
-      <circle cx="${c.pinX}" cy="${c.pinY}" r="6.5" class="pin-circle-outer"></circle>
-      <circle cx="${c.pinX}" cy="${c.pinY}" r="3" class="pin-circle-inner"></circle>
-      <text x="${c.pinX}" y="${c.pinY - 10}" class="pin-text-label" text-anchor="middle">${escapeHtml(c.name)}</text>
-    </g>
-  `).join('');
+    const mapPins = cities.map(c => `
+      <g id="japan-pin-${c.id}" class="japan-map-pin ${c.id === activeJapanCityId ? 'active' : ''}" onclick="selectJapanCity('${c.id}')" style="cursor:pointer">
+        <circle cx="${c.pinX}" cy="${c.pinY}" r="11" class="pin-circle-halo"></circle>
+        <circle cx="${c.pinX}" cy="${c.pinY}" r="6.5" class="pin-circle-outer"></circle>
+        <circle cx="${c.pinX}" cy="${c.pinY}" r="3" class="pin-circle-inner"></circle>
+        <text x="${c.pinX}" y="${c.pinY - 10}" class="pin-text-label" text-anchor="middle">${escapeHtml(c.name)}</text>
+      </g>
+    `).join('');
 
+    return `
+      <div class="step-header-banner">
+        <span class="step-label-pill">Langkah 8 • Peta Kota &amp; Budaya</span>
+        <h2 class="step-main-title">Eksplorasi Peta Kota Jepang &amp; Wawasan Budaya</h2>
+        <p class="step-desc-text">Klik titik nama kota pada peta untuk melihat profil kuliner dan mendengar pelafalan aslinya:</p>
+      </div>
+
+      <div class="nihongo-study-card">
+        <div class="japan-map-interactive-module">
+          <div class="japan-map-top-bar">
+            <span class="japan-map-hint">Pilih kota pada tombol tab atau klik pin di peta:</span>
+            <div class="japan-cities-tabs-bar">
+              ${cityPills}
+            </div>
+          </div>
+
+          <div class="japan-map-display-layout">
+            <div class="japan-map-svg-wrap">
+              <svg viewBox="140 10 460 410" class="japan-map-svg" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="islandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#E2E8F0"/>
+                    <stop offset="100%" stop-color="#CBD5E1"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Pulau Hokkaido (Utara) -->
+                <path class="japan-island-path island-hokkaido" d="M 460 70 Q 485 30 540 45 Q 590 60 575 105 Q 545 135 500 115 Q 460 110 455 90 Z" />
+                <text x="515" y="60" class="island-watermark-text" text-anchor="middle">HOKKAIDO</text>
+
+                <!-- Pulau Honshu (Utama) -->
+                <path class="japan-island-path island-honshu" d="M 480 140 Q 495 190 475 240 Q 455 270 410 270 Q 360 270 310 290 Q 255 305 245 285 Q 285 260 340 250 Q 390 240 420 210 Q 450 170 470 140 Z" />
+                <text x="405" y="235" class="island-watermark-text" text-anchor="middle">HONSHU</text>
+
+                <!-- Pulau Shikoku -->
+                <path class="japan-island-path island-shikoku" d="M 315 305 Q 355 295 370 325 Q 345 345 310 330 Z" />
+                <text x="340" y="322" class="island-watermark-text-small" text-anchor="middle">SHIKOKU</text>
+
+                <!-- Pulau Kyushu -->
+                <path class="japan-island-path island-kyushu" d="M 235 300 Q 255 315 245 365 Q 215 390 195 360 Q 185 315 220 295 Z" />
+                <text x="220" y="348" class="island-watermark-text-small" text-anchor="middle">KYUSHU</text>
+
+                <!-- Pin Kota -->
+                ${mapPins}
+              </svg>
+            </div>
+
+            <!-- Panel Detail Kota Terpilih -->
+            <div class="japan-city-detail-panel" id="japan-city-detail-card"></div>
+          </div>
+        </div>
+
+        <!-- Wawasan Budaya: Etika Ojigi -->
+        <div class="study-culture-box" style="margin-top:2rem;">
+          <div class="study-culture-title">Etika Budaya Membungkuk (Ojigi) di Jepang:</div>
+          <p class="study-culture-desc" style="margin-bottom:0.8rem;">
+            Membungkuk (Ojigi) adalah gestur kesopanan fundamental di Jepang. Sudut bungkukan memiliki makna berbeda:
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem; margin-top:0.8rem;">
+            <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
+              <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Eshaku (15°)</div>
+              <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan ringan saat berpapasan dengan rekan atau tetangga.</div>
+            </div>
+            <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
+              <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Keirei (30°)</div>
+              <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan hormat kepada guru, atasan, atau pelanggan.</div>
+            </div>
+            <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
+              <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Saikeirei (45°)</div>
+              <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan sangat mendalam untuk permintaan maaf atau rasa terima kasih tulus.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Untuk Pelajaran 2 dan seterusnya: Wawasan Budaya & Tips Praktis yang Relevan
   return `
     <div class="step-header-banner">
-      <span class="step-label-pill">Langkah 8 • Latihan Tambahan &amp; Budaya</span>
-      <h2 class="step-main-title">Eksplorasi Peta Kota Jepang &amp; Wawasan Budaya</h2>
-      <p class="step-desc-text">Klik titik nama kota pada peta untuk melihat profil kuliner dan mendengar pelafalan aslinya:</p>
+      <span class="step-label-pill">Langkah 8 • Wawasan Budaya</span>
+      <h2 class="step-main-title">Wawasan Budaya &amp; Tips Praktis</h2>
+      <p class="step-desc-text">Konteks budaya dan kebiasaan masyarakat Jepang yang berkaitan dengan topik modul ini:</p>
     </div>
 
     <div class="nihongo-study-card">
-      <div class="japan-map-interactive-module">
-        <div class="japan-map-top-bar">
-          <span class="japan-map-hint">Pilih kota pada tombol tab atau klik pin di peta:</span>
-          <div class="japan-cities-tabs-bar">
-            ${cityPills}
-          </div>
-        </div>
-
-        <div class="japan-map-display-layout">
-          <div class="japan-map-svg-wrap">
-            <svg viewBox="140 10 460 410" class="japan-map-svg" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <linearGradient id="islandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#E2E8F0"/>
-                  <stop offset="100%" stop-color="#CBD5E1"/>
-                </linearGradient>
-              </defs>
-
-              <!-- Pulau Hokkaido (Utara) -->
-              <path class="japan-island-path island-hokkaido" d="M 460 70 Q 485 30 540 45 Q 590 60 575 105 Q 545 135 500 115 Q 460 110 455 90 Z" />
-              <text x="515" y="60" class="island-watermark-text" text-anchor="middle">HOKKAIDO</text>
-
-              <!-- Pulau Honshu (Utama) -->
-              <path class="japan-island-path island-honshu" d="M 480 140 Q 495 190 475 240 Q 455 270 410 270 Q 360 270 310 290 Q 255 305 245 285 Q 285 260 340 250 Q 390 240 420 210 Q 450 170 470 140 Z" />
-              <text x="405" y="235" class="island-watermark-text" text-anchor="middle">HONSHU</text>
-
-              <!-- Pulau Shikoku -->
-              <path class="japan-island-path island-shikoku" d="M 315 305 Q 355 295 370 325 Q 345 345 310 330 Z" />
-              <text x="340" y="322" class="island-watermark-text-small" text-anchor="middle">SHIKOKU</text>
-
-              <!-- Pulau Kyushu -->
-              <path class="japan-island-path island-kyushu" d="M 235 300 Q 255 315 245 365 Q 215 390 195 360 Q 185 315 220 295 Z" />
-              <text x="220" y="348" class="island-watermark-text-small" text-anchor="middle">KYUSHU</text>
-
-              <!-- Pin Kota -->
-              ${mapPins}
-            </svg>
-          </div>
-
-          <!-- Panel Detail Kota Terpilih -->
-          <div class="japan-city-detail-panel" id="japan-city-detail-card"></div>
-        </div>
+      <div style="background:#FAF6F0; border:1.5px solid #E2D7CC; border-radius:18px; padding:1.8rem; margin-bottom:1.5rem;">
+        <h4 style="font-size:1.15rem; font-weight:800; color:#64554B; margin:0 0 0.8rem 0;">Wawasan Budaya Jepang:</h4>
+        <p style="font-size:0.98rem; line-height:1.7; color:#4A3B32; margin:0;">
+          ${escapeHtml(lesson.cultureTip || 'Di Jepang, kesopanan dan tata krama dalam berkomunikasi sangat dihargai. Mengucapkan salam dengan jelas dan nada santun akan membuka pintu pertemanan yang hangat.')}
+        </p>
       </div>
 
-      <!-- Wawasan Budaya: Etika Ojigi -->
-      <div class="study-culture-box" style="margin-top:2rem;">
-        <div class="study-culture-title">Etika Budaya Membungkuk (Ojigi) di Jepang:</div>
-        <p class="study-culture-desc" style="margin-bottom:0.8rem;">
-          Membungkuk (Ojigi) adalah gestur kesopanan fundamental di Jepang. Sudut bungkukan memiliki makna berbeda:
-        </p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem; margin-top:0.8rem;">
-          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
-            <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Eshaku (15°)</div>
-            <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan ringan saat berpapasan dengan rekan atau tetangga.</div>
-          </div>
-          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
-            <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Keirei (30°)</div>
-            <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan hormat kepada guru, atasan, atau pelanggan.</div>
-          </div>
-          <div style="background:#FFFFFF; border:1px solid #E2D7CC; border-radius:10px; padding:0.8rem;">
-            <div style="font-weight:800; color:#BA3D27; font-size:0.9rem;">Saikeirei (45°)</div>
-            <div style="font-size:0.8rem; color:#4A3B32;">Bungkukan sangat mendalam untuk permintaan maaf atau rasa terima kasih tulus.</div>
-          </div>
-        </div>
+      <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-radius:16px; padding:1.4rem;">
+        <h4 style="font-size:1.05rem; font-weight:800; color:#0F172A; margin:0 0 0.6rem 0;">Tips Praktis Penggunaan:</h4>
+        <ul style="margin:0 0 0 1.2rem; color:#475569; font-size:0.92rem; line-height:1.7;">
+          <li>Lafalkan setiap kata dengan tenang dan tidak perlu terburu-buru.</li>
+          <li>Gunakan bentuk sopan "desu" dan "masu" kepada orang yang baru pertama kali kamu temui.</li>
+          <li>Ucapkan "Sumimasen" terlebih dahulu sebelum meminta bantuan atau menanyakan lokasi di tempat umum.</li>
+        </ul>
       </div>
     </div>
   `;
