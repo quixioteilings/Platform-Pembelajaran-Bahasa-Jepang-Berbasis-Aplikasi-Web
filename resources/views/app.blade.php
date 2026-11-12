@@ -860,8 +860,8 @@
           <!-- Section Title Identik dengan Hiragana (Gaya Gambar 2) -->
           <div class="char-group-title" style="margin-top: 14px; margin-bottom: 18px;">
             <span class="group-dot" id="materi-group-dot" style="background:#B55242;"></span>
-            <span class="group-name" id="materi-group-name">Modul Pembelajaran N5</span>
-            <span class="group-category-badge cat-tag-dasar" id="materi-group-badge" style="background:#FEE2E2; color:#B55242; border-color:#FECACA;">N5 DASAR</span>
+            <span class="group-name" id="materi-group-name">Pengetahuan Umum Jepang</span>
+            <span class="group-category-badge cat-tag-dasar" id="materi-group-badge" style="background:#FEE2E2; color:#B55242; border-color:#FECACA;">N5</span>
             <span class="group-count" id="materi-section-count">(16 Pelajaran)</span>
           </div>
 

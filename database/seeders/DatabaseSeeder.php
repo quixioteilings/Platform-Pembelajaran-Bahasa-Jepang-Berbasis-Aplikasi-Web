@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         $lvlN5 = MateriLevel::firstOrCreate(
             ['code' => 'n5'],
             [
-                'name' => 'N5 Dasar',
+                'name' => 'Pengetahuan Umum Jepang',
                 'sub' => 'Fondasi, Aksara & Wisata',
                 'accent_color' => '#D9383A',
                 'order' => 1,
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
                 "level": {
                         "id": 1,
                         "code": "n5",
-                        "name": "N5 Dasar Liburan",
+                        "name": "Pengetahuan Umum Jepang",
                         "sub": "Aksara & Percakapan Penting",
                         "accent_color": "#D9383A",
                         "order": 1,
@@ -420,7 +420,7 @@ class DatabaseSeeder extends Seeder
                 "level": {
                         "id": 1,
                         "code": "n5",
-                        "name": "N5 Dasar Liburan",
+                        "name": "Pengetahuan Umum Jepang",
                         "sub": "Aksara & Percakapan Penting",
                         "accent_color": "#D9383A",
                         "order": 1,
@@ -562,7 +562,7 @@ class DatabaseSeeder extends Seeder
                 "level": {
                         "id": 1,
                         "code": "n5",
-                        "name": "N5 Dasar Liburan",
+                        "name": "Pengetahuan Umum Jepang",
                         "sub": "Aksara & Percakapan Penting",
                         "accent_color": "#D9383A",
                         "order": 1,
@@ -668,7 +668,7 @@ class DatabaseSeeder extends Seeder
                 "level": {
                         "id": 1,
                         "code": "n5",
-                        "name": "N5 Dasar Liburan",
+                        "name": "Pengetahuan Umum Jepang",
                         "sub": "Aksara & Percakapan Penting",
                         "accent_color": "#D9383A",
                         "order": 1,

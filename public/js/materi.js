@@ -1781,7 +1781,7 @@ let currentLessonQuizScore = 0;
 
 let activeMateriLevel = 'n5';
 let materiLevelsData = [
-  { code: 'n5', name: 'N5 Dasar', sub: 'Fondasi, Aksara & Wisata', accent_color: '#BA5444' },
+  { code: 'n5', name: 'Pengetahuan Umum Jepang', sub: 'Fondasi, Aksara & Budaya', accent_color: '#BA5444' },
   { code: 'n4', name: 'N4 Menengah', sub: 'Situasi Praktis Traveling', accent_color: '#3E6B89' },
   { code: 'n3', name: 'N3 Lanjutan', sub: 'Tata Bahasa & Dialog Kompleks', accent_color: '#059669' },
   { code: 'all', name: 'Semua Level', sub: 'Seluruh Kurikulum', accent_color: '#2D2520' }
@@ -1991,16 +1991,18 @@ function renderLessonCatalogList() {
     return;
   }
 
-  container.innerHTML = filteredLessons.map(les => {
+  container.innerHTML = filteredLessons.map((les, idx) => {
     const isDone = completedLessons.includes(les.id);
     const lesLevel = (les.level || 'N5').toUpperCase();
+    const lesNum = les.lesson_number || les.num || les.id || (idx + 1);
     return `
       <div class="materi-nihongo-catalog-row ${isDone ? 'completed' : ''}" onclick="openLesson(${les.id})">
-        <div class="nihongo-row-num ${isDone ? 'done' : ''}">${isDone ? 'OK' : les.id}</div>
+        <div class="nihongo-row-num ${isDone ? 'done' : ''}">${lesNum}</div>
         <div class="nihongo-row-content">
           <div class="nihongo-row-meta">
             <span class="nihongo-level-chip chip-${lesLevel.toLowerCase()}">${lesLevel}</span>
             <span class="nihongo-row-time">${les.time || '20 menit'}</span>
+            ${isDone ? '<span class="nihongo-done-chip">✓ Selesai</span>' : ''}
           </div>
           <h3 class="nihongo-row-title">${escapeHtml(les.title)}</h3>
           <p class="nihongo-row-subtitle">${escapeHtml(les.subtitle)}</p>
