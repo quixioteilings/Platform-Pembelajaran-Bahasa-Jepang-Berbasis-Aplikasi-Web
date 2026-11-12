@@ -102,22 +102,22 @@
         <div class="hero-content">
           <div class="hero-badge">
             <span class="badge-dot"></span>
-            <span>Platform Belajar Bahasa Jepang Interaktif</span>
+            <span>Media Pembelajaran Bahasa Jepang</span>
           </div>
 
           <h1 class="hero-title">
-            Kuasai Bahasa Jepang<br/>
-            <span class="hero-title-jp">日本語</span> dengan Cepat &amp; Presisi
+            Belajar Bahasa Jepang<br/>
+            Lebih Mudah &amp; Terstruktur
           </h1>
 
           <p class="hero-subtitle">
-            Pelajari 104 Hiragana &amp; 104 Katakana (Huruf Dasar, Tenten, Maru, dan Gabungan), serta kosakata praktis melalui visual dan pelafalan asli.
+            Pelajari aksara Hiragana, Katakana, materi percakapan, dan kosakata sehari-hari lengkap dengan latihan interaktif.
           </p>
 
           <div class="hero-cta">
             <button class="btn-primary" onclick="showPage('materi')">
               <svg viewBox="0 0 24 24" class="svg-icon"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Mulai Belajar (Materi &amp; Komik)</span>
+              <span>Mulai Belajar</span>
               <svg viewBox="0 0 24 24" class="svg-icon-arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
             <button class="btn-secondary" onclick="showPage('games')">
@@ -145,85 +145,26 @@
         </div>
 
         <div class="hero-visual">
-          <div class="daily-word-container" id="daily-word-container">
-            <div class="daily-word-card" id="daily-word-card" onclick="flipDailyWordCard(event)">
-              <!-- MUKA DEPAN (FRONT) -->
-              <div class="daily-word-face face-front">
-                <div class="daily-card-header">
-                  <div class="daily-card-badge">
-                    <span class="daily-badge-dot"></span>
-                    <span class="daily-badge-text">KATA HARI INI</span>
-                  </div>
-                  <div class="daily-card-actions">
-                    <button type="button" class="btn-daily-action" onclick="speakCurrentDailyWord(event)" title="Dengarkan Pelafalan">
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-                    </button>
-                    <button type="button" class="btn-daily-action" onclick="shuffleDailyWord(event)" title="Acak Kata Lain">
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="daily-card-body">
-                  <div class="daily-kanji-wrap">
-                    <span class="daily-kanji" id="daily-word-kanji">乾杯</span>
-                  </div>
-                  <div class="daily-reading-pill" id="daily-word-reading">
-                    かんぱい • kanpai
-                  </div>
-                  <div class="daily-category-tag" id="daily-word-category">
-                    Percakapan Sehari-hari
-                  </div>
-                </div>
-
-                <div class="daily-card-footer">
-                  <div class="daily-flip-hint">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                    <span>Ketuk kartu untuk lihat arti &amp; contoh kalimat</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- MUKA BELAKANG (BACK) -->
-              <div class="daily-word-face face-back">
-                <div class="daily-card-header">
-                  <div class="daily-card-badge">
-                    <span class="daily-badge-dot green"></span>
-                    <span class="daily-badge-text">Arti &amp; Contoh Kalimat</span>
-                  </div>
-                  <button type="button" class="btn-daily-action" onclick="flipDailyWordCard(event)" title="Balik ke Depan">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                  </button>
-                </div>
-
-                <div class="daily-back-body">
-                  <div class="daily-meaning-box">
-                    <span class="daily-meaning-label">Arti Bahasa Indonesia</span>
-                    <h3 class="daily-meaning-text" id="daily-word-meaning">Bersulang! (Cheers!)</h3>
-                  </div>
-
-                  <div class="daily-example-box">
-                    <div class="daily-example-header">
-                      <span class="daily-example-label">Contoh Kalimat:</span>
-                      <button type="button" class="btn-example-speak" onclick="speakCurrentDailyExample(event)" title="Dengarkan Kalimat">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                        <span>Putar Suara</span>
-                      </button>
-                    </div>
-                    <p class="daily-example-jp" id="daily-example-jp">みんなで 乾杯しましょう！</p>
-                    <p class="daily-example-romaji" id="daily-example-romaji">Minna de kanpai shimashou!</p>
-                    <p class="daily-example-id" id="daily-example-id">"Mari kita bersulang bersama-sama!"</p>
-                  </div>
-                </div>
-
-                <div class="daily-back-actions">
-                  <button type="button" class="btn-daily-shuffle" onclick="shuffleDailyWord(event)">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
-                    <span>Acak Kata Baru</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div class="floating-cards" id="hero-floating-cards">
+            <div class="float-card card-a" data-kana="あ" style="--delay:0s"><span class="card-jp">あ</span><span class="card-ro">a</span></div>
+            <div class="float-card card-b" data-kana="か" style="--delay:0.5s"><span class="card-jp">か</span><span class="card-ro">ka</span></div>
+            <div class="float-card card-c" data-kana="さ" style="--delay:1s"><span class="card-jp">さ</span><span class="card-ro">sa</span></div>
+            <div class="float-card card-d" data-kana="ア" style="--delay:1.5s"><span class="card-jp">ア</span><span class="card-ro">a</span></div>
+            <div class="float-card card-e" data-kana="な" style="--delay:0.3s"><span class="card-jp">な</span><span class="card-ro">na</span></div>
+          </div>
+          <div class="hero-mascot-art" onclick="speakJapanese('にほんご')" title="SIJapanese - にほんご" style="cursor:pointer">
+            <svg class="mascot-emblem-svg" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="#BE5544" opacity="0.95"/>
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+              <!-- Torii Gate Silhouette -->
+              <path d="M30 46Q60 41 90 46" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <line x1="36" y1="52" x2="84" y2="52" stroke="#FFFFFF" stroke-width="2.5"/>
+              <line x1="42" y1="46" x2="42" y2="86" stroke="#FFFFFF" stroke-width="3.5"/>
+              <line x1="78" y1="46" x2="78" y2="86" stroke="#FFFFFF" stroke-width="3.5"/>
+              <rect x="55" y="47" width="10" height="9" fill="#FFFFFF"/>
+              <!-- Sun / Cloud Accent -->
+              <path d="M26 86h68" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            </svg>
           </div>
         </div>
       </section>
@@ -231,9 +172,9 @@
       <!-- MODULES SECTION -->
       <section class="features-section">
         <div class="section-header">
-          <span class="section-tag">KURIKULUM PEMBELAJARAN</span>
-          <h2>Modul &amp; Materi Pembelajaran</h2>
-          <p>Pilih materi dasar atau latihan bertahap sesuai kemampuanmu</p>
+          <span class="section-tag">MENU PEMBELAJARAN</span>
+          <h2>Modul Pembelajaran</h2>
+          <p>Pilih modul materi atau latihan bertahap sesuai kebutuhan belajarmu</p>
         </div>
 
         <div class="feature-cards">
@@ -242,12 +183,12 @@
               <div class="feature-icon-wrap" style="background:var(--red-pale); color:var(--red);">
                 <svg viewBox="0 0 24 24" class="svg-icon-large"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M12 6v14"/></svg>
               </div>
-              <div class="feature-badge" style="background:#FEE2E2; color:#991B1B;">Cerita Komik + Quest</div>
+              <div class="feature-badge" style="background:#FEE2E2; color:#991B1B;">16 Modul</div>
             </div>
-            <h3>Materi &amp; Petualangan Kenji</h3>
-            <p>Kurikulum interaktif sekolah dengan komik cerita berwarna, pelafalan audio asli, kupas kalimat, dan quest latihan.</p>
+            <h3>Materi Pembelajaran</h3>
+            <p>Materi bahasa Jepang terstruktur dilengkapi dialog ilustrasi, audio pelafalan, penjelasan tata bahasa, dan latihan kuis.</p>
             <div class="feature-footer">
-              <span>Mulai Belajar</span>
+              <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </div>
           </div>
@@ -258,8 +199,8 @@
               </div>
               <div class="feature-badge red-badge">104 Huruf</div>
             </div>
-            <h3>Hiragana (ひらがな)</h3>
-            <p>Huruf lengkap: 46 huruf dasar, 20 huruf tenten, 5 huruf maru, dan 33 huruf gabungan.</p>
+            <h3>Hiragana</h3>
+            <p>Pelajari 104 huruf Hiragana lengkap mulai dari huruf dasar, perubahan bunyi, hingga huruf gabungan.</p>
             <div class="feature-footer">
               <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -273,8 +214,8 @@
               </div>
               <div class="feature-badge blue-badge">104 Huruf</div>
             </div>
-            <h3>Katakana (カタカナ)</h3>
-            <p>Huruf lengkap: 46 huruf dasar, 20 huruf tenten, 5 huruf maru, dan 33 huruf gabungan.</p>
+            <h3>Katakana</h3>
+            <p>Pelajari 104 huruf Katakana untuk kata serapan asing dengan panduan bunyi dan tabel interaktif.</p>
             <div class="feature-footer">
               <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -289,7 +230,7 @@
               <div class="feature-badge yellow-badge">200+ Kosakata</div>
             </div>
             <h3>Kosakata</h3>
-            <p>Pelajari kosakata sehari-hari: salam, kata tanya, makanan &amp; minuman, kata kerja harian, kata sifat, sekolah, angka &amp; waktu.</p>
+            <p>Kumpulan kosakata praktis sehari-hari seperti salam, kata tanya, makanan, kata kerja, dan waktu.</p>
             <div class="feature-footer">
               <span>Buka Modul</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -301,10 +242,10 @@
               <div class="feature-icon-wrap green-icon">
                 <svg viewBox="0 0 24 24" class="svg-icon-large"><rect width="20" height="12" x="2" y="6" rx="6"/><path d="M6 12h4m-2-2v4m10-2h.01m-4 0h.01"/></svg>
               </div>
-              <div class="feature-badge green-badge">6 Game Edukasi</div>
+              <div class="feature-badge green-badge">6 Permainan</div>
             </div>
-            <h3>Mini Games &amp; Arcade</h3>
-            <p>Uji refleks hafalan melalui Kana Blast (Turret Blaster), Sky Atk Defense, Flash Card, Memory Match, Speed Quiz, dan Word Builder.</p>
+            <h3>Mini Games Edukasi</h3>
+            <p>Asah daya ingat aksara dan refleks membaca lewat berbagai permainan interaktif yang seru.</p>
             <div class="feature-footer">
               <span>Buka Mini Games</span>
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -471,6 +412,7 @@
       <div class="page-header yellow-header">
         <div class="page-header-content">
           <button class="back-btn" onclick="showPage('home')">
+            <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             <span>Kembali</span>
           </button>
           <div class="page-title-wrap">
@@ -921,12 +863,12 @@
             <!-- Populated dynamically by js/materi.js -->
           </div>
 
-          <!-- Misi Belajar Utama (CTA Banner Gaya Hiragana/Katakana) -->
+          <!-- Latihan Aksara Tambahan -->
           <div class="kana-minigames-cta" style="margin-top: 28px;">
             <div class="kana-cta-text-wrap">
-              <span class="kana-cta-badge">Misi Belajar Utama</span>
-              <h3 class="kana-cta-title">Kuasai Hiragana, Katakana &amp; Percakapan Liburan ke Jepang</h3>
-              <p class="kana-cta-desc">Dirancang khusus agar Anda fasih membaca menu, papan stasiun, belanja di konbini, dan memesan makanan langsung ke orang Jepang dengan percaya diri.</p>
+              <span class="kana-cta-badge">Latihan Aksara</span>
+              <h3 class="kana-cta-title">Latihan Aksara Hiragana &amp; Katakana</h3>
+              <p class="kana-cta-desc">Perkuat kemampuan membaca huruf Jepang melalui modul aksara interaktif.</p>
             </div>
             <div class="kana-cta-btn-wrap">
               <button class="kana-cta-btn-primary" onclick="showPage('hiragana')">
