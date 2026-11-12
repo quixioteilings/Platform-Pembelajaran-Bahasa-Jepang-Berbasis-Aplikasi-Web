@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20261112_spacious_beranda" />
+  <link rel="stylesheet" href="css/style.css?v=20261112_unified_headers" />
   <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
   <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_spacious_beranda" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_unified_headers" />
   <style>
     html, body {
       background-color: #FAF6F0 !important;
@@ -409,34 +409,30 @@
 
     <!-- VOCABULARY PAGE -->
     <div id="page-vocabulary" class="page">
-      <div class="page-header yellow-header">
+      <div class="page-header blue-header">
         <div class="page-header-content">
           <button class="back-btn" onclick="showPage('home')">
             <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             <span>Kembali</span>
           </button>
           <div class="page-title-wrap">
-            <h1>Kosakata Bahasa Jepang</h1>
+            <h1>単語 <span class="sub-title">Kosakata</span></h1>
             <p>Daftar kosakata praktis sehari-hari dengan pelafalan suara, flashcard, dan latihan kuis</p>
           </div>
-        </div>
-      </div>
-
-      <!-- VOCABULARY MODE SWITCHER (ZERO ICON / ZERO EMOJI) -->
-      <div class="vocab-mode-nav-wrap">
-        <div class="vocab-mode-switcher">
-          <button type="button" class="vocab-mode-btn active" id="btn-vocab-mode-explore" onclick="switchVocabMode('explore')">
-            <span class="vocab-mode-pill-tag">Mode 1</span>
-            <span class="vocab-mode-title">Kamus &amp; Eksplorasi</span>
-          </button>
-          <button type="button" class="vocab-mode-btn" id="btn-vocab-mode-flashcard" onclick="switchVocabMode('flashcard')">
-            <span class="vocab-mode-pill-tag">Mode 2</span>
-            <span class="vocab-mode-title">Flashcard Audio</span>
-          </button>
-          <button type="button" class="vocab-mode-btn" id="btn-vocab-mode-quiz" onclick="switchVocabMode('quiz')">
-            <span class="vocab-mode-pill-tag">Mode 3</span>
-            <span class="vocab-mode-title">Latihan &amp; Kuis Kosakata</span>
-          </button>
+          <div class="page-mode-toggle">
+            <button class="mode-btn active" id="btn-vocab-mode-explore" onclick="switchVocabMode('explore')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span>Kamus</span>
+            </button>
+            <button class="mode-btn" id="btn-vocab-mode-flashcard" onclick="switchVocabMode('flashcard')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 8 6 4-6 4Z"/></svg>
+              <span>Flashcard</span>
+            </button>
+            <button class="mode-btn" id="btn-vocab-mode-quiz" onclick="switchVocabMode('quiz')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span>Kuis</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -2054,21 +2050,35 @@
 
           <!-- MINI GAMES PAGE -->
     <div id="page-games" class="page">
-      <div class="page-header green-header">
+      <div class="page-header red-header">
         <div class="page-header-content">
           <button class="back-btn" id="games-back-btn" onclick="showPage('home')">
             <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             <span>Kembali</span>
           </button>
           <div class="page-title-wrap">
-            <h1>ミニゲーム <span class="sub-title" id="game-page-title">Mini Games Bahasa Jepang</span></h1>
+            <h1>ミニゲーム <span class="sub-title" id="game-page-title">Mini Games</span></h1>
             <p id="game-page-subtitle">Uji pemahaman dan kecepatan refleks membaca aksara Jepang</p>
+          </div>
+          <div class="page-mode-toggle">
+            <button class="mode-btn active" id="btn-game-filter-all" onclick="filterGameCards('all')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><rect width="20" height="12" x="2" y="6" rx="6"/><path d="M6 12h4m-2-2v4m10-2h.01m-4 0h.01"/></svg>
+              <span>Semua Game</span>
+            </button>
+            <button class="mode-btn" id="btn-game-filter-action" onclick="filterGameCards('action')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Aksi &amp; Refleks</span>
+            </button>
+            <button class="mode-btn" id="btn-game-filter-quiz" onclick="filterGameCards('quiz')">
+              <svg viewBox="0 0 24 24" class="svg-icon-mini"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              <span>Kuis &amp; Kartu</span>
+            </button>
           </div>
         </div>
       </div>
 
       <div id="game-menu" class="game-menu">
-        <div class="game-card" onclick="startGame('kana-blast')">
+        <div class="game-card" onclick="startGame('kana-blast')" data-game-category="action">
           <div class="game-icon-wrap icon-cyan-blast">
             <svg viewBox="0 0 24 24" class="svg-icon-large">
               <circle cx="12" cy="17" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -2083,7 +2093,7 @@
           <div class="game-difficulty"><span class="diff-dot cyan-dot"></span> Tingkat: Cepat &amp; Seru</div>
         </div>
 
-        <div class="game-card game-card-monster" onclick="showPage('monster')">
+        <div class="game-card game-card-monster" onclick="showPage('monster')" data-game-category="action">
           <div class="game-icon-wrap icon-purple">
             <svg viewBox="0 0 24 24" class="svg-icon-large">
               <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
@@ -2097,7 +2107,7 @@
           <div class="game-difficulty"><span class="diff-dot purple-dot"></span> Tingkat: Pertahanan Refleks</div>
         </div>
 
-        <div class="game-card" onclick="startGame('flash-card')">
+        <div class="game-card" onclick="startGame('flash-card')" data-game-category="quiz">
           <div class="game-icon-wrap icon-cyan">
             <svg viewBox="0 0 24 24" class="svg-icon-large"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
           </div>
@@ -2106,7 +2116,7 @@
           <div class="game-difficulty"><span class="diff-dot green-dot"></span> Tingkat: Fleksibel &amp; Hafalan</div>
         </div>
 
-        <div class="game-card" onclick="startGame('sushi-conveyor')">
+        <div class="game-card" onclick="startGame('sushi-conveyor')" data-game-category="action">
           <div class="game-icon-wrap" style="background:#FFF1F2; color:#E11D48;">
             <svg viewBox="0 0 24 24" class="svg-icon-large" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <ellipse cx="12" cy="17" rx="10" ry="4"/>
@@ -2120,7 +2130,7 @@
           <div class="game-difficulty"><span class="diff-dot orange-dot"></span> Tingkat: Refleks &amp; Kosakata</div>
         </div>
 
-        <div class="game-card" onclick="startGame('speed-quiz')">
+        <div class="game-card" onclick="startGame('speed-quiz')" data-game-category="quiz">
           <div class="game-icon-wrap icon-orange">
             <svg viewBox="0 0 24 24" class="svg-icon-large"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/><path d="m13 2 4 4"/></svg>
           </div>
@@ -2129,7 +2139,7 @@
           <div class="game-difficulty"><span class="diff-dot orange-dot"></span> Tingkat: Cepat</div>
         </div>
 
-        <div class="game-card" onclick="startGame('word-builder')">
+        <div class="game-card" onclick="startGame('word-builder')" data-game-category="quiz">
           <div class="game-icon-wrap icon-rose">
             <svg viewBox="0 0 24 24" class="svg-icon-large"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
           </div>
@@ -2614,7 +2624,7 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="js/data.js"></script>
-  <script src="js/app.js?v=20261103_sakura"></script>
+  <script src="js/app.js?v=20261112_unified_headers"></script>
   <script src="js/materi.js?v=20261030_v3"></script>
   <script src="js/auth.js"></script>
 </body>

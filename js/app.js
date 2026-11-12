@@ -3125,6 +3125,27 @@ function showGameMenu() {
   document.body.scrollTop = 0;
 }
 
+function filterGameCards(category) {
+  const allBtn = document.getElementById('btn-game-filter-all');
+  const actionBtn = document.getElementById('btn-game-filter-action');
+  const quizBtn = document.getElementById('btn-game-filter-quiz');
+  
+  if (allBtn) allBtn.classList.toggle('active', category === 'all');
+  if (actionBtn) actionBtn.classList.toggle('active', category === 'action');
+  if (quizBtn) quizBtn.classList.toggle('active', category === 'quiz');
+
+  const cards = document.querySelectorAll('#game-menu .game-card');
+  cards.forEach(card => {
+    const cardCat = card.getAttribute('data-game-category');
+    if (category === 'all' || cardCat === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+window.filterGameCards = filterGameCards;
+
 function startGame(type) {
   clearInterval(gameTimer);
   stopBlastGame();
