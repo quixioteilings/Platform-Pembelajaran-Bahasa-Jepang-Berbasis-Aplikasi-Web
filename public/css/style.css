@@ -2978,6 +2978,52 @@ body {
   box-shadow: 0 3px 10px rgba(186, 118, 53, 0.25);
 }
 
+.flash-batch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  margin-top: 10px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.flash-batch-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+.flash-batch-options {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.flash-batch-pill {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border);
+  background: var(--card-inner);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.flash-batch-pill:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+.flash-batch-pill.active {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  box-shadow: 0 2px 8px rgba(186, 84, 68, 0.25);
+}
+
 .flash-type-badge {
   padding: 4px 12px;
   border-radius: var(--radius-pill);

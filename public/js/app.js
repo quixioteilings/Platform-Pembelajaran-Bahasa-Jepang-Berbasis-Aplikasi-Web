@@ -3105,20 +3105,24 @@ function toggleFlashCardStar(cardId, event) {
 function getFlashMasterList() {
   const list = [];
   
-  // 1. Prioritaskan Bank Soal dari GameConfigManager (Hiragana, Katakana, Kanji, dll.)
+  // 1. Ambil Bank Soal dari GameConfigManager (Hiragana, Katakana, Kanji, dll.)
   if (typeof GameConfigManager !== 'undefined') {
     const customList = GameConfigManager.getQuestions('flash-card');
     if (customList && customList.length > 0) {
       customList.forEach(q => {
-        const modeKey = q.mode || q.subMode || 'hiragana';
+        const modeKey = (q.mode || q.subMode || 'vocab-hiragana').toLowerCase();
         const isKanji = modeKey.includes('kanji');
-        const isKata = modeKey.includes('katakana');
+        const isKata = modeKey.includes('kata');
         const isHira = !isKanji && !isKata;
         list.push({
           id: 'cfg_' + (q.id || Math.random().toString(36).substr(2, 9)),
           char: q.char,
           romaji: q.romaji,
-          type: isHira ? 'hiragana' : (isKata ? 'katakana' : modeKey),
+          type: modeKey,
+          subMode: modeKey,
+          isHira: isHira,
+          isKata: isKata,
+          isKanji: isKanji,
           typeLabel: isHira ? 'Hiragana' : (isKata ? 'Katakana' : (isKanji ? 'Kanji' : modeKey.toUpperCase())),
           badgeClass: isHira ? 'hiragana' : (isKata ? 'katakana' : (isKanji ? 'kanji' : 'hiragana')),
           category: 'Bank Soal Guru',
@@ -3128,11 +3132,10 @@ function getFlashMasterList() {
           speech: q.char
         });
       });
-      return list;
     }
   }
 
-  // Fallback jika belum tersimpan di GameConfigManager
+  // 2. Tambahkan Alfabet Aksara Dasar (Hiragana 104 & Katakana 104) agar tidak kosong dan opsi selalu kaya
   if (typeof HIRAGANA !== 'undefined' && Array.isArray(HIRAGANA)) {
     HIRAGANA.forEach((h, idx) => {
       list.push({
@@ -3140,9 +3143,13 @@ function getFlashMasterList() {
         char: h.char,
         romaji: h.romaji,
         type: 'hiragana',
+        subMode: 'vocab-hiragana',
+        isHira: true,
+        isKata: false,
+        isKanji: false,
         typeLabel: 'Hiragana',
         badgeClass: 'hiragana',
-        category: h.category || 'Dasar',
+        category: h.category || 'Aksara Dasar',
         group: h.group || '',
         example: h.example || '',
         meaning: h.mnemonic || '',
@@ -3158,9 +3165,13 @@ function getFlashMasterList() {
         char: k.char,
         romaji: k.romaji,
         type: 'katakana',
+        subMode: 'vocab-katakana',
+        isHira: false,
+        isKata: true,
+        isKanji: false,
         typeLabel: 'Katakana',
         badgeClass: 'katakana',
-        category: k.category || 'Dasar',
+        category: k.category || 'Aksara Dasar',
         group: k.group || '',
         example: k.example || '',
         meaning: k.mnemonic || '',
@@ -3172,8 +3183,36 @@ function getFlashMasterList() {
   return list;
 }
 
+function matchesFlashCardMode(card, mode) {
+  if (!card) return false;
+  if (!mode || mode === 'all') return true;
+  if (mode === 'starred') {
+    const starredIds = new Set(getFlashStoredIds(FLASH_STARRED_KEY));
+    return starredIds.has(card.id);
+  }
+
+  const cType = (card.type || '').toLowerCase();
+  const cSubMode = (card.subMode || card.mode || '').toLowerCase();
+  const target = (mode || '').toLowerCase();
+
+  if (cType === target || cSubMode === target) return true;
+
+  if (target.includes('hira')) {
+    return card.isHira || cType.includes('hira') || cSubMode.includes('hira');
+  }
+  if (target.includes('kata')) {
+    return card.isKata || cType.includes('kata') || cSubMode.includes('kata');
+  }
+  if (target.includes('kanji')) {
+    return card.isKanji || cType.includes('kanji') || cSubMode.includes('kanji');
+  }
+
+  return false;
+}
+
 let flashState = {
   mode: 'all',
+  batchSize: '30',
   cards: [],
   current: 0,
   know: 0,
@@ -3185,14 +3224,14 @@ let flashState = {
 };
 
 function getFlashModeLabel(mode) {
-  if (mode === 'hiragana') return 'Hiragana';
-  if (mode === 'katakana') return 'Katakana';
+  if (mode === 'hiragana' || mode === 'vocab-hiragana') return 'Hiragana (かさ...)';
+  if (mode === 'katakana' || mode === 'vocab-katakana') return 'Katakana (パン...)';
   if (mode === 'starred') return 'Huruf Berbintang';
-  if (mode === 'kanji-n5') return 'Kanji N5 Dasar';
+  if (mode === 'kanji-n5' || mode === 'kanji') return 'Kanji N5 Dasar';
   return 'Semua Huruf';
 }
 
-function startFlashCard(mode = null) {
+function startFlashCard(mode = null, batchSize = null) {
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
@@ -3206,20 +3245,30 @@ function startFlashCard(mode = null) {
     flashState.mode = 'all';
   }
 
-  const master = getFlashMasterList();
-  let filtered = [];
-  const currentMode = flashState.mode;
-
-  if (currentMode === 'all') {
-    filtered = master;
-  } else if (currentMode === 'starred') {
-    const starredIds = new Set(getFlashStoredIds(FLASH_STARRED_KEY));
-    filtered = master.filter(c => starredIds.has(c.id));
-  } else {
-    filtered = master.filter(c => c.type === currentMode);
+  if (batchSize !== null && batchSize !== undefined) {
+    flashState.batchSize = batchSize;
+  } else if (!flashState.batchSize) {
+    flashState.batchSize = '30';
   }
 
-  flashState.cards = shuffle([...filtered]);
+  const master = getFlashMasterList();
+  const currentMode = flashState.mode;
+
+  // Filter dengan pencocokan pintar (mendukung submode vocab-hiragana, vocab-katakana, dll.)
+  const filtered = master.filter(c => matchesFlashCardMode(c, currentMode));
+
+  // Acak susunan kartu
+  let deck = shuffle([...filtered]);
+
+  // Batasi jumlah kartu sesuai batch (10, 15, 30, atau all)
+  if (flashState.batchSize !== 'all') {
+    const num = parseInt(flashState.batchSize, 10);
+    if (!isNaN(num) && num > 0) {
+      deck = deck.slice(0, Math.min(num, deck.length));
+    }
+  }
+
+  flashState.cards = deck;
   flashState.current = 0;
   flashState.know = 0;
   flashState.dontknow = 0;
@@ -3230,10 +3279,19 @@ function startFlashCard(mode = null) {
 
   renderFlashCard();
 }
+window.startFlashCard = startFlashCard;
 
 function setFlashMode(newMode) {
-  startFlashCard(newMode);
+  startFlashCard(newMode, flashState.batchSize);
 }
+window.setFlashMode = setFlashMode;
+
+function setFlashBatch(newBatch) {
+  flashState.batchSize = newBatch;
+  startFlashCard(flashState.mode, newBatch);
+  showToast(`Jumlah kartu diatur ke ${newBatch === 'all' ? 'Semua' : newBatch} kartu`, 'info');
+}
+window.setFlashBatch = setFlashBatch;
 
 function continueUnlearnedFlashCards() {
   if (!flashState.unlearnedCards || flashState.unlearnedCards.length === 0) return;
@@ -3250,11 +3308,13 @@ function continueUnlearnedFlashCards() {
   showToast(`Melanjutkan ${flashState.cards.length} huruf yang belum hafal`, 'info');
   renderFlashCard();
 }
+window.continueUnlearnedFlashCards = continueUnlearnedFlashCards;
 
 function resetFlashCardSession() {
-  startFlashCard(flashState.mode);
+  startFlashCard(flashState.mode, flashState.batchSize);
   showToast('Sesi flash card direset ke awal.', 'info');
 }
+window.resetFlashCardSession = resetFlashCardSession;
 
 function renderFlashCard() {
   const screen = document.getElementById('game-screen');
@@ -3283,19 +3343,34 @@ function renderFlashCard() {
         { id: 'kanji-n5', name: 'Kanji N5' }
       ];
 
-  const subChipsHtml = activeSubModes.map(sm => `
-    <button class="flash-filter-chip ${fs.mode === sm.id ? 'active' : ''}" onclick="setFlashMode('${sm.id}')" title="${sm.name}">
-      <span>${formatShortSubModeName(sm.name)}</span>
-    </button>
-  `).join('');
+  const subChipsHtml = activeSubModes.map(sm => {
+    const isActive = (fs.mode === sm.id) ||
+      (sm.id === 'vocab-hiragana' && fs.mode === 'hiragana') ||
+      (sm.id === 'vocab-katakana' && fs.mode === 'katakana');
+    return `
+      <button type="button" class="flash-filter-chip ${isActive ? 'active' : ''}" onclick="setFlashMode('${sm.id}')" title="${sm.name}">
+        <span>${formatShortSubModeName(sm.name)}</span>
+      </button>
+    `;
+  }).join('');
 
   const filterTabsHtml = `
     <div class="flash-filter-container">
       <div class="flash-filter-scroll">
         ${subChipsHtml}
-        <button class="flash-filter-chip star-chip ${fs.mode === 'starred' ? 'active' : ''}" onclick="setFlashMode('starred')" title="Huruf Berbintang (${starredCount})">
+        <button type="button" class="flash-filter-chip star-chip ${fs.mode === 'starred' ? 'active' : ''}" onclick="setFlashMode('starred')" title="Huruf Berbintang (${starredCount})">
           <span>★ Berbintang (${starredCount})</span>
         </button>
+      </div>
+
+      <div class="flash-batch-row">
+        <span class="flash-batch-label">Jumlah Kartu:</span>
+        <div class="flash-batch-options">
+          <button type="button" class="flash-batch-pill ${fs.batchSize === '10' ? 'active' : ''}" onclick="setFlashBatch('10')">10 Kartu</button>
+          <button type="button" class="flash-batch-pill ${fs.batchSize === '15' ? 'active' : ''}" onclick="setFlashBatch('15')">15 Kartu</button>
+          <button type="button" class="flash-batch-pill ${fs.batchSize === '30' ? 'active' : ''}" onclick="setFlashBatch('30')">30 Kartu</button>
+          <button type="button" class="flash-batch-pill ${fs.batchSize === 'all' ? 'active' : ''}" onclick="setFlashBatch('all')">Semua</button>
+        </div>
       </div>
     </div>
   `;
@@ -3320,8 +3395,8 @@ function renderFlashCard() {
           </p>
           <div class="flash-empty-actions">
             <button class="flash-empty-btn primary" onclick="setFlashMode('all')">Mulai Semua Huruf</button>
-            <button class="flash-empty-btn secondary" onclick="setFlashMode('hiragana')">Latihan Hiragana</button>
-            <button class="flash-empty-btn secondary" onclick="setFlashMode('katakana')">Latihan Katakana</button>
+            <button class="flash-empty-btn secondary" onclick="setFlashMode('vocab-hiragana')">Latihan Hiragana</button>
+            <button class="flash-empty-btn secondary" onclick="setFlashMode('vocab-katakana')">Latihan Katakana</button>
           </div>
         </div>
       </div>
@@ -3456,6 +3531,7 @@ function renderFlashCard() {
 
   speakJapanese(card.speech);
 }
+
 
 function revealFlash() {
   if (flashState.revealed) return;
