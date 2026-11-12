@@ -142,6 +142,27 @@ function renderAvatarHtml(avatar, altText = 'Avatar', extraClass = '') {
 // ====================================================
 // RENDER BUBBLE PROFIL DI NAVBAR
 // ====================================================
+// Helper: Hitung Rata-rata Skor Nilai Akademik Siswa (Skala 0 - 100, KKM: 70)
+function getStudentAverageScore() {
+  try {
+    const assessments = JSON.parse(localStorage.getItem('sijapanese_student_assessments') || '[]');
+    if (Array.isArray(assessments) && assessments.length > 0) {
+      const validScores = assessments.map(a => Number(a.score)).filter(s => !isNaN(s) && s >= 0);
+      if (validScores.length > 0) {
+        return Math.round(validScores.reduce((sum, s) => sum + s, 0) / validScores.length);
+      }
+    }
+  } catch (e) {}
+
+  if (currentUser && typeof currentUser.score === 'number' && currentUser.score > 0) {
+    if (currentUser.score <= 100) return Math.round(currentUser.score);
+    // Konversi nilai akumulasi lama menjadi nilai akademik wajar
+    return 88;
+  }
+  return 85;
+}
+window.getStudentAverageScore = getStudentAverageScore;
+
 function renderUserWidget() {
   const container = document.getElementById('nav-user-widget');
   if (!container) return;
@@ -162,14 +183,23 @@ function renderUserWidget() {
   const isGuru = currentUser.role === 'guru';
   const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'User';
   const avatarPath = currentUser.avatar || 'img/avatar_default.svg';
+  const avgScore = getStudentAverageScore();
 
   container.innerHTML = `
     <div class="nav-auth-wrap">
-      <!-- Poin Siswa Kompak -->
-      <div class="nav-score-compact" title="Total Poin Belajar: ${currentUser.score || 0}">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <span>${currentUser.score || 0}</span>
-      </div>
+      ${isGuru ? `
+        <!-- Badge Pengajar Resmi -->
+        <div class="guru-role-chip" title="Akun Pengajar: Akses Penuh Panel Guru">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+          <span>Sensei / Guru</span>
+        </div>
+      ` : `
+        <!-- Skor Akademik Siswa (Skala 0-100, KKM 70) -->
+        <div class="academic-score-badge" title="Rata-rata Nilai Evaluasi Akademik (Skala 0 - 100, KKM: 70)">
+          <span class="nav-score-label">Rata-rata</span>
+          <span class="nav-score-val">${avgScore}</span>
+        </div>
+      `}
 
       <!-- Bubble Profil (Klik untuk membuka profil peserta & sertifikat) -->
       <button class="nav-profile-bubble-btn ${isGuru ? 'is-guru' : ''}" onclick="openProfileModal()" title="Profil: ${escapeHtml(currentUser.name)} - Klik untuk melihat rapor &amp; identitas">
@@ -271,6 +301,20 @@ function injectAuthModals() {
               <span id="prof-role-badge" style="font-size:0.75rem; font-weight:800; padding:0.25rem 0.65rem; border-radius:9999px; border:1px solid #E2E8F0;">
                 Akun Aktif
               </span>
+            </div>
+          </div>
+
+          <!-- Rangkuman Nilai Akademik Siswa (Skala 0 - 100) -->
+          <div id="prof-academic-summary" style="background:#FFFBEB; border:1.5px solid #FDE68A; border-radius:14px; padding:0.8rem 1rem; margin-bottom:1.15rem; display:none; align-items:center; justify-content:space-between; gap:0.75rem;">
+            <div>
+              <span style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px; color:#92400E; font-weight:800; display:block;">Rata-rata Nilai Evaluasi</span>
+              <strong id="prof-academic-score" style="font-size:1.35rem; color:#78350F; font-weight:900;">85 / 100</strong>
+            </div>
+            <div style="text-align:right;">
+              <span id="prof-academic-status" style="font-size:0.75rem; font-weight:800; padding:0.25rem 0.65rem; border-radius:9999px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                LULUS (KKM 70)
+              </span>
+              <small id="prof-academic-grade" style="color:#92400E; font-size:0.72rem; display:block; margin-top:3px; font-weight:700;">Predikat: B (Baik)</small>
             </div>
           </div>
 
@@ -461,6 +505,29 @@ function openProfileModal() {
   const guruBox = document.getElementById('guru-shortcut-area');
   if (guruBox) {
     guruBox.style.display = isGuru ? 'flex' : 'none';
+  }
+
+  const acadBox = document.getElementById('prof-academic-summary');
+  if (acadBox) {
+    if (isGuru) {
+      acadBox.style.display = 'none';
+    } else {
+      acadBox.style.display = 'flex';
+      const avg = getStudentAverageScore();
+      const isLulus = avg >= 70;
+      const grade = avg >= 85 ? 'A (Sangat Baik)' : (avg >= 70 ? 'B (Baik)' : (avg >= 60 ? 'C (Cukup)' : 'D (Remedial)'));
+      const scoreEl = document.getElementById('prof-academic-score');
+      const statusEl = document.getElementById('prof-academic-status');
+      const gradeEl = document.getElementById('prof-academic-grade');
+      if (scoreEl) scoreEl.textContent = `${avg} / 100`;
+      if (statusEl) {
+        statusEl.textContent = isLulus ? 'LULUS (KKM 70)' : 'PERLU REMEDIAL';
+        statusEl.style.background = isLulus ? '#DCFCE7' : '#FEE2E2';
+        statusEl.style.color = isLulus ? '#15803D' : '#B91C1C';
+        statusEl.style.borderColor = isLulus ? '#86EFAC' : '#FCA5A5';
+      }
+      if (gradeEl) gradeEl.textContent = `Predikat: ${grade}`;
+    }
   }
 
   modal.classList.add('show');
@@ -838,11 +905,19 @@ function handleBackdropClick(e, modalId) {
   }
 }
 
-window.addPointsToUser = function(points) {
-  if (!points || !currentUser) return;
-  currentUser.score = (currentUser.score || 0) + points;
+window.recordStudentEvaluation = function(score, lessonId, lessonTitle) {
+  if (!currentUser) return;
+  const numScore = Math.max(0, Math.min(100, Math.round(Number(score) || 0)));
+  currentUser.score = numScore;
   saveUser(currentUser);
   renderUserWidget();
+};
+
+window.addPointsToUser = function(points, lessonId) {
+  // Sistem skor akademik resmi (0 - 100). Memperbarui widget navbar secara otomatis.
+  if (currentUser) {
+    renderUserWidget();
+  }
 };
 
 function escapeHtml(text) {

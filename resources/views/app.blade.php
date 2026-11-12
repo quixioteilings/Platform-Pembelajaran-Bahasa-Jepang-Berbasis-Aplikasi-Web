@@ -7,10 +7,10 @@
   <title>SIJapanese - Belajar Bahasa Jepang Interaktif</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20261112_unified_headers" />
-  <link rel="stylesheet" href="css/materi.css?v=20261112_level_tabs_v1" />
-  <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_level_tabs_v1" />
+  <link rel="stylesheet" href="css/style.css?v=20261112_academic_v2" />
+  <link rel="stylesheet" href="css/materi.css?v=20261112_academic_v2" />
+  <link rel="stylesheet" href="css/auth.css?v=20261112_academic_v2" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_academic_v2" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     html, body {
@@ -545,7 +545,7 @@
               <span>Belum Hafal</span>
             </button>
             <button type="button" class="btn-flash-master" onclick="markFlashcardMastered()">
-              <span>Sudah Hafal (+3 Poin)</span>
+              <span>Sudah Hafal</span>
             </button>
             <button type="button" class="btn-flash-nav" onclick="nextFlashcard()">
               <span>Selanjutnya</span>
@@ -601,8 +601,8 @@
                 <strong id="flash-result-reviews" style="font-size: 1.45rem; color: #D97706;">0x Ulang</strong>
               </div>
               <div style="background: var(--card-warm); padding: 16px 12px; border-radius: 16px; border: 1.5px solid var(--border);">
-                <span style="font-size: 0.75rem; color: #6E6157; font-weight: 700; display: block; margin-bottom: 4px;">Poin Diperoleh</span>
-                <strong id="flash-result-points" style="font-size: 1.45rem; color: #16A34A;">+0 Poin</strong>
+                <span style="font-size: 0.75rem; color: #6E6157; font-weight: 700; display: block; margin-bottom: 4px;">Tingkat Kuasai</span>
+                <strong id="flash-result-points" style="font-size: 1.45rem; color: #16A34A;">100%</strong>
               </div>
             </div>
 
@@ -787,8 +787,8 @@
                 <span class="stat-col-val text-red" id="vocab-result-wrong-count">1 Soal</span>
               </div>
               <div class="result-stat-col">
-                <span class="stat-col-label">Poin Diperoleh</span>
-                <span class="stat-col-val text-amber" id="vocab-result-points-val">+45 Poin</span>
+                <span class="stat-col-label">Predikat Nilai</span>
+                <span class="stat-col-val text-amber" id="vocab-result-points-val">Grade A</span>
               </div>
               <div class="result-stat-col">
                 <span class="stat-col-label">Status Kelulusan</span>
@@ -2028,8 +2028,8 @@
                   <span class="celebrate-reward-val">Tuntas</span>
                 </div>
                 <div class="celebrate-reward-item">
-                  <span class="celebrate-reward-label">Bonus Poin</span>
-                  <span class="celebrate-reward-val highlight">+50 Poin</span>
+                  <span class="celebrate-reward-label">Evaluasi</span>
+                  <span class="celebrate-reward-val highlight">KKM 70</span>
                 </div>
                 <div class="celebrate-reward-item">
                   <span class="celebrate-reward-label">Tingkat</span>
@@ -2690,8 +2690,8 @@
   </script>
 
   <script src="js/data.js"></script>
-  <script src="js/app.js?v=20261112_polished_v1"></script>
-  <script src="js/materi.js?v=20261112_level_tabs_v1"></script>
-  <script src="js/auth.js"></script>
+  <script src="js/app.js?v=20261112_academic_v2"></script>
+  <script src="js/materi.js?v=20261112_academic_v2"></script>
+  <script src="js/auth.js?v=20261112_academic_v2"></script>
 </body>
 </html>

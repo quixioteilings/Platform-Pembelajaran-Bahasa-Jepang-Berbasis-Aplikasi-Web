@@ -1052,11 +1052,12 @@ function renderQuizQuestion(type) {
   const wrong = shuffle(data.filter(c => c.romaji !== q.romaji)).slice(0, 3).map(c => c.romaji);
   const options = shuffle([q.romaji, ...wrong]);
 
+  const currentScorePct = Math.round((qs.correct / qs.questions.length) * 100);
   wrap.innerHTML = `
     <div class="quiz-score-bar">
       <span>Soal ${qs.current + 1} dari ${qs.questions.length}</span>
       <span>${qs.correct} Jawaban Benar</span>
-      <span>+${qs.correct * 3} Poin</span>
+      <span>Nilai: ${currentScorePct} / 100</span>
     </div>
     <div class="quiz-question-card">
       <div class="quiz-char-row">
@@ -1088,9 +1089,8 @@ function answerQuiz(type, chosen, correct, btnId) {
   const isCorrect = chosen === correct;
   if (isCorrect) {
     qs.correct++;
-    addScore(3);
     playPositiveChime();
-    showToast('Tepat sekali! +3 Poin (' + correct + ')', 'success');
+    showToast('Tepat sekali! (' + correct + ')', 'success');
   } else {
     playNegativeTone();
     showToast('Kurang tepat. Jawaban yang benar: ' + correct, 'error');
@@ -1118,7 +1118,35 @@ function renderQuizResult(type) {
   if (!wrap) return;
 
   const pct = Math.round(qs.correct / qs.questions.length * 100);
-  const msg = pct >= 80 ? 'Luar Biasa! Pemahaman Sangat Baik' : pct >= 60 ? 'Bagus! Terus Asah Hafalanmu' : 'Tetap Semangat, Latihan Lagi!';
+  const isPassed = pct >= 70;
+  const grade = pct >= 85 ? 'Grade A' : (pct >= 70 ? 'Grade B' : (pct >= 60 ? 'Grade C' : 'Grade D'));
+  const msg = isPassed ? `Selamat, Kamu Lulus Kuis ${type.toUpperCase()}!` : `Hasil Evaluasi: Perlu Remedial Kuis ${type.toUpperCase()}`;
+
+  // Catat penilaian akademik siswa
+  if (typeof window.recordStudentEvaluation === 'function') {
+    window.recordStudentEvaluation(pct, 900, `Kuis ${type.toUpperCase()}`);
+  }
+
+  try {
+    const localAssessments = JSON.parse(localStorage.getItem('sijapanese_student_assessments') || '[]');
+    const activeUser = JSON.parse(localStorage.getItem('sijapanese_active_user') || '{}');
+    localAssessments.unshift({
+      id: Date.now(),
+      user_name: activeUser.name || 'Siswa',
+      user_avatar: activeUser.avatar || 'img/avatar_anggata.svg',
+      lesson_id: 900,
+      exercise_title: `Kuis ${type.toUpperCase()}`,
+      exercise_type: 'kuis_kana',
+      total_questions: qs.questions.length,
+      correct_count: qs.correct,
+      wrong_count: qs.questions.length - qs.correct,
+      score: pct,
+      grade: pct >= 85 ? 'A' : (pct >= 70 ? 'B' : (pct >= 60 ? 'C' : 'D')),
+      status: isPassed ? 'lulus' : 'remedial',
+      created_at: new Date().toISOString()
+    });
+    localStorage.setItem('sijapanese_student_assessments', JSON.stringify(localAssessments.slice(0, 50)));
+  } catch (e) {}
 
   wrap.innerHTML = `
     <div class="quiz-result-card">
@@ -1129,9 +1157,11 @@ function renderQuizResult(type) {
         </svg>
       </div>
       <div class="quiz-result-title">${msg}</div>
-      <p class="quiz-result-subtitle">Hasil Jawaban Benar:</p>
-      <div class="quiz-result-score">${qs.correct} / ${qs.questions.length}</div>
-      <div class="quiz-result-pct">Akurasi: ${pct}%</div>
+      <p class="quiz-result-subtitle">Nilai Evaluasi Resmi (KKM 70):</p>
+      <div class="quiz-result-score" style="font-size:2.4rem; font-weight:900; color:${isPassed ? '#15803D' : '#DC2626'};">${pct} / 100</div>
+      <div class="quiz-result-pct" style="font-weight:700; color:#475569; margin-bottom:1rem;">
+        ${grade} • ${isPassed ? 'Status: LULUS' : 'Status: REMEDIAL'} (${qs.correct} dari ${qs.questions.length} benar)
+      </div>
       <button class="quiz-result-restart" onclick="startQuiz('${type}')">
         <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
         <span>Mulai Ulang Kuis</span>
@@ -1337,7 +1367,7 @@ function renderVocabExplore() {
             Dengar Audio
           </button>
           <button type="button" class="btn-vocab-master ${isLearned ? 'is-mastered' : ''}" onclick="toggleVocabMastered('${safeWord}', this)">
-            ${isLearned ? 'Sudah Dikuasai' : 'Tandai Hafal (+2 Poin)'}
+            ${isLearned ? 'Sudah Dikuasai' : 'Tandai Hafal'}
           </button>
         </div>
       </div>
@@ -1348,9 +1378,8 @@ function renderVocabExplore() {
 function toggleVocabMastered(jpWord, btn) {
   if (!state.learnedVocab.has(jpWord)) {
     state.learnedVocab.add(jpWord);
-    addScore(2);
     saveState();
-    showToast(`Kosakata "${jpWord}" ditandai hafal! +2 Poin`, 'success');
+    showToast(`Kosakata "${jpWord}" ditandai sudah dikuasai!`, 'success');
     if (btn) {
       btn.classList.add('is-mastered');
       btn.textContent = 'Sudah Dikuasai';
@@ -1364,7 +1393,7 @@ function toggleVocabMastered(jpWord, btn) {
     showToast(`Kosakata "${jpWord}" dihapus dari daftar hafal`, 'info');
     if (btn) {
       btn.classList.remove('is-mastered');
-      btn.textContent = 'Tandai Hafal (+2 Poin)';
+      btn.textContent = 'Tandai Hafal';
       const card = btn.closest('.vocab-card');
       if (card) card.classList.remove('learned');
     }
@@ -1713,9 +1742,8 @@ function markFlashcardMastered() {
   if (!state.learnedVocab.has(item.jp) && !state.learnedVocab.has(keyWord)) {
     state.learnedVocab.add(item.jp);
     state.learnedVocab.add(keyWord);
-    addScore(3);
     saveState();
-    showToast(`Hafal "${keyWord}"! (+3 Poin)`, 'success');
+    showToast(`Hafal "${keyWord}"!`, 'success');
     updateProgressBars();
   } else {
     showToast(`Hafal "${keyWord}"!`, 'success');
@@ -2270,15 +2298,13 @@ function finishVocabQuiz() {
 
   const totalQuestions = vocabQuizQuestions.length || 10;
   const scorePercent = Math.round((vocabQuizCorrectCount / totalQuestions) * 100);
-  const earnedPoints = vocabQuizCorrectCount * 5;
 
   const isPassed = scorePercent >= 70;
   const grade = scorePercent >= 85 ? 'A' : (scorePercent >= 70 ? 'B' : (scorePercent >= 60 ? 'C' : 'D'));
 
-  // Award points to user
-  if (earnedPoints > 0) {
-    addScore(earnedPoints);
-    saveState();
+  // Update evaluasi siswa & navbar
+  if (typeof window.recordStudentEvaluation === 'function') {
+    window.recordStudentEvaluation(scorePercent, 999, `Latihan Kosakata: ${vocabQuizActivePacketTitle}`);
   }
 
   // 1. Submit ke Backend API (Laravel SQLite)
@@ -2299,7 +2325,7 @@ function finishVocabQuiz() {
         correct_count: vocabQuizCorrectCount,
         wrong_count: vocabQuizWrongCount,
         score: scorePercent,
-        points: earnedPoints
+        points: scorePercent
       })
     }).then(r => r.json()).then(data => {
       if (data.new_score && typeof currentUser !== 'undefined' && currentUser) {
@@ -2360,7 +2386,7 @@ function finishVocabQuiz() {
   if (scoreValEl) scoreValEl.textContent = scorePercent;
   if (correctCountEl) correctCountEl.textContent = `${vocabQuizCorrectCount} Soal`;
   if (wrongCountEl) wrongCountEl.textContent = `${vocabQuizWrongCount} Soal`;
-  if (pointsValEl) pointsValEl.textContent = `+${earnedPoints} Poin`;
+  if (pointsValEl) pointsValEl.textContent = `Grade ${grade}`;
   if (statusTextEl) {
     statusTextEl.textContent = isPassed ? 'LULUS (Tuntas)' : 'REMEDIAL (<70)';
     statusTextEl.style.color = isPassed ? '#059669' : '#DC2626';

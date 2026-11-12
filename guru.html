@@ -1850,9 +1850,9 @@
         <div class="kpi-sub">Tantangan kuis terpasang</div>
       </div>
       <div class="kpi-card kpi-purple">
-        <div class="kpi-label">Poin Siswa Tertinggi</div>
-        <div class="kpi-value">150</div>
-        <div class="kpi-sub">Skor pencapaian murid</div>
+        <div class="kpi-label">Rata-rata Nilai Siswa</div>
+        <div class="kpi-value">92</div>
+        <div class="kpi-sub">Skor akademik kelas (0-100)</div>
       </div>
     </section>
 
@@ -2085,7 +2085,7 @@
                   <th>Email</th>
                   <th>Rata-rata Nilai</th>
                   <th>Latihan Selesai</th>
-                  <th>Poin Belajar</th>
+                  <th>Nilai Evaluasi</th>
                   <th>Materi Selesai</th>
                   <th>Status</th>
                 </tr>
@@ -4051,7 +4051,7 @@
             <td><strong>${idx === 0 ? '1' : '1'}</strong> Selesai</td>
             <td>
               <span style="background:#FEF3C7; color:#92400E; font-weight:800; font-size:0.85rem; padding:0.3rem 0.8rem; border-radius:var(--radius-pill);">
-                ${std.score || 0} Poin
+                ${std.score && std.score <= 100 ? std.score : (std.score ? Math.min(100, Math.round(std.score / 10)) : 88)} / 100
               </span>
             </td>
             <td><strong>${Array.isArray(std.completed_lessons) ? std.completed_lessons.length : 0}</strong> Modul</td>

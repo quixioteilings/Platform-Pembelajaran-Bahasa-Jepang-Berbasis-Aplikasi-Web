@@ -2288,7 +2288,7 @@ function renderStepMulai(lesson) {
       <div class="nihongo-meta-row" style="margin-bottom:1.2rem;">
         <span class="nihongo-tag-chip">Modul Pembelajaran</span>
         <span class="nihongo-time-chip">${lesson.estMinutes || 15} Menit Pelajaran</span>
-        <span class="nihongo-points-chip">Reward Kuis: +${lesson.rewardPoints || 50} Poin</span>
+        <span class="nihongo-points-chip">Standar Kelulusan: KKM 70</span>
       </div>
 
       <div class="study-culture-box" style="margin-bottom:1.8rem; background:#FAF6F0; border-color:#E2D7CC;">
@@ -3374,8 +3374,8 @@ function renderStepKuis(lesson) {
             <span class="quiz-final-stat-label">Jawaban Salah</span>
           </div>
           <div class="quiz-final-stat-col">
-            <span class="quiz-final-stat-val text-amber" id="final-stat-points">+0 Poin</span>
-            <span class="quiz-final-stat-label">Poin Didapat</span>
+            <span class="quiz-final-stat-val text-amber" id="final-stat-points">Grade -</span>
+            <span class="quiz-final-stat-label">Predikat Nilai</span>
           </div>
         </div>
 
@@ -3544,8 +3544,8 @@ function renderStepSelesai(lesson) {
           <span class="celebrate-reward-val">Tuntas 100%</span>
         </div>
         <div class="celebrate-reward-item">
-          <span class="celebrate-reward-label">Bonus Poin</span>
-          <span class="celebrate-reward-val highlight">+${lesson.rewardPoints} Poin</span>
+          <span class="celebrate-reward-label">Evaluasi</span>
+          <span class="celebrate-reward-val highlight">KKM 70</span>
         </div>
         <div class="celebrate-reward-item">
           <span class="celebrate-reward-label">Tingkat</span>
@@ -3852,7 +3852,7 @@ function renderLessonStudyContent(lesson) {
         <div class="nihongo-meta-row">
           <span class="nihongo-tag-chip">${escapeHtml(lesson.level)} Dasar</span>
           <span class="nihongo-time-chip">${lesson.estMinutes} Menit Pelajaran</span>
-          <span class="nihongo-points-chip">Reward Kuis: +${lesson.rewardPoints} Poin</span>
+          <span class="nihongo-points-chip">Standar Kelulusan: KKM 70</span>
         </div>
         <h1 class="nihongo-lesson-h1">${escapeHtml(lesson.title)}</h1>
         <p class="nihongo-lesson-sub">${escapeHtml(lesson.subtitle)}</p>
@@ -3968,8 +3968,8 @@ function renderLessonQuizContent(lesson) {
             <span class="quiz-final-stat-label">Jawaban Salah</span>
           </div>
           <div class="quiz-final-stat-col">
-            <span class="quiz-final-stat-val text-amber" id="final-stat-points">+0 Poin</span>
-            <span class="quiz-final-stat-label">Poin Didapat</span>
+            <span class="quiz-final-stat-val text-amber" id="final-stat-points">Grade -</span>
+            <span class="quiz-final-stat-label">Predikat Nilai</span>
           </div>
         </div>
 
@@ -4018,7 +4018,7 @@ function handleLessonQuizAnswer(qIdx, selectedOptIdx) {
     if (clickedBtn) clickedBtn.classList.add('correct');
     if (feedbackEl) {
       feedbackEl.className = 'quiz-item-feedback show correct';
-      feedbackEl.innerHTML = `<strong>Jawaban Benar (+25 Poin).</strong> ${escapeHtml(qItem.explanation)}`;
+      feedbackEl.innerHTML = `<strong>Jawaban Benar!</strong> ${escapeHtml(qItem.explanation)}`;
     }
   } else {
     if (typeof playNegativeTone === 'function') playNegativeTone();
@@ -4049,10 +4049,13 @@ function handleLessonQuizAnswer(qIdx, selectedOptIdx) {
 // Selesaikan Kuis & Simpan Hasil Evaluasi
 function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
   const wrongCount = Math.max(0, totalQuestions - correctCount);
-  const pointsEarned = correctCount * 25;
+  const isPassed = score >= 70;
+  const grade = score >= 85 ? 'Grade A' : (score >= 70 ? 'Grade B' : (score >= 60 ? 'Grade C' : 'Grade D'));
 
-  if (score >= 60 && typeof playPositiveChime === 'function') {
+  if (isPassed && typeof playPositiveChime === 'function') {
     playPositiveChime();
+  } else if (!isPassed && typeof playNegativeTone === 'function') {
+    playNegativeTone();
   }
 
   // Catat lesson selesai di localStorage
@@ -4064,12 +4067,14 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
     }
   } catch (e) {}
 
-  // Tambahkan poin ke user
-  if (typeof window.addPointsToUser === 'function') {
-    window.addPointsToUser(pointsEarned, lesson.id);
+  // Simpan evaluasi akademik ke user & update navbar
+  if (typeof window.recordStudentEvaluation === 'function') {
+    window.recordStudentEvaluation(score, lesson.id, lesson.title);
+  } else if (typeof window.addPointsToUser === 'function') {
+    window.addPointsToUser(score, lesson.id);
   }
 
-  // Rekapitulasi evaluasi untuk Guru
+  // Rekapitulasi evaluasi akademik resmi untuk Guru (KKM 70)
   try {
     const localAssessments = JSON.parse(localStorage.getItem('sijapanese_student_assessments') || '[]');
     const activeUser = JSON.parse(localStorage.getItem('sijapanese_active_user') || '{}');
@@ -4085,7 +4090,7 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
       wrong_count: wrongCount,
       score: score,
       grade: score >= 85 ? 'A' : (score >= 70 ? 'B' : (score >= 60 ? 'C' : 'D')),
-      status: score >= 60 ? 'lulus' : 'remedial',
+      status: isPassed ? 'lulus' : 'remedial',
       created_at: new Date().toISOString()
     });
     localStorage.setItem('sijapanese_student_assessments', JSON.stringify(localAssessments.slice(0, 50)));
@@ -4109,7 +4114,7 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
         correct_count: correctCount,
         wrong_count: wrongCount,
         score: score,
-        points: pointsEarned
+        points: score
       })
     }).catch(() => {});
   } catch (err) {}
@@ -4124,11 +4129,11 @@ function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
 
     if (correctEl) correctEl.textContent = `${correctCount} Soal`;
     if (wrongEl) wrongEl.textContent = `${wrongCount} Soal`;
-    if (pointsEl) pointsEl.textContent = `+${pointsEarned} Poin`;
+    if (pointsEl) pointsEl.textContent = grade;
     if (descEl) {
-      descEl.textContent = score >= 70
-        ? `Luar biasa! Kamu berhasil lulus dengan nilai ${score} / 100. Poin dan rekapan nilai otomatis terkirim ke Guru.`
-        : `Latihan selesai dengan nilai ${score} / 100. Kamu bisa mengulangi latihan untuk meningkatkan nilai.`;
+      descEl.textContent = isPassed
+        ? `Luar biasa! Kamu berhasil lulus evaluasi dengan nilai ${score} / 100 (${grade}, di atas KKM 70). Rekapan nilai resmi otomatis tercatat di Rapor Guru.`
+        : `Latihan selesai dengan nilai ${score} / 100 (${grade}, belum mencapai KKM 70). Silakan ulas materi kembali dan coba kuis lagi.`;
     }
 
     finalCard.classList.add('show');
