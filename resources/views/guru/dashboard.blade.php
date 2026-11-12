@@ -4647,7 +4647,7 @@
             <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
               <button type="button" class="btn-preset" onclick="loadAdminPreset('vocab-hiragana')" title="Muat 25 Kosakata Hiragana Standar (kasa, neko, dll)">+ Kosakata Hiragana</button>
               <button type="button" class="btn-preset" onclick="loadAdminPreset('vocab-katakana')" title="Muat 18 Kosakata Katakana Standar (pan, terebi, dll)">+ Kosakata Katakana</button>
-              <button type="button" class="btn-preset" onclick="loadAdminPreset('kanji-n5')" title="Muat 15 Kanji N5 Standar">+ Paket Kanji N5</button>
+              <button type="button" class="btn-preset" onclick="loadAdminPreset('kanji-n5')" title="Muat 87 Kanji N5 Dasar Lengkap">+ Paket Kanji N5</button>
               <button type="button" class="btn-guru-primary" onclick="openAddGameQuestionModal()">
                 <span>+ Tambah Soal Kosakata</span>
               </button>

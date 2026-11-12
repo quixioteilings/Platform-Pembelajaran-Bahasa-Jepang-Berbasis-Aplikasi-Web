@@ -2410,6 +2410,7 @@ const PRESET_KATAKANA_46 = [
 ];
 
 const PRESET_KANJI_N5 = [
+  // 1. Alam & Elemen Dasar
   { char: '日', romaji: 'hi / nichi', mean: 'Matahari / Hari' },
   { char: '月', romaji: 'tsuki / getsu', mean: 'Bulan' },
   { char: '木', romaji: 'ki / moku', mean: 'Pohon / Kayu' },
@@ -2424,7 +2425,91 @@ const PRESET_KANJI_N5 = [
   { char: '水', romaji: 'mizu / sui', mean: 'Air' },
   { char: '金', romaji: 'kane / kin', mean: 'Emas / Uang' },
   { char: '土', romaji: 'tsuchi / do', mean: 'Tanah' },
-  { char: '本', romaji: 'hon', mean: 'Buku / Asal' }
+  { char: '本', romaji: 'hon', mean: 'Buku / Asal' },
+
+  // 2. Angka & Satuan (Dasar & Gampang)
+  { char: '一', romaji: 'ichi / hito', mean: 'Satu' },
+  { char: '二', romaji: 'ni / futa', mean: 'Dua' },
+  { char: '三', romaji: 'san / mi', mean: 'Tiga' },
+  { char: '四', romaji: 'yon / shi', mean: 'Empat' },
+  { char: '五', romaji: 'go / itsu', mean: 'Lima' },
+  { char: '六', romaji: 'roku / mu', mean: 'Enam' },
+  { char: '七', romaji: 'nana / shichi', mean: 'Tujuh' },
+  { char: '八', romaji: 'hachi / ya', mean: 'Delapan' },
+  { char: '九', romaji: 'kyuu / ku', mean: 'Sembilan' },
+  { char: '十', romaji: 'juu / too', mean: 'Sepuluh' },
+  { char: '百', romaji: 'hyaku', mean: 'Seratus' },
+  { char: '千', romaji: 'sen', mean: 'Seribu' },
+  { char: '万', romaji: 'man', mean: 'Sepuluh Ribu' },
+  { char: '円', romaji: 'en', mean: 'Yen (Mata Uang Jepang)' },
+
+  // 3. Arah, Posisi & Ukuran
+  { char: '上', romaji: 'ue / jou', mean: 'Atas' },
+  { char: '下', romaji: 'shita / ka', mean: 'Bawah' },
+  { char: '中', romaji: 'naka / chuu', mean: 'Tengah / Dalam' },
+  { char: '左', romaji: 'hidari / sa', mean: 'Kiri' },
+  { char: '右', romaji: 'migi / u', mean: 'Kanan' },
+  { char: '前', romaji: 'mae / zen', mean: 'Depan / Sebelum' },
+  { char: '後', romaji: 'ushiro / ato', mean: 'Belakang / Setelah' },
+  { char: '大', romaji: 'oo / dai', mean: 'Besar' },
+  { char: '小', romaji: 'chii / shou', mean: 'Kecil' },
+  { char: '長', romaji: 'naga / chou', mean: 'Panjang' },
+  { char: '白', romaji: 'shiro / haku', mean: 'Putih' },
+  { char: '赤', romaji: 'aka / seki', mean: 'Merah' },
+  { char: '青', romaji: 'ao / sei', mean: 'Biru' },
+
+  // 4. Waktu, Cuaca & Langit
+  { char: '年', romaji: 'toshi / nen', mean: 'Tahun' },
+  { char: '今', romaji: 'ima / kon', mean: 'Sekarang' },
+  { char: '時', romaji: 'toki / ji', mean: 'Waktu / Jam' },
+  { char: '分', romaji: 'fun / bun', mean: 'Menit / Bagian' },
+  { char: '半', romaji: 'han', mean: 'Setengah / Separuh' },
+  { char: '天', romaji: 'ten', mean: 'Langit / Surga' },
+  { char: '気', romaji: 'ki', mean: 'Hawa / Semangat / Cuaca' },
+  { char: '雨', romaji: 'ame / u', mean: 'Hujan' },
+
+  // 5. Manusia, Keluarga & Bagian Tubuh
+  { char: '男', romaji: 'otoko / dan', mean: 'Laki-laki / Pria' },
+  { char: '女', romaji: 'onna / jo', mean: 'Perempuan / Wanita' },
+  { char: '子', romaji: 'ko / shi', mean: 'Anak' },
+  { char: '目', romaji: 'me / moku', mean: 'Mata' },
+  { char: '耳', romaji: 'mimi / ji', mean: 'Telinga' },
+  { char: '手', romaji: 'te / shu', mean: 'Tangan' },
+  { char: '足', romaji: 'ashi / soku', mean: 'Kaki' },
+  { char: '父', romaji: 'chichi / fu', mean: 'Ayah' },
+  { char: '母', romaji: 'haha / bo', mean: 'Ibu' },
+  { char: '友', romaji: 'tomo / yuu', mean: 'Teman' },
+
+  // 6. Tempat, Sekolah & Makhluk Hidup
+  { char: '先', romaji: 'sen / saki', mean: 'Dahulu / Guru' },
+  { char: '生', romaji: 'sei / nama', mean: 'Hidup / Murid' },
+  { char: '学', romaji: 'gaku / manabu', mean: 'Belajar / Sekolah' },
+  { char: '校', romaji: 'kou', mean: 'Gedung Sekolah' },
+  { char: '名', romaji: 'na / mei', mean: 'Nama' },
+  { char: '国', romaji: 'kuni / koku', mean: 'Negara' },
+  { char: '店', romaji: 'mise / ten', mean: 'Toko / Kedai' },
+  { char: '駅', romaji: 'eki', mean: 'Stasiun' },
+  { char: '道', romaji: 'michi / dou', mean: 'Jalan' },
+  { char: '花', romaji: 'hana / ka', mean: 'Bunga' },
+  { char: '魚', romaji: 'sakana / gyo', mean: 'Ikan' },
+  { char: '犬', romaji: 'inu / ken', mean: 'Anjing' },
+  { char: '鳥', romaji: 'tori / chou', mean: 'Burung' },
+
+  // 7. Kata Kerja Tindakan Dasar
+  { char: '行', romaji: 'i / kou', mean: 'Pergi' },
+  { char: '来', romaji: 'ku / rai', mean: 'Datang' },
+  { char: '食', romaji: 'ta / shoku', mean: 'Makan' },
+  { char: '飲', romaji: 'no / in', mean: 'Minum' },
+  { char: '見', romaji: 'mi / ken', mean: 'Melihat' },
+  { char: '聞', romaji: 'ki / bun', mean: 'Mendengar' },
+  { char: '読', romaji: 'yo / doku', mean: 'Membaca' },
+  { char: '書', romaji: 'ka / sho', mean: 'Menulis' },
+  { char: '話', romaji: 'hana / wa', mean: 'Berbicara' },
+  { char: '買', romaji: 'ka / bai', mean: 'Membeli' },
+  { char: '休', romaji: 'yasu / kyuu', mean: 'Istirahat / Libur' },
+  { char: '入', romaji: 'hai / nyuu', mean: 'Masuk' },
+  { char: '出', romaji: 'de / shutsu', mean: 'Keluar' },
+  { char: '立', romaji: 'ta / ritsu', mean: 'Berdiri' }
 ];
 
 const PRESET_VOCAB_HIRAGANA = [
@@ -2503,7 +2588,7 @@ function buildDefaultQuestions(gameId) {
     });
   });
 
-  // 3. 15 Kanji N5 Dasar
+  // 3. Kanji N5 Dasar Lengkap
   PRESET_KANJI_N5.forEach((item, idx) => {
     list.push({
       id: `${gameId}_kanji_${idx + 1}`,
@@ -3177,6 +3262,32 @@ function getFlashMasterList() {
         meaning: k.mnemonic || '',
         speech: k.char
       });
+    });
+  }
+
+  // 3. Tambahkan Kanji N5 Dasar Lengkap agar selalu tersedia dan kaya pilihan
+  if (typeof PRESET_KANJI_N5 !== 'undefined' && Array.isArray(PRESET_KANJI_N5)) {
+    const existingChars = new Set(list.map(item => item.char));
+    PRESET_KANJI_N5.forEach((item, idx) => {
+      if (!existingChars.has(item.char)) {
+        list.push({
+          id: 'kanji_' + (item.char || idx),
+          char: item.char,
+          romaji: item.romaji,
+          type: 'kanji-n5',
+          subMode: 'kanji-n5',
+          isHira: false,
+          isKata: false,
+          isKanji: true,
+          typeLabel: 'Kanji N5',
+          badgeClass: 'kanji',
+          category: 'Kanji N5 Dasar',
+          group: item.mean || '',
+          example: `${item.char} (${item.romaji}): ${item.mean}`,
+          meaning: item.mean || '',
+          speech: item.char
+        });
+      }
     });
   }
 
@@ -5529,18 +5640,20 @@ function getRandomKanaItem() {
       const q = GameConfigManager.getQuestions('sky-defense', msState.mode);
       if (q && q.length > 0) return q[Math.floor(Math.random() * q.length)];
     }
-    const kanjiList = [
-      { char: '日', romaji: 'hi' },
-      { char: '月', romaji: 'tsuki' },
-      { char: '木', romaji: 'ki' },
-      { char: '山', romaji: 'yama' },
-      { char: '川', romaji: 'kawa' },
-      { char: '火', romaji: 'hi' },
-      { char: '水', romaji: 'mizu' },
-      { char: '人', romaji: 'hito' },
-      { char: '本', romaji: 'hon' },
-      { char: '車', romaji: 'kuruma' }
-    ];
+    const kanjiList = (typeof PRESET_KANJI_N5 !== 'undefined' && PRESET_KANJI_N5.length > 0)
+      ? PRESET_KANJI_N5
+      : [
+          { char: '日', romaji: 'hi' },
+          { char: '月', romaji: 'tsuki' },
+          { char: '木', romaji: 'ki' },
+          { char: '山', romaji: 'yama' },
+          { char: '川', romaji: 'kawa' },
+          { char: '火', romaji: 'hi' },
+          { char: '水', romaji: 'mizu' },
+          { char: '人', romaji: 'hito' },
+          { char: '本', romaji: 'hon' },
+          { char: '車', romaji: 'kuruma' }
+        ];
     return kanjiList[Math.floor(Math.random() * kanjiList.length)];
   }
   if (msState.mode === 'mix') {

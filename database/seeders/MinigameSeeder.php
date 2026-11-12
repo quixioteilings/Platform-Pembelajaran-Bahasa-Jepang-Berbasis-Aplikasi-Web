@@ -61,8 +61,9 @@ class MinigameSeeder extends Seeder
             ['char' => 'ビル', 'romaji' => 'biru', 'meaning' => 'Gedung'],
         ];
 
-        // 3. KANJI N5 DASAR
+        // 3. KANJI N5 DASAR LENGKAP (87 KANJI DASAR & MUDAH)
         $kanjiN5 = [
+            // 1. Alam & Elemen Dasar
             ['char' => '日', 'romaji' => 'hi / nichi', 'meaning' => 'Matahari / Hari'],
             ['char' => '月', 'romaji' => 'tsuki / getsu', 'meaning' => 'Bulan'],
             ['char' => '木', 'romaji' => 'ki / moku', 'meaning' => 'Pohon / Kayu'],
@@ -78,6 +79,90 @@ class MinigameSeeder extends Seeder
             ['char' => '金', 'romaji' => 'kane / kin', 'meaning' => 'Emas / Uang'],
             ['char' => '土', 'romaji' => 'tsuchi / do', 'meaning' => 'Tanah'],
             ['char' => '本', 'romaji' => 'hon', 'meaning' => 'Buku / Asal Mula'],
+
+            // 2. Angka & Satuan (Dasar & Gampang)
+            ['char' => '一', 'romaji' => 'ichi / hito', 'meaning' => 'Satu'],
+            ['char' => '二', 'romaji' => 'ni / futa', 'meaning' => 'Dua'],
+            ['char' => '三', 'romaji' => 'san / mi', 'meaning' => 'Tiga'],
+            ['char' => '四', 'romaji' => 'yon / shi', 'meaning' => 'Empat'],
+            ['char' => '五', 'romaji' => 'go / itsu', 'meaning' => 'Lima'],
+            ['char' => '六', 'romaji' => 'roku / mu', 'meaning' => 'Enam'],
+            ['char' => '七', 'romaji' => 'nana / shichi', 'meaning' => 'Tujuh'],
+            ['char' => '八', 'romaji' => 'hachi / ya', 'meaning' => 'Delapan'],
+            ['char' => '九', 'romaji' => 'kyuu / ku', 'meaning' => 'Sembilan'],
+            ['char' => '十', 'romaji' => 'juu / too', 'meaning' => 'Sepuluh'],
+            ['char' => '百', 'romaji' => 'hyaku', 'meaning' => 'Seratus'],
+            ['char' => '千', 'romaji' => 'sen', 'meaning' => 'Seribu'],
+            ['char' => '万', 'romaji' => 'man', 'meaning' => 'Sepuluh Ribu'],
+            ['char' => '円', 'romaji' => 'en', 'meaning' => 'Yen (Mata Uang Jepang)'],
+
+            // 3. Arah, Posisi & Ukuran
+            ['char' => '上', 'romaji' => 'ue / jou', 'meaning' => 'Atas'],
+            ['char' => '下', 'romaji' => 'shita / ka', 'meaning' => 'Bawah'],
+            ['char' => '中', 'romaji' => 'naka / chuu', 'meaning' => 'Tengah / Dalam'],
+            ['char' => '左', 'romaji' => 'hidari / sa', 'meaning' => 'Kiri'],
+            ['char' => '右', 'romaji' => 'migi / u', 'meaning' => 'Kanan'],
+            ['char' => '前', 'romaji' => 'mae / zen', 'meaning' => 'Depan / Sebelum'],
+            ['char' => '後', 'romaji' => 'ushiro / ato', 'meaning' => 'Belakang / Setelah'],
+            ['char' => '大', 'romaji' => 'oo / dai', 'meaning' => 'Besar'],
+            ['char' => '小', 'romaji' => 'chii / shou', 'meaning' => 'Kecil'],
+            ['char' => '長', 'romaji' => 'naga / chou', 'meaning' => 'Panjang'],
+            ['char' => '白', 'romaji' => 'shiro / haku', 'meaning' => 'Putih'],
+            ['char' => '赤', 'romaji' => 'aka / seki', 'meaning' => 'Merah'],
+            ['char' => '青', 'romaji' => 'ao / sei', 'meaning' => 'Biru'],
+
+            // 4. Waktu, Cuaca & Langit
+            ['char' => '年', 'romaji' => 'toshi / nen', 'meaning' => 'Tahun'],
+            ['char' => '今', 'romaji' => 'ima / kon', 'meaning' => 'Sekarang'],
+            ['char' => '時', 'romaji' => 'toki / ji', 'meaning' => 'Waktu / Jam'],
+            ['char' => '分', 'romaji' => 'fun / bun', 'meaning' => 'Menit / Bagian'],
+            ['char' => '半', 'romaji' => 'han', 'meaning' => 'Setengah / Separuh'],
+            ['char' => '天', 'romaji' => 'ten', 'meaning' => 'Langit / Surga'],
+            ['char' => '気', 'romaji' => 'ki', 'meaning' => 'Hawa / Semangat / Cuaca'],
+            ['char' => '雨', 'romaji' => 'ame / u', 'meaning' => 'Hujan'],
+
+            // 5. Manusia, Keluarga & Bagian Tubuh
+            ['char' => '男', 'romaji' => 'otoko / dan', 'meaning' => 'Laki-laki / Pria'],
+            ['char' => '女', 'romaji' => 'onna / jo', 'meaning' => 'Perempuan / Wanita'],
+            ['char' => '子', 'romaji' => 'ko / shi', 'meaning' => 'Anak'],
+            ['char' => '目', 'romaji' => 'me / moku', 'meaning' => 'Mata'],
+            ['char' => '耳', 'romaji' => 'mimi / ji', 'meaning' => 'Telinga'],
+            ['char' => '手', 'romaji' => 'te / shu', 'meaning' => 'Tangan'],
+            ['char' => '足', 'romaji' => 'ashi / soku', 'meaning' => 'Kaki'],
+            ['char' => '父', 'romaji' => 'chichi / fu', 'meaning' => 'Ayah'],
+            ['char' => '母', 'romaji' => 'haha / bo', 'meaning' => 'Ibu'],
+            ['char' => '友', 'romaji' => 'tomo / yuu', 'meaning' => 'Teman'],
+
+            // 6. Tempat, Sekolah & Makhluk Hidup
+            ['char' => '先', 'romaji' => 'sen / saki', 'meaning' => 'Dahulu / Guru'],
+            ['char' => '生', 'romaji' => 'sei / nama', 'meaning' => 'Hidup / Murid'],
+            ['char' => '学', 'romaji' => 'gaku / manabu', 'meaning' => 'Belajar / Sekolah'],
+            ['char' => '校', 'romaji' => 'kou', 'meaning' => 'Gedung Sekolah'],
+            ['char' => '名', 'romaji' => 'na / mei', 'meaning' => 'Nama'],
+            ['char' => '国', 'romaji' => 'kuni / koku', 'meaning' => 'Negara'],
+            ['char' => '店', 'romaji' => 'mise / ten', 'meaning' => 'Toko / Kedai'],
+            ['char' => '駅', 'romaji' => 'eki', 'meaning' => 'Stasiun'],
+            ['char' => '道', 'romaji' => 'michi / dou', 'meaning' => 'Jalan'],
+            ['char' => '花', 'romaji' => 'hana / ka', 'meaning' => 'Bunga'],
+            ['char' => '魚', 'romaji' => 'sakana / gyo', 'meaning' => 'Ikan'],
+            ['char' => '犬', 'romaji' => 'inu / ken', 'meaning' => 'Anjing'],
+            ['char' => '鳥', 'romaji' => 'tori / chou', 'meaning' => 'Burung'],
+
+            // 7. Kata Kerja Tindakan Dasar
+            ['char' => '行', 'romaji' => 'i / kou', 'meaning' => 'Pergi'],
+            ['char' => '来', 'romaji' => 'ku / rai', 'meaning' => 'Datang'],
+            ['char' => '食', 'romaji' => 'ta / shoku', 'meaning' => 'Makan'],
+            ['char' => '飲', 'romaji' => 'no / in', 'meaning' => 'Minum'],
+            ['char' => '見', 'romaji' => 'mi / ken', 'meaning' => 'Melihat'],
+            ['char' => '聞', 'romaji' => 'ki / bun', 'meaning' => 'Mendengar'],
+            ['char' => '読', 'romaji' => 'yo / doku', 'meaning' => 'Membaca'],
+            ['char' => '書', 'romaji' => 'ka / sho', 'meaning' => 'Menulis'],
+            ['char' => '話', 'romaji' => 'hana / wa', 'meaning' => 'Berbicara'],
+            ['char' => '買', 'romaji' => 'ka / bai', 'meaning' => 'Membeli'],
+            ['char' => '休', 'romaji' => 'yasu / kyuu', 'meaning' => 'Istirahat / Libur'],
+            ['char' => '入', 'romaji' => 'hai / nyuu', 'meaning' => 'Masuk'],
+            ['char' => '出', 'romaji' => 'de / shutsu', 'meaning' => 'Keluar'],
+            ['char' => '立', 'romaji' => 'ta / ritsu', 'meaning' => 'Berdiri'],
         ];
 
         // 4. SUSUN KATA (WORD BUILDER)
