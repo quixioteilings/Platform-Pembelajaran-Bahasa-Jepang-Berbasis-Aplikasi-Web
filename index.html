@@ -456,27 +456,42 @@
       <div id="vocab-view-flashcard" class="vocab-mode-view hidden">
         <div class="vocab-flashcard-container">
           <div class="vocab-flashcard-header">
-            <div class="vocab-deck-selector-row">
-              <label class="vocab-control-label">Pilih Kategori Deck:</label>
-              <select id="vocab-flashcard-deck-select" class="vocab-select-control" onchange="changeFlashcardDeck(this.value)">
-                <option value="all" selected>Semua Kosakata</option>
-                <option value="greetings">Salam &amp; Sapaan</option>
-                <option value="questions">Kata Tanya &amp; Bertanya</option>
-                <option value="food">Makanan &amp; Minuman</option>
-                <option value="verbs">Kata Kerja Harian</option>
-                <option value="adjectives">Kata Sifat &amp; Kondisi</option>
-                <option value="school">Sekolah &amp; Benda Kelas</option>
-                <option value="numbers_time">Angka, Hari &amp; Waktu</option>
-                <option value="family">Keluarga</option>
-                <option value="places">Tempat &amp; Transportasi</option>
-              </select>
+            <div class="vocab-deck-selector-row" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+              <div style="flex: 1; min-width: 200px;">
+                <label class="vocab-control-label">Pilih Kategori Deck:</label>
+                <select id="vocab-flashcard-deck-select" class="vocab-select-control" onchange="changeFlashcardDeck(this.value)">
+                  <option value="all" selected>Semua Kosakata</option>
+                  <option value="greetings">Salam &amp; Sapaan</option>
+                  <option value="questions">Kata Tanya &amp; Bertanya</option>
+                  <option value="food">Makanan &amp; Minuman</option>
+                  <option value="verbs">Kata Kerja Harian</option>
+                  <option value="adjectives">Kata Sifat &amp; Kondisi</option>
+                  <option value="school">Sekolah &amp; Benda Kelas</option>
+                  <option value="numbers_time">Angka, Hari &amp; Waktu</option>
+                  <option value="family">Keluarga</option>
+                  <option value="places">Tempat &amp; Transportasi</option>
+                </select>
+              </div>
+              <div style="min-width: 140px;">
+                <label class="vocab-control-label">Target Hafalan:</label>
+                <select id="vocab-flashcard-batch-select" class="vocab-select-control" onchange="changeFlashcardBatch(this.value)">
+                  <option value="15">15 Kartu</option>
+                  <option value="30" selected>30 Kartu</option>
+                  <option value="45">45 Kartu</option>
+                  <option value="60">60 Kartu</option>
+                  <option value="all">Semua Kartu</option>
+                </select>
+              </div>
             </div>
             <div class="vocab-flashcard-progress-bar-wrap">
               <div class="vocab-flashcard-progress-info">
-                <span id="flashcard-counter-text">Sisa 0 dari 0 kartu</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span id="flashcard-round-badge" style="font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 9999px; background: #EFF6FF; color: #1D4ED8;">Putaran 1</span>
+                  <span id="flashcard-counter-text">Sisa 0 dari 0 kartu</span>
+                </div>
                 <div style="display:flex; gap:8px; align-items:center;">
                   <span style="font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px; background:#DCFCE7; color:#15803D;"><strong id="flashcard-mastered-text">0 Dikuasai</strong></span>
-                  <span style="font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px; background:#FEF3C7; color:#B45309;"><strong id="flashcard-review-badge">0x Diulang</strong></span>
+                  <span style="font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px; background:#FEF3C7; color:#B45309;"><strong id="flashcard-review-badge">0 Perlu Ulang</strong></span>
                 </div>
               </div>
               <div class="vocab-progress-track">
@@ -539,6 +554,36 @@
             </button>
           </div>
 
+          <!-- QUIZLET-STYLE ROUND CHECKPOINT CARD (JIKA ADA KARTU BELUM HAFAL) -->
+          <div id="vocab-flashcard-checkpoint" class="vocab-flashcard-checkpoint hidden" style="background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 32px 24px; text-align: center; margin-top: 10px; box-shadow: 0 12px 32px rgba(45,37,32,0.08);">
+            <div style="width: 68px; height: 68px; border-radius: 50%; background: #FEF3C7; color: #D97706; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <svg viewBox="0 0 24 24" style="width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span style="display: inline-block; padding: 4px 14px; border-radius: 9999px; background: #FEF3C7; color: #B45309; font-size: 0.8rem; font-weight: 800; margin-bottom: 10px;">PUTARAN <span id="flash-checkpoint-round-num">1</span> SELESAI</span>
+            <h2 style="font-size: 1.45rem; font-weight: 800; color: #2F2620; margin-bottom: 8px;">Progres Bagus! Mari Tuntaskan Sisanya</h2>
+            <p style="font-size: 0.92rem; color: #6E6157; max-width: 480px; margin: 0 auto 20px; line-height: 1.5;">Kamu telah menyelesaikan kartu di putaran ini. Yuk fokus ulangi sisa kartu yang belum hafal sampai semuanya tuntas 100%!</p>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 400px; margin: 0 auto 24px;">
+              <div style="background: #DCFCE7; padding: 14px 12px; border-radius: 16px; border: 1.5px solid #86EFAC;">
+                <span style="font-size: 0.75rem; color: #15803D; font-weight: 700; display: block; margin-bottom: 4px;">Sudah Hafal</span>
+                <strong id="flash-checkpoint-mastered-count" style="font-size: 1.45rem; color: #166534;">0 Kartu</strong>
+              </div>
+              <div style="background: #FEF2F2; padding: 14px 12px; border-radius: 16px; border: 1.5px solid #FECACA;">
+                <span style="font-size: 0.75rem; color: #B91C1C; font-weight: 700; display: block; margin-bottom: 4px;">Perlu Diulang</span>
+                <strong id="flash-checkpoint-unmastered-count" style="font-size: 1.45rem; color: #991B1B;">0 Kartu</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+              <button type="button" class="btn-primary" onclick="continueFlashcardNextRound()" style="padding: 12px 24px; font-weight: 700; border-radius: 12px;">
+                <span>Lanjutkan Sisa <span id="flash-checkpoint-next-count">0</span> Kartu</span>
+              </button>
+              <button type="button" class="btn-secondary" onclick="restartCurrentFlashcardDeck()" style="padding: 12px 20px; font-weight: 700; border-radius: 12px;">
+                <span>Ulangi Semua Dari Awal</span>
+              </button>
+            </div>
+          </div>
+
           <!-- QUIZLET-STYLE COMPLETION CARD (OTOMATIS MASUK DATABASE GURU) -->
           <div id="vocab-flashcard-complete" class="vocab-flashcard-complete hidden" style="background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 36px 24px; text-align: center; margin-top: 10px; box-shadow: 0 12px 32px rgba(45,37,32,0.08);">
             <div style="width: 72px; height: 72px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
@@ -585,7 +630,25 @@
           <div class="vocab-quiz-intro-card">
             <span class="badge-pill-brand">EVALUASI AKADEMIK</span>
             <h2>Latihan &amp; Kuis Kosakata Interaktif</h2>
-            <p>Uji penguasaan kosakata bahasa Jepang Anda melalui paket soal pilihan ganda. Setiap paket berisi 10 soal dengan format arti kata, pembacaan kanji/kana, dan audio chokai. Nilai Anda akan otomatis direkapitulasi ke dalam laporan Guru.</p>
+            <p>Uji penguasaan kosakata bahasa Jepang Anda melalui paket soal pilihan ganda. Pilihlah target jumlah soal yang ingin Anda latih, dan pantau penguasaan Anda. Nilai Anda akan otomatis direkapitulasi ke dalam laporan Guru.</p>
+          </div>
+
+          <div class="vocab-quiz-settings-bar" style="background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <label for="vocab-quiz-count-select" style="font-size: 0.88rem; font-weight: 700; color: var(--text);">Jumlah Soal per Paket:</label>
+              <select id="vocab-quiz-count-select" class="vocab-select-control" style="padding: 6px 14px; font-weight: 700; border-radius: 10px;">
+                <option value="10">10 Soal (Cepat)</option>
+                <option value="15" selected>15 Soal (Standar)</option>
+                <option value="30">30 Soal (Mendalam)</option>
+                <option value="45">45 Soal</option>
+                <option value="60">60 Soal</option>
+                <option value="all">Semua Soal Tersedia</option>
+              </select>
+            </div>
+            <div id="vocab-quiz-resume-badge" class="hidden" style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 9999px; background: #FEF3C7; color: #B45309;">Ada sesi kuis tersimpan</span>
+              <button type="button" onclick="resumeSavedQuizSession()" style="padding: 5px 14px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; background: #BA5444; color: #FFF; border: none; cursor: pointer;">Lanjutkan</button>
+            </div>
           </div>
 
           <div class="vocab-quiz-packets-grid">
@@ -738,6 +801,9 @@
               <span>Hasil penilaian ini telah disinkronkan ke rekapitulasi evaluasi Guru.</span>
             </div>
             <div class="vocab-result-actions">
+              <button type="button" class="btn-result-review-missed hidden" id="btn-quiz-retry-missed" onclick="retryMissedVocabQuiz()" style="background: #BA5444; color: #FFFFFF; font-weight: 700; padding: 12px 20px; border-radius: 12px; border: none; cursor: pointer;">
+                <span>Latih Soal yang Salah Saja (<span id="quiz-missed-count-badge">0</span> Soal)</span>
+              </button>
               <button type="button" class="btn-result-restart" onclick="retryCurrentVocabQuiz()">
                 <span>Ulangi Kuis Ini</span>
               </button>

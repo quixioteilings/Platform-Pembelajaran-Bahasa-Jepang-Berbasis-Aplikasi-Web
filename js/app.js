@@ -1131,9 +1131,9 @@ function switchVocabMode(mode) {
   if (mode === 'explore') {
     renderVocabExplore();
   } else if (mode === 'flashcard') {
-    initFlashcardMode();
+    initFlashcardMode(true);
   } else if (mode === 'quiz') {
-    backToVocabLobby();
+    backToVocabLobby(true);
   }
 }
 window.switchVocabMode = switchVocabMode;
@@ -1281,50 +1281,209 @@ function toggleVocabMastered(jpWord, btn) {
 }
 window.toggleVocabMastered = toggleVocabMastered;
 
-// ===== MODE 2: FLASHCARD AUDIO =====
-let flashcardDeck = [];
-// ===== MODE 2: FLASHCARD AUDIO INTERAKTIF (ALGORITMA REPETISI QUIZLET & SINKRONISASI DATABASE GURU) =====
+// ====================================================
+// MODE 2: FLASHCARD AUDIO INTERAKTIF (QUIZLET SYSTEM)
+// BATCH TARGET (15/30/45/60/ALL), ROUND-BASED REPETITION,
+// SESSION MEMORY & RESUME MODAL, AUTO-SYNC GURU DB
+// ====================================================
+const VOCAB_CATEGORIES_MAP = {
+  all: 'Semua Kosakata',
+  greetings: 'Salam & Sapaan',
+  questions: 'Kata Tanya & Bertanya',
+  food: 'Makanan & Minuman',
+  verbs: 'Kata Kerja Harian',
+  adjectives: 'Kata Sifat & Kondisi',
+  school: 'Sekolah & Benda Kelas',
+  numbers_time: 'Angka, Hari & Waktu',
+  family: 'Keluarga',
+  places: 'Tempat & Transportasi'
+};
+
+let flashcardBatchSize = '30';
 let flashcardOriginalDeck = [];
-let flashcardQueue = [];
+let flashcardRoundQueue = [];
+let flashcardRoundUnmastered = [];
 let flashcardMasteredSet = new Set();
 let flashcardReviewCount = 0;
+let flashcardRoundNumber = 1;
 let currentFlashcardIndex = 0;
 let isFlashcardFlipped = false;
 let currentFlashcardDeckKey = 'all';
 
-function initFlashcardMode() {
+function changeFlashcardBatch(batchVal) {
+  flashcardBatchSize = batchVal || '30';
+  localStorage.removeItem('sijapanese_active_flashcard_session');
+  changeFlashcardDeck(currentFlashcardDeckKey);
+}
+window.changeFlashcardBatch = changeFlashcardBatch;
+
+async function initFlashcardMode(checkResume = true) {
   const select = document.getElementById('vocab-flashcard-deck-select');
+  const batchSelect = document.getElementById('vocab-flashcard-batch-select');
+  
+  if (checkResume) {
+    try {
+      const savedRaw = localStorage.getItem('sijapanese_active_flashcard_session');
+      if (savedRaw) {
+        const saved = JSON.parse(savedRaw);
+        if (saved && saved.originalDeck && saved.originalDeck.length > 0) {
+          const totalCards = saved.originalDeck.length;
+          const masteredCount = (saved.masteredWords || []).length;
+          const remainingCount = totalCards - masteredCount;
+
+          if (remainingCount > 0) {
+            const deckName = VOCAB_CATEGORIES_MAP[saved.deckKey] || saved.deckKey || 'Kosakata';
+            const doResume = await showCustomConfirm({
+              title: 'Lanjutkan Sesi Belajar?',
+              message: `Ditemukan sesi tersimpan di kategori <strong>${deckName}</strong> dengan sisa <strong>${remainingCount} dari ${totalCards} kartu</strong> yang belum tuntas.<br><br>Apakah ingin melanjutkan sesi ini atau mulai dari awal?`,
+              confirmText: `Lanjutkan Sesi (${remainingCount} Kartu)`,
+              cancelText: 'Mulai Dari Awal',
+              isDanger: false
+            });
+
+            if (doResume) {
+              restoreSavedFlashcardSession(saved);
+              return;
+            } else {
+              localStorage.removeItem('sijapanese_active_flashcard_session');
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  }
+
   const deckKey = select ? select.value : 'all';
+  if (batchSelect) flashcardBatchSize = batchSelect.value || '30';
   changeFlashcardDeck(deckKey);
 }
 window.initFlashcardMode = initFlashcardMode;
 
-function changeFlashcardDeck(deckKey) {
+function restoreSavedFlashcardSession(saved) {
+  currentFlashcardDeckKey = saved.deckKey || 'all';
+  flashcardBatchSize = saved.batchSize || '30';
+  flashcardOriginalDeck = saved.originalDeck || [];
+  flashcardRoundQueue = saved.roundQueue || [...flashcardOriginalDeck];
+  flashcardRoundUnmastered = saved.roundUnmastered || [];
+  flashcardMasteredSet = new Set(saved.masteredWords || []);
+  flashcardRoundNumber = saved.roundNumber || 1;
+  currentFlashcardIndex = saved.currentIndex || 0;
+  flashcardReviewCount = saved.reviewCount || 0;
+  isFlashcardFlipped = false;
+
+  const select = document.getElementById('vocab-flashcard-deck-select');
+  if (select) select.value = currentFlashcardDeckKey;
+  const batchSelect = document.getElementById('vocab-flashcard-batch-select');
+  if (batchSelect) batchSelect.value = flashcardBatchSize;
+
+  const cardScene = document.querySelector('.vocab-card-scene');
+  const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
+  const completeScreen = document.getElementById('vocab-flashcard-complete');
+
+  if (saved.isCheckpoint && flashcardRoundUnmastered.length > 0) {
+    if (cardScene) cardScene.classList.add('hidden');
+    if (actionControls) actionControls.classList.add('hidden');
+    if (checkpointScreen) checkpointScreen.classList.remove('hidden');
+    if (completeScreen) completeScreen.classList.add('hidden');
+
+    const roundNumEl = document.getElementById('flash-checkpoint-round-num');
+    const masteredEl = document.getElementById('flash-checkpoint-mastered-count');
+    const unmasteredEl = document.getElementById('flash-checkpoint-unmastered-count');
+    const nextCountEl = document.getElementById('flash-checkpoint-next-count');
+
+    if (roundNumEl) roundNumEl.textContent = flashcardRoundNumber;
+    if (masteredEl) masteredEl.textContent = `${flashcardMasteredSet.size} Kartu`;
+    if (unmasteredEl) unmasteredEl.textContent = `${flashcardRoundUnmastered.length} Kartu`;
+    if (nextCountEl) nextCountEl.textContent = `${flashcardRoundUnmastered.length}`;
+  } else {
+    if (cardScene) cardScene.classList.remove('hidden');
+    if (actionControls) actionControls.classList.remove('hidden');
+    if (checkpointScreen) checkpointScreen.classList.add('hidden');
+    if (completeScreen) completeScreen.classList.add('hidden');
+
+    renderCurrentFlashcard();
+  }
+
+  showToast(`Sesi belajar kategori "${VOCAB_CATEGORIES_MAP[currentFlashcardDeckKey] || 'Kosakata'}" berhasil dipulihkan!`, 'info');
+}
+
+function saveActiveFlashcardSession(isCheckpoint = false) {
+  if (!flashcardOriginalDeck || flashcardOriginalDeck.length === 0) return;
+  try {
+    const payload = {
+      deckKey: currentFlashcardDeckKey,
+      batchSize: flashcardBatchSize,
+      originalDeck: flashcardOriginalDeck,
+      roundQueue: flashcardRoundQueue,
+      roundUnmastered: flashcardRoundUnmastered,
+      masteredWords: Array.from(flashcardMasteredSet),
+      roundNumber: flashcardRoundNumber,
+      currentIndex: currentFlashcardIndex,
+      reviewCount: flashcardReviewCount,
+      isCheckpoint: isCheckpoint,
+      updatedAt: Date.now()
+    };
+    localStorage.setItem('sijapanese_active_flashcard_session', JSON.stringify(payload));
+  } catch (e) {}
+}
+
+function changeFlashcardDeck(deckKey, customCards = null) {
   currentFlashcardDeckKey = deckKey || 'all';
-  flashcardOriginalDeck = getVocabListByCategory(deckKey);
-  // Gandakan array ke antrean aktif yang akan berkurang jika hafal, bertambah jika belum hafal
-  flashcardQueue = [...flashcardOriginalDeck];
+  const batchSelect = document.getElementById('vocab-flashcard-batch-select');
+  if (batchSelect) {
+    flashcardBatchSize = batchSelect.value || flashcardBatchSize || '30';
+  }
+
+  if (customCards && Array.isArray(customCards)) {
+    flashcardOriginalDeck = [...customCards];
+  } else {
+    let pool = (deckKey === 'all') ? getAllVocabList() : getVocabListByCategory(deckKey);
+    if (!pool || pool.length === 0) {
+      pool = getAllVocabList();
+    }
+    
+    // Acak urutan kartu agar sesi variatif
+    pool = shuffle([...pool]);
+
+    let targetCount = pool.length;
+    if (flashcardBatchSize !== 'all') {
+      const num = parseInt(flashcardBatchSize, 10);
+      if (!isNaN(num) && num > 0) {
+        targetCount = Math.min(num, pool.length);
+      }
+    }
+    flashcardOriginalDeck = pool.slice(0, targetCount);
+  }
+
+  flashcardRoundQueue = [...flashcardOriginalDeck];
+  flashcardRoundUnmastered = [];
   flashcardMasteredSet = new Set();
   flashcardReviewCount = 0;
+  flashcardRoundNumber = 1;
   currentFlashcardIndex = 0;
   isFlashcardFlipped = false;
-  
+
   const flipper = document.getElementById('vocab-flipper');
   if (flipper) flipper.classList.remove('is-flipped');
 
-  // Pastikan area kartu aktif dan sembunyikan layar selesai
   const cardScene = document.querySelector('.vocab-card-scene');
   const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
   const completeScreen = document.getElementById('vocab-flashcard-complete');
+
   if (cardScene) cardScene.classList.remove('hidden');
   if (actionControls) actionControls.classList.remove('hidden');
+  if (checkpointScreen) checkpointScreen.classList.add('hidden');
   if (completeScreen) completeScreen.classList.add('hidden');
 
+  saveActiveFlashcardSession(false);
   renderCurrentFlashcard();
 }
 window.changeFlashcardDeck = changeFlashcardDeck;
 
 function restartCurrentFlashcardDeck() {
+  localStorage.removeItem('sijapanese_active_flashcard_session');
   changeFlashcardDeck(currentFlashcardDeckKey);
 }
 window.restartCurrentFlashcardDeck = restartCurrentFlashcardDeck;
@@ -1332,41 +1491,50 @@ window.restartCurrentFlashcardDeck = restartCurrentFlashcardDeck;
 function renderCurrentFlashcard() {
   const cardScene = document.querySelector('.vocab-card-scene');
   const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
   const completeScreen = document.getElementById('vocab-flashcard-complete');
 
-  if (!flashcardQueue || flashcardQueue.length === 0) {
+  if (!flashcardRoundQueue || flashcardRoundQueue.length === 0) {
     if (flashcardOriginalDeck && flashcardOriginalDeck.length > 0) {
-      finishFlashcardSession();
+      if (flashcardRoundUnmastered && flashcardRoundUnmastered.length > 0) {
+        showFlashcardCheckpoint();
+      } else {
+        finishFlashcardSession();
+      }
     }
     return;
   }
 
   if (cardScene) cardScene.classList.remove('hidden');
   if (actionControls) actionControls.classList.remove('hidden');
+  if (checkpointScreen) checkpointScreen.classList.add('hidden');
   if (completeScreen) completeScreen.classList.add('hidden');
 
-  if (currentFlashcardIndex >= flashcardQueue.length) {
+  if (currentFlashcardIndex >= flashcardRoundQueue.length) {
     currentFlashcardIndex = 0;
   }
 
-  const item = flashcardQueue[currentFlashcardIndex];
+  const item = flashcardRoundQueue[currentFlashcardIndex];
   if (!item) return;
 
   const totalOriginal = flashcardOriginalDeck.length || 1;
-  const remainingCount = flashcardQueue.length;
+  const currentRoundTotal = flashcardRoundQueue.length;
+  const currentRoundNum = currentFlashcardIndex + 1;
   const masteredCount = flashcardMasteredSet.size;
   const progressPct = Math.min(100, Math.round((masteredCount / totalOriginal) * 100));
 
-  // Counter & Progress
+  // Counter & Badges
+  const roundBadge = document.getElementById('flashcard-round-badge');
   const counterText = document.getElementById('flashcard-counter-text');
   const progressFill = document.getElementById('flashcard-progress-fill');
   const masteredText = document.getElementById('flashcard-mastered-text');
   const reviewBadge = document.getElementById('flashcard-review-badge');
 
-  if (counterText) counterText.textContent = `Sisa ${remainingCount} dari ${totalOriginal} kartu`;
+  if (roundBadge) roundBadge.textContent = `Putaran ${flashcardRoundNumber}`;
+  if (counterText) counterText.textContent = `Kartu ${currentRoundNum} dari ${currentRoundTotal} (Target: ${totalOriginal})`;
   if (progressFill) progressFill.style.width = `${progressPct}%`;
   if (masteredText) masteredText.textContent = `${masteredCount} Dikuasai`;
-  if (reviewBadge) reviewBadge.textContent = `${flashcardReviewCount}x Diulang`;
+  if (reviewBadge) reviewBadge.textContent = `${flashcardRoundUnmastered.length} Perlu Ulang`;
 
   // Front Elements
   const frontLevel = document.getElementById('flash-front-level');
@@ -1400,7 +1568,7 @@ function renderCurrentFlashcard() {
     if (backExId) backExId.textContent = item.id;
   }
 
-  // Ensure card is front-facing
+  // Reset kartu menghadap depan
   isFlashcardFlipped = false;
   const flipper = document.getElementById('vocab-flipper');
   if (flipper) flipper.classList.remove('is-flipped');
@@ -1415,39 +1583,40 @@ function flipFlashcard() {
 window.flipFlashcard = flipFlashcard;
 
 function prevFlashcard() {
-  if (flashcardQueue.length === 0) return;
-  currentFlashcardIndex = (currentFlashcardIndex - 1 + flashcardQueue.length) % flashcardQueue.length;
+  if (flashcardRoundQueue.length === 0) return;
+  currentFlashcardIndex = (currentFlashcardIndex - 1 + flashcardRoundQueue.length) % flashcardRoundQueue.length;
   renderCurrentFlashcard();
 }
 window.prevFlashcard = prevFlashcard;
 
 function nextFlashcard() {
-  if (flashcardQueue.length === 0) return;
-  currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcardQueue.length;
+  if (flashcardRoundQueue.length === 0) return;
+  currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcardRoundQueue.length;
   renderCurrentFlashcard();
 }
 window.nextFlashcard = nextFlashcard;
 
 function playFlashcardAudio() {
-  if (!flashcardQueue || flashcardQueue.length === 0) return;
-  const item = flashcardQueue[currentFlashcardIndex];
+  if (!flashcardRoundQueue || flashcardRoundQueue.length === 0) return;
+  const item = flashcardRoundQueue[currentFlashcardIndex];
   if (item) {
     speakJapanese(item.kana || item.jp);
   }
 }
 window.playFlashcardAudio = playFlashcardAudio;
 
-// PERSIS QUIZLET: Tombol "Sudah Hafal" mencabut kartu dari antrean sesi
+// PERSIS QUIZLET: Tombol "Sudah Hafal" mencatat kartu dikuasai dan lanjut
 function markFlashcardMastered() {
-  if (!flashcardQueue || flashcardQueue.length === 0) return;
-  const item = flashcardQueue[currentFlashcardIndex];
+  if (!flashcardRoundQueue || flashcardRoundQueue.length === 0) return;
+  const item = flashcardRoundQueue[currentFlashcardIndex];
   if (!item) return;
 
   const keyWord = item.kana || item.jp;
-  
-  // Catat kata sebagai dikuasai dalam sesi ini
   flashcardMasteredSet.add(item.jp);
   flashcardMasteredSet.add(keyWord);
+
+  // Jika sebelumnya tercatat di unmastered putaran ini, hapus
+  flashcardRoundUnmastered = flashcardRoundUnmastered.filter(x => x.jp !== item.jp && (x.kana || x.jp) !== keyWord);
 
   if (!state.learnedVocab.has(item.jp) && !state.learnedVocab.has(keyWord)) {
     state.learnedVocab.add(item.jp);
@@ -1460,43 +1629,102 @@ function markFlashcardMastered() {
     showToast(`Hafal "${keyWord}"!`, 'success');
   }
 
-  // Cabut dari antrean aktif Quizlet
-  flashcardQueue.splice(currentFlashcardIndex, 1);
-
-  if (flashcardQueue.length === 0) {
-    finishFlashcardSession();
-  } else {
-    if (currentFlashcardIndex >= flashcardQueue.length) {
-      currentFlashcardIndex = 0;
-    }
-    renderCurrentFlashcard();
-  }
+  advanceFlashcardProgress();
 }
 window.markFlashcardMastered = markFlashcardMastered;
 
-// PERSIS QUIZLET: Tombol "Belum Hafal" memindahkan kartu ke akhir antrean untuk diulang terus sampai hafal
+// PERSIS QUIZLET: Tombol "Belum Hafal" mencatat kartu untuk diulang di putaran berikutnya
 function markFlashcardReview() {
-  if (!flashcardQueue || flashcardQueue.length === 0) return;
-  const item = flashcardQueue[currentFlashcardIndex];
+  if (!flashcardRoundQueue || flashcardRoundQueue.length === 0) return;
+  const item = flashcardRoundQueue[currentFlashcardIndex];
   if (!item) return;
 
   flashcardReviewCount++;
-  const [cardToRepeat] = flashcardQueue.splice(currentFlashcardIndex, 1);
-  flashcardQueue.push(cardToRepeat);
-
-  const wordName = cardToRepeat.kana || cardToRepeat.jp;
-  showToast(`"${wordName}" akan diulang kembali sampai hafal!`, 'info');
-
-  if (currentFlashcardIndex >= flashcardQueue.length) {
-    currentFlashcardIndex = 0;
+  if (!flashcardRoundUnmastered.some(x => x.jp === item.jp)) {
+    flashcardRoundUnmastered.push(item);
   }
-  renderCurrentFlashcard();
+
+  const wordName = item.kana || item.jp;
+  showToast(`"${wordName}" dicatat untuk diulang di putaran berikutnya!`, 'info');
+
+  advanceFlashcardProgress();
 }
 window.markFlashcardReview = markFlashcardReview;
 
-function finishFlashcardSession() {
+function advanceFlashcardProgress() {
+  if (currentFlashcardIndex < flashcardRoundQueue.length - 1) {
+    currentFlashcardIndex++;
+    saveActiveFlashcardSession(false);
+    renderCurrentFlashcard();
+  } else {
+    // Selesai putaran ini
+    if (flashcardRoundUnmastered.length === 0) {
+      finishFlashcardSession();
+    } else {
+      showFlashcardCheckpoint();
+    }
+  }
+}
+
+function showFlashcardCheckpoint() {
   const cardScene = document.querySelector('.vocab-card-scene');
   const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
+  const completeScreen = document.getElementById('vocab-flashcard-complete');
+
+  if (cardScene) cardScene.classList.add('hidden');
+  if (actionControls) actionControls.classList.add('hidden');
+  if (completeScreen) completeScreen.classList.add('hidden');
+  if (checkpointScreen) checkpointScreen.classList.remove('hidden');
+
+  const roundNumEl = document.getElementById('flash-checkpoint-round-num');
+  const masteredEl = document.getElementById('flash-checkpoint-mastered-count');
+  const unmasteredEl = document.getElementById('flash-checkpoint-unmastered-count');
+  const nextCountEl = document.getElementById('flash-checkpoint-next-count');
+
+  if (roundNumEl) roundNumEl.textContent = flashcardRoundNumber;
+  if (masteredEl) masteredEl.textContent = `${flashcardMasteredSet.size} Kartu`;
+  if (unmasteredEl) unmasteredEl.textContent = `${flashcardRoundUnmastered.length} Kartu`;
+  if (nextCountEl) nextCountEl.textContent = `${flashcardRoundUnmastered.length}`;
+
+  saveActiveFlashcardSession(true);
+}
+
+function continueFlashcardNextRound() {
+  if (flashcardRoundUnmastered.length === 0) {
+    finishFlashcardSession();
+    return;
+  }
+
+  flashcardRoundNumber++;
+  flashcardRoundQueue = [...flashcardRoundUnmastered];
+  flashcardRoundUnmastered = [];
+  currentFlashcardIndex = 0;
+  isFlashcardFlipped = false;
+
+  const cardScene = document.querySelector('.vocab-card-scene');
+  const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
+  const completeScreen = document.getElementById('vocab-flashcard-complete');
+
+  if (cardScene) cardScene.classList.remove('hidden');
+  if (actionControls) actionControls.classList.remove('hidden');
+  if (checkpointScreen) checkpointScreen.classList.add('hidden');
+  if (completeScreen) completeScreen.classList.add('hidden');
+
+  saveActiveFlashcardSession(false);
+  renderCurrentFlashcard();
+
+  showToast(`Putaran ${flashcardRoundNumber} dimulai dengan sisa ${flashcardRoundQueue.length} kartu!`, 'info');
+}
+window.continueFlashcardNextRound = continueFlashcardNextRound;
+
+function finishFlashcardSession() {
+  localStorage.removeItem('sijapanese_active_flashcard_session');
+
+  const cardScene = document.querySelector('.vocab-card-scene');
+  const actionControls = document.querySelector('.vocab-flashcard-actions');
+  const checkpointScreen = document.getElementById('vocab-flashcard-checkpoint');
   const completeScreen = document.getElementById('vocab-flashcard-complete');
   const counterText = document.getElementById('flashcard-counter-text');
   const progressFill = document.getElementById('flashcard-progress-fill');
@@ -1504,6 +1732,7 @@ function finishFlashcardSession() {
 
   if (cardScene) cardScene.classList.add('hidden');
   if (actionControls) actionControls.classList.add('hidden');
+  if (checkpointScreen) checkpointScreen.classList.add('hidden');
   if (completeScreen) completeScreen.classList.remove('hidden');
 
   const total = flashcardOriginalDeck.length || flashcardMasteredSet.size || 0;
@@ -1589,7 +1818,11 @@ function syncFlashcardToGuruDatabase(totalCards, reviewCount, bonusPoints) {
 }
 window.syncFlashcardToGuruDatabase = syncFlashcardToGuruDatabase;
 
-// ===== MODE 3: LATIHAN & KUIS KOSAKATA (EVALUASI GURU) =====
+// ====================================================
+// MODE 3: LATIHAN & KUIS KOSAKATA (EVALUASI GURU)
+// BATCH TARGET (10/15/30/45/60/ALL), PERSISTENCE & RESUME,
+// RETRY MISSED QUESTIONS ONLY (QUIZLET LEARN STYLE)
+// ====================================================
 let vocabQuizQuestions = [];
 let currentVocabQuizIndex = 0;
 let vocabQuizLiveScore = 0;
@@ -1598,6 +1831,7 @@ let vocabQuizWrongCount = 0;
 let vocabQuizActivePacket = 'greetings';
 let vocabQuizActivePacketTitle = 'Salam & Sapaan Sehari-hari';
 let isVocabQuizAnswerLocked = false;
+let vocabQuizMissedQuestions = [];
 
 const VOCAB_QUIZ_PACKET_NAMES = {
   greetings: 'Salam & Sapaan Sehari-hari',
@@ -1612,7 +1846,23 @@ const VOCAB_QUIZ_PACKET_NAMES = {
   mixed: 'Campuran Semua Kosakata'
 };
 
-function backToVocabLobby() {
+function checkQuizResumeState() {
+  const badge = document.getElementById('vocab-quiz-resume-badge');
+  const savedRaw = localStorage.getItem('sijapanese_active_quiz_session');
+  if (savedRaw) {
+    try {
+      const saved = JSON.parse(savedRaw);
+      if (saved && saved.questions && saved.index < saved.questions.length) {
+        if (badge) badge.classList.remove('hidden');
+        return saved;
+      }
+    } catch (e) {}
+  }
+  if (badge) badge.classList.add('hidden');
+  return null;
+}
+
+async function backToVocabLobby(checkResume = false) {
   const lobby = document.getElementById('vocab-quiz-lobby');
   const play = document.getElementById('vocab-quiz-play');
   const result = document.getElementById('vocab-quiz-result');
@@ -1620,13 +1870,72 @@ function backToVocabLobby() {
   if (lobby) lobby.classList.remove('hidden');
   if (play) play.classList.add('hidden');
   if (result) result.classList.add('hidden');
+
+  const saved = checkQuizResumeState();
+  if (checkResume && saved) {
+    const doResume = await showCustomConfirm({
+      title: 'Lanjutkan Kuis Sebelumnya?',
+      message: `Ditemukan sesi latihan <strong>${saved.packetTitle}</strong> yang belum tuntas (Soal <strong>${saved.index + 1} dari ${saved.questions.length}</strong>).<br><br>Apakah Anda ingin melanjutkan kuis ini?`,
+      confirmText: 'Lanjutkan Kuis',
+      cancelText: 'Pilih Paket Baru',
+      isDanger: false
+    });
+    if (doResume) {
+      resumeSavedQuizSession(saved);
+    }
+  }
 }
 window.backToVocabLobby = backToVocabLobby;
+
+function resumeSavedQuizSession(session = null) {
+  const saved = session || checkQuizResumeState();
+  if (!saved) return;
+
+  vocabQuizActivePacket = saved.packetKey;
+  vocabQuizActivePacketTitle = saved.packetTitle;
+  vocabQuizQuestions = saved.questions;
+  currentVocabQuizIndex = saved.index || 0;
+  vocabQuizLiveScore = saved.score || 0;
+  vocabQuizCorrectCount = saved.correct || 0;
+  vocabQuizWrongCount = saved.wrong || 0;
+  vocabQuizMissedQuestions = saved.missed || [];
+  isVocabQuizAnswerLocked = false;
+
+  const lobby = document.getElementById('vocab-quiz-lobby');
+  const play = document.getElementById('vocab-quiz-play');
+  const result = document.getElementById('vocab-quiz-result');
+
+  if (lobby) lobby.classList.add('hidden');
+  if (play) play.classList.remove('hidden');
+  if (result) result.classList.add('hidden');
+
+  renderVocabQuizQuestion();
+  showToast(`Sesi kuis "${vocabQuizActivePacketTitle}" dilanjutkan!`, 'info');
+}
+window.resumeSavedQuizSession = resumeSavedQuizSession;
+
+function saveActiveQuizSession() {
+  if (!vocabQuizQuestions || vocabQuizQuestions.length === 0) return;
+  try {
+    localStorage.setItem('sijapanese_active_quiz_session', JSON.stringify({
+      packetKey: vocabQuizActivePacket,
+      packetTitle: vocabQuizActivePacketTitle,
+      questions: vocabQuizQuestions,
+      index: currentVocabQuizIndex,
+      score: vocabQuizLiveScore,
+      correct: vocabQuizCorrectCount,
+      wrong: vocabQuizWrongCount,
+      missed: vocabQuizMissedQuestions,
+      updatedAt: Date.now()
+    }));
+    checkQuizResumeState();
+  } catch (e) {}
+}
 
 async function quitVocabQuiz() {
   const confirmed = await showCustomConfirm({
     title: 'Keluar dari Kuis',
-    message: 'Apakah Anda yakin ingin keluar dari latihan ini? Nilai belum tersimpan ke Guru.',
+    message: 'Apakah Anda yakin ingin keluar dari latihan ini? Progres tersimpan dan Anda dapat melanjutkannya nanti.',
     confirmText: 'Ya, Keluar',
     cancelText: 'Lanjutkan Kuis',
     isDanger: false
@@ -1637,12 +1946,15 @@ async function quitVocabQuiz() {
 }
 window.quitVocabQuiz = quitVocabQuiz;
 
-function selectVocabQuizPacket(packetKey) {
+function selectVocabQuizPacket(packetKey, customPool = null) {
   vocabQuizActivePacket = packetKey;
   vocabQuizActivePacketTitle = VOCAB_QUIZ_PACKET_NAMES[packetKey] || 'Latihan Kosakata';
+  vocabQuizMissedQuestions = [];
 
   let pool = [];
-  if (packetKey === 'mixed') {
+  if (customPool && Array.isArray(customPool) && customPool.length > 0) {
+    pool = [...customPool];
+  } else if (packetKey === 'mixed') {
     pool = getAllVocabList();
   } else {
     pool = getVocabListByCategory(packetKey);
@@ -1652,15 +1964,25 @@ function selectVocabQuizPacket(packetKey) {
     pool = getAllVocabList();
   }
 
-  // Shuffle pool and pick 10 items
-  const shuffledPool = shuffle([...pool]);
-  const quizWords = shuffledPool.slice(0, Math.min(10, shuffledPool.length));
+  // Ambil opsi jumlah soal dari dropdown selector
+  const countSelect = document.getElementById('vocab-quiz-count-select');
+  const selectedCountVal = countSelect ? countSelect.value : '15';
 
-  // Build 10 questions with multiple choice options
+  const shuffledPool = shuffle([...pool]);
+  let targetCount = shuffledPool.length;
+  if (selectedCountVal !== 'all' && (!customPool || customPool.length === 0)) {
+    const num = parseInt(selectedCountVal, 10);
+    if (!isNaN(num) && num > 0) {
+      targetCount = Math.min(num, shuffledPool.length);
+    }
+  }
+
+  const quizWords = shuffledPool.slice(0, targetCount);
+
+  // Buat paket soal
   vocabQuizQuestions = quizWords.map((targetWord, qIndex) => {
     const mainWord = targetWord.kana || targetWord.jp;
     const distractors = shuffle(shuffledPool.filter(w => (w.kana || w.jp) !== mainWord)).slice(0, 3);
-    
     const formatType = (qIndex % 3 === 0) ? 'meaning' : ((qIndex % 3 === 1) ? 'reading' : 'audio');
     
     let prompt = '';
@@ -1713,6 +2035,7 @@ function selectVocabQuizPacket(packetKey) {
   if (play) play.classList.remove('hidden');
   if (result) result.classList.add('hidden');
 
+  saveActiveQuizSession();
   renderVocabQuizQuestion();
 }
 window.selectVocabQuizPacket = selectVocabQuizPacket;
@@ -1823,24 +2146,37 @@ function handleVocabQuizAnswer(btn) {
   } else {
     btn.classList.add('wrong');
     vocabQuizWrongCount++;
+    if (q && q.target && !vocabQuizMissedQuestions.some(m => m.jp === q.target.jp)) {
+      vocabQuizMissedQuestions.push(q.target);
+    }
     if (feedbackBox) {
       feedbackBox.className = 'vocab-quiz-feedback-box wrong';
       feedbackBox.textContent = `Kurang Tepat. Jawaban yang benar adalah: ${q.correctText}`;
     }
   }
 
-  // Advance to next question after 1.1s
+  saveActiveQuizSession();
+
+  // Maju ke soal berikutnya setelah jeda 1.1s
   setTimeout(() => {
     currentVocabQuizIndex++;
-    renderVocabQuizQuestion();
+    if (currentVocabQuizIndex >= vocabQuizQuestions.length) {
+      finishVocabQuiz();
+    } else {
+      saveActiveQuizSession();
+      renderVocabQuizQuestion();
+    }
   }, 1100);
 }
 window.handleVocabQuizAnswer = handleVocabQuizAnswer;
 
 function finishVocabQuiz() {
+  localStorage.removeItem('sijapanese_active_quiz_session');
+  checkQuizResumeState();
+
   const totalQuestions = vocabQuizQuestions.length || 10;
   const scorePercent = Math.round((vocabQuizCorrectCount / totalQuestions) * 100);
-  const earnedPoints = vocabQuizCorrectCount * 5; // up to +50 points
+  const earnedPoints = vocabQuizCorrectCount * 5;
 
   const isPassed = scorePercent >= 70;
   const grade = scorePercent >= 85 ? 'A' : (scorePercent >= 70 ? 'B' : (scorePercent >= 60 ? 'C' : 'D'));
@@ -1851,7 +2187,7 @@ function finishVocabQuiz() {
     saveState();
   }
 
-  // 1. Submit to Backend API (Laravel SQLite)
+  // 1. Submit ke Backend API (Laravel SQLite)
   try {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     fetch('/api/auth/assessment', {
@@ -1862,7 +2198,7 @@ function finishVocabQuiz() {
         ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {})
       },
       body: JSON.stringify({
-        lesson_id: 999, // vocabulary evaluation code
+        lesson_id: 999,
         exercise_title: `Latihan Kosakata: ${vocabQuizActivePacketTitle}`,
         exercise_type: 'vocabulary',
         total_questions: totalQuestions,
@@ -1880,7 +2216,7 @@ function finishVocabQuiz() {
     }).catch(() => {});
   } catch (err) {}
 
-  // 2. Synchronize to LocalStorage for Guru Instant Live Display
+  // 2. Synchronize ke LocalStorage untuk Instant Live Display Dashboard Guru
   try {
     const localAssessments = JSON.parse(localStorage.getItem('sijapanese_student_assessments') || '[]');
     const activeUser = JSON.parse(localStorage.getItem('sijapanese_active_user') || '{}');
@@ -1936,6 +2272,20 @@ function finishVocabQuiz() {
     statusTextEl.style.color = isPassed ? '#059669' : '#DC2626';
   }
 
+  // Tombol Quizlet Learn Style: Latih Soal yang Salah Saja
+  const retryMissedBtn = document.getElementById('btn-quiz-retry-missed');
+  const missedCountBadge = document.getElementById('quiz-missed-count-badge');
+  if (retryMissedBtn) {
+    if (vocabQuizWrongCount > 0 && vocabQuizMissedQuestions.length > 0) {
+      retryMissedBtn.classList.remove('hidden');
+      retryMissedBtn.style.display = 'inline-block';
+      if (missedCountBadge) missedCountBadge.textContent = vocabQuizMissedQuestions.length;
+    } else {
+      retryMissedBtn.classList.add('hidden');
+      retryMissedBtn.style.display = 'none';
+    }
+  }
+
   showToast(`Kuis Selesai! Nilai: ${scorePercent} (${isPassed ? 'LULUS' : 'REMEDIAL'})`, isPassed ? 'success' : 'info');
 }
 
@@ -1943,6 +2293,18 @@ function retryCurrentVocabQuiz() {
   selectVocabQuizPacket(vocabQuizActivePacket);
 }
 window.retryCurrentVocabQuiz = retryCurrentVocabQuiz;
+
+function retryMissedVocabQuiz() {
+  if (!vocabQuizMissedQuestions || vocabQuizMissedQuestions.length === 0) {
+    showToast('Tidak ada soal yang salah pada latihan ini!', 'info');
+    return;
+  }
+  const missedPool = [...vocabQuizMissedQuestions];
+  selectVocabQuizPacket(vocabQuizActivePacket, missedPool);
+  showToast(`Memulai latihan ulang khusus ${missedPool.length} soal yang salah!`, 'info');
+}
+window.retryMissedVocabQuiz = retryMissedVocabQuiz;
+
 
 // ====================================================
 // MASTER GAME CONFIGURATION & QUESTION BANK MANAGER
