@@ -3495,33 +3495,17 @@
 
       if (tabName === 'levels') renderAdminLevels();
       if (tabName === 'lessons') renderAdminLessons();
-    renderAdminJapanCitiesTable(); // MARK_SWITCH_TAB
       if (tabName === 'quests') renderAdminQuests();
-      if (tabName === 'students') renderAdminStudents();
-      if (tabName === 'minigames') renderAdminMiniGames();
-      if (tabName === 'japan-cities') renderAdminJapanCitiesTable();
-    }
-      document.querySelectorAll('.guru-tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.guru-tab-content').forEach(c => c.classList.remove('active'));
-
-      const tabs = ['levels', 'lessons', 'quests', 'students', 'minigames'];
-      const idx = tabs.indexOf(tabName);
-      if (idx !== -1) {
-        const btns = document.querySelectorAll('.guru-tab-btn');
-        if (btns[idx]) btns[idx].classList.add('active');
-        const target = document.getElementById('guru-tab-' + tabName);
-        if (target) {
-          target.classList.add('active');
-          window.scrollTo({ top: 120, behavior: 'smooth' });
-        }
+      if (tabName === 'students') {
+        if (typeof renderAssessments === 'function') renderAssessments();
+        if (typeof renderStudents === 'function') renderStudents();
+        renderAdminStudents();
       }
       if (tabName === 'minigames') {
-        renderAdminGameView();
+        renderAdminMiniGames();
+        if (typeof renderAdminGameView === 'function') renderAdminGameView();
       }
-      if (tabName === 'students') {
-        renderAssessments();
-        renderStudents();
-      }
+      if (tabName === 'japan-cities') renderAdminJapanCitiesTable();
     }
 
     function setGuruAvatar(avatarPath) {
@@ -4106,7 +4090,6 @@
     }
 
     let currentUploadedPanels = {};
-    let currentUploadedLessonComic = null;
 
     function setComicMode(mode) {
       const modeMulti = document.getElementById('comic-mode-multi-wrap');
@@ -4461,11 +4444,6 @@
 
         fetch('/guru/lessons/' + les.id, {
           method: 'POST',
-          headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
-          body: fd
-        }).catch(err => {});
-      } catch (err) {}
-    }
           headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
           body: fd
         }).catch(err => {});
