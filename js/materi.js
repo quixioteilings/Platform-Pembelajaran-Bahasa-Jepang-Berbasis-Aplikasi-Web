@@ -1779,6 +1779,14 @@ let currentLessonId = 1;
 let currentLessonQuizAnswers = {}; // { qIndex: { isCorrect, selectedOptIndex } }
 let currentLessonQuizScore = 0;
 
+let activeMateriLevel = 'n5';
+let materiLevelsData = [
+  { code: 'n5', name: 'N5 Dasar', sub: 'Fondasi, Aksara & Wisata', accent_color: '#BA5444' },
+  { code: 'n4', name: 'N4 Menengah', sub: 'Situasi Praktis Traveling', accent_color: '#3E6B89' },
+  { code: 'n3', name: 'N3 Lanjutan', sub: 'Tata Bahasa & Dialog Kompleks', accent_color: '#059669' },
+  { code: 'all', name: 'Semua Level', sub: 'Seluruh Kurikulum', accent_color: '#2D2520' }
+];
+
 // Daftar Modul Katalog Utama (Sesuai Kurikulum Resmi Nihongo to Japan N5)
 const LESSON_CATALOG_DATA = [
   { id: 1, title: 'Bahasa Jepang Itu Seperti Apa?', subtitle: 'Kenalan dengan tiga jenis huruf Jepang', time: '12 menit', level: 'N5' },
@@ -1801,9 +1809,74 @@ const LESSON_CATALOG_DATA = [
 
 // Inisialisasi Halaman Materi
 function initMateriPage() {
+  syncLevelsFromDatabase();
   syncLessonsFromDatabase();
+  renderMateriLevelPills();
   renderLessonCatalogList();
 }
+
+function syncLevelsFromDatabase() {
+  if (window.LARAVEL_LEVELS && Array.isArray(window.LARAVEL_LEVELS) && window.LARAVEL_LEVELS.length > 0) {
+    applyDbLevels(window.LARAVEL_LEVELS);
+    return;
+  }
+  if (typeof fetch === 'function') {
+    fetch('/api/materi/levels')
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.success && data.levels && data.levels.length > 0) {
+          applyDbLevels(data.levels);
+          renderMateriLevelPills();
+          renderLessonCatalogList();
+        }
+      })
+      .catch(() => {});
+  }
+}
+
+function applyDbLevels(dbLevels) {
+  const list = Array.isArray(dbLevels) ? dbLevels : Object.values(dbLevels);
+  if (!list || list.length === 0) return;
+  const mapped = list.map(l => ({
+    code: (l.code || '').toLowerCase(),
+    name: l.name || (l.code || '').toUpperCase(),
+    sub: l.sub || '',
+    accent_color: l.accent_color || '#BA5444'
+  }));
+  if (!mapped.some(l => l.code === 'all')) {
+    mapped.push({ code: 'all', name: 'Semua Level', sub: 'Seluruh Kurikulum', accent_color: '#2D2520' });
+  }
+  materiLevelsData = mapped;
+}
+
+function getLevelLessonCount(code) {
+  if (code === 'all') return LESSON_CATALOG_DATA.length;
+  return LESSON_CATALOG_DATA.filter(l => (l.level || 'n5').toLowerCase() === code.toLowerCase()).length;
+}
+
+function renderMateriLevelPills() {
+  const container = document.getElementById('materi-level-pills-bar');
+  if (!container) return;
+
+  container.innerHTML = materiLevelsData.map(lvl => {
+    const isActive = (activeMateriLevel === lvl.code);
+    const count = getLevelLessonCount(lvl.code);
+    return `
+      <button type="button" class="filter-pill filter-cat-pill ${isActive ? 'active' : ''}" onclick="selectLevelTab('${lvl.code}')">
+        <span>${escapeHtml(lvl.name)}</span>
+        <span class="pill-count">${count} Modul</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function selectLevelTab(code) {
+  activeMateriLevel = (code || 'n5').toLowerCase();
+  renderMateriLevelPills();
+  renderLessonCatalogList();
+}
+window.selectLevelTab = selectLevelTab;
+window.renderMateriLevelPills = renderMateriLevelPills;
 
 function syncLessonsFromDatabase() {
   if (window.LARAVEL_LESSONS) {
@@ -1816,6 +1889,7 @@ function syncLessonsFromDatabase() {
       .then(data => {
         if (data && data.success && data.lessons) {
           applyDbLessons(data.lessons);
+          renderMateriLevelPills();
           renderLessonCatalogList();
         }
       })
@@ -1828,12 +1902,14 @@ function applyDbLessons(dbLessons) {
   list.forEach(dbLes => {
     if (!dbLes || !dbLes.id) return;
     const lesId = Number(dbLes.id);
+    const lvlCode = dbLes.level ? (dbLes.level.code || 'n5') : (dbLes.level_id === 2 ? 'n4' : 'n5');
     if (LESSON_DETAIL_DATA[lesId]) {
       LESSON_DETAIL_DATA[lesId].comic_image = dbLes.comic_image;
       LESSON_DETAIL_DATA[lesId].audio_text = dbLes.audio_text;
       LESSON_DETAIL_DATA[lesId].audio_label = dbLes.audio_label;
       if (dbLes.title) LESSON_DETAIL_DATA[lesId].title = dbLes.title;
       if (dbLes.subtitle) LESSON_DETAIL_DATA[lesId].subtitle = dbLes.subtitle;
+      LESSON_DETAIL_DATA[lesId].level = lvlCode.toUpperCase();
     } else {
       LESSON_DETAIL_DATA[lesId] = {
         id: lesId,
@@ -1842,6 +1918,7 @@ function applyDbLessons(dbLessons) {
         comic_image: dbLes.comic_image,
         audio_text: dbLes.audio_text,
         audio_label: dbLes.audio_label,
+        level: lvlCode.toUpperCase(),
         overview: [],
         sections: []
       };
@@ -1850,6 +1927,15 @@ function applyDbLessons(dbLessons) {
     if (catalogItem) {
       if (dbLes.title) catalogItem.title = dbLes.title;
       if (dbLes.subtitle) catalogItem.subtitle = dbLes.subtitle;
+      catalogItem.level = lvlCode.toUpperCase();
+    } else {
+      LESSON_CATALOG_DATA.push({
+        id: lesId,
+        title: dbLes.title,
+        subtitle: dbLes.subtitle || '',
+        time: (dbLes.est_minutes || 20) + ' menit',
+        level: lvlCode.toUpperCase()
+      });
     }
   });
 }
@@ -1868,22 +1954,58 @@ function renderLessonCatalogList() {
     completedLessons = JSON.parse(localStorage.getItem('sijapanese_completed_lessons') || '[]');
   } catch (e) {}
 
+  const filteredLessons = (activeMateriLevel === 'all')
+    ? LESSON_CATALOG_DATA
+    : LESSON_CATALOG_DATA.filter(l => (l.level || 'n5').toLowerCase() === activeMateriLevel.toLowerCase());
+
+  const currentLevelObj = materiLevelsData.find(l => l.code === activeMateriLevel) || { name: 'Semua Level', sub: 'Seluruh Kurikulum' };
+  const groupNameEl = document.getElementById('materi-group-name');
+  const groupBadgeEl = document.getElementById('materi-group-badge');
   const countEl = document.getElementById('materi-section-count');
-  if (countEl) {
-    countEl.textContent = `(${LESSON_CATALOG_DATA.length} Pelajaran)`;
+  const groupDotEl = document.getElementById('materi-group-dot');
+
+  if (groupNameEl) groupNameEl.textContent = currentLevelObj.name;
+  if (groupBadgeEl) groupBadgeEl.textContent = activeMateriLevel === 'all' ? 'SEMUA' : activeMateriLevel.toUpperCase();
+  if (countEl) countEl.textContent = `(${filteredLessons.length} Pelajaran)`;
+  if (groupDotEl && currentLevelObj.accent_color) groupDotEl.style.background = currentLevelObj.accent_color;
+
+  renderMateriLevelPills();
+
+  if (filteredLessons.length === 0) {
+    container.innerHTML = `
+      <div class="materi-empty-level-card">
+        <div class="empty-icon-wrap">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#BA5444" stroke-width="1.8">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h7"/>
+          </svg>
+        </div>
+        <h3 class="empty-level-title">Modul ${escapeHtml(currentLevelObj.name)} Sedang Disiapkan</h3>
+        <p class="empty-level-desc">Sensei/Guru sedang menyusun silabus dan materi untuk tingkatan ini di Panel Guru. Setiap modul baru yang dibuat di Panel Guru akan langsung muncul di tab ini.</p>
+        <button type="button" class="btn-empty-return-n5" onclick="selectLevelTab('n5')">
+          <span>Pelajari Modul N5 Dasar Dulu (16 Pelajaran)</span>
+        </button>
+      </div>
+    `;
+    return;
   }
 
-  container.innerHTML = LESSON_CATALOG_DATA.map(les => {
+  container.innerHTML = filteredLessons.map(les => {
     const isDone = completedLessons.includes(les.id);
+    const lesLevel = (les.level || 'N5').toUpperCase();
     return `
       <div class="materi-nihongo-catalog-row ${isDone ? 'completed' : ''}" onclick="openLesson(${les.id})">
         <div class="nihongo-row-num ${isDone ? 'done' : ''}">${isDone ? 'OK' : les.id}</div>
         <div class="nihongo-row-content">
+          <div class="nihongo-row-meta">
+            <span class="nihongo-level-chip chip-${lesLevel.toLowerCase()}">${lesLevel}</span>
+            <span class="nihongo-row-time">${les.time || '20 menit'}</span>
+          </div>
           <h3 class="nihongo-row-title">${escapeHtml(les.title)}</h3>
           <p class="nihongo-row-subtitle">${escapeHtml(les.subtitle)}</p>
         </div>
         <div class="nihongo-row-right">
-          <span class="nihongo-row-time">${les.time}</span>
           <span class="nihongo-row-arrow">&rsaquo;</span>
         </div>
       </div>
@@ -4022,11 +4144,6 @@ function openNextLesson() {
   const lesson = LESSON_DETAIL_DATA[currentLessonId] || LESSON_DETAIL_DATA[1];
   const nextId = lesson.nextLessonId || 1;
   openLesson(nextId);
-}
-
-function selectLevelTab(code) {
-  // Untuk saat ini fokus kurikulum N5 Dasar
-  initMateriPage();
 }
 
 function switchLessonViewTab(tab) {

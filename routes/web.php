@@ -13,8 +13,14 @@ use App\Http\Controllers\MateriApiController;
 
 // Halaman Utama Siswa & Aplikasi Interaktif
 Route::get('/', function () {
-    $lessons = \App\Models\MateriLesson::where('is_published', true)->get()->keyBy('id');
-    return view('app', compact('lessons'));
+    $levels = \App\Models\MateriLevel::where('is_active', true)
+        ->withCount(['lessons' => function($q) {
+            $q->where('is_published', true);
+        }])
+        ->orderBy('order', 'asc')
+        ->get();
+    $lessons = \App\Models\MateriLesson::where('is_published', true)->with('level')->get()->keyBy('id');
+    return view('app', compact('lessons', 'levels'));
 })->name('home');
 
 Route::get('/index.html', function () {

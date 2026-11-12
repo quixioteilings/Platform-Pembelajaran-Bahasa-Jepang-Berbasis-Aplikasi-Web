@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css?v=20261112_unified_headers" />
-  <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
+  <link rel="stylesheet" href="css/materi.css?v=20261112_level_tabs_v1" />
   <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_polished_v1" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_level_tabs_v1" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     html, body {
@@ -849,11 +849,19 @@
         </div>
 
         <div class="materi-page-container">
+          <!-- Filter Tingkatan Level (JLPT / Kurikulum SMK: N5, N4, N3, dll.) -->
+          <div class="char-filter-section materi-level-filter-section">
+            <div class="char-filter-label">Pilih Tingkatan Level:</div>
+            <div class="char-filter-bar category-filter-bar" id="materi-level-pills-bar">
+              <!-- Rendered dynamically by js/materi.js -->
+            </div>
+          </div>
+
           <!-- Section Title Identik dengan Hiragana (Gaya Gambar 2) -->
-          <div class="char-group-title" style="margin-top: 8px; margin-bottom: 18px;">
-            <span class="group-dot" style="background:#B55242;"></span>
-            <span class="group-name">Modul Pembelajaran</span>
-            <span class="group-category-badge cat-tag-dasar" style="background:#FEE2E2; color:#B55242; border-color:#FECACA;">Dasar</span>
+          <div class="char-group-title" style="margin-top: 14px; margin-bottom: 18px;">
+            <span class="group-dot" id="materi-group-dot" style="background:#B55242;"></span>
+            <span class="group-name" id="materi-group-name">Modul Pembelajaran N5</span>
+            <span class="group-category-badge cat-tag-dasar" id="materi-group-badge" style="background:#FEE2E2; color:#B55242; border-color:#FECACA;">N5 DASAR</span>
             <span class="group-count" id="materi-section-count">(16 Pelajaran)</span>
           </div>
 
@@ -2673,11 +2681,17 @@
     @else
       window.LARAVEL_LESSONS = null;
     @endif
+
+    @if(isset($levels))
+      window.LARAVEL_LEVELS = {!! json_encode($levels) !!};
+    @else
+      window.LARAVEL_LEVELS = null;
+    @endif
   </script>
 
   <script src="js/data.js"></script>
   <script src="js/app.js?v=20261112_polished_v1"></script>
-  <script src="js/materi.js?v=20261112_polished_v1"></script>
+  <script src="js/materi.js?v=20261112_level_tabs_v1"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>

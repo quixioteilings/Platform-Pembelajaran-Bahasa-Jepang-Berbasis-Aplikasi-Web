@@ -955,10 +955,41 @@ body {
     font-size: 0.75rem !important;
   }
 
-  /* DAFTAR MODUL MATERI */
+  /* DAFTAR MODUL MATERI RESPONGIF DI MOBILE */
+  .materi-level-filter-section {
+    margin-bottom: 12px !important;
+  }
   .materi-lesson-list {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .materi-nihongo-catalog-row {
+    padding: 12px 14px !important;
     gap: 12px !important;
+    border-radius: 14px !important;
+  }
+  .nihongo-row-num {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 0.95rem !important;
+    border-radius: 10px !important;
+  }
+  .nihongo-row-title {
+    font-size: 0.96rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 3px !important;
+  }
+  .nihongo-row-subtitle {
+    font-size: 0.8rem !important;
+    line-height: 1.35 !important;
+  }
+  .nihongo-row-time {
+    font-size: 0.72rem !important;
+    padding: 2px 7px !important;
+  }
+  .nihongo-row-arrow {
+    font-size: 1.25rem !important;
   }
 
   .materi-lesson-card {
