@@ -849,60 +849,15 @@
         </div>
 
         <div class="materi-page-container">
-          <!-- Filter Kategori & Tokoh (Gaya Gambar 2) -->
-          <div class="char-filter-wrapper">
-            <div class="char-filter-section">
-              <div class="char-filter-label">Pilih Kategori Modul:</div>
-              <div class="char-filter-bar" id="materi-category-filter">
-                <button type="button" class="filter-pill active" data-cat="all" onclick="filterMateriCatalog('all', this)">
-                  <span>Semua Modul</span>
-                  <span class="pill-count">16</span>
-                </button>
-                <button type="button" class="filter-pill" data-cat="n5" onclick="filterMateriCatalog('n5', this)">
-                  <span>Kurikulum N5 Dasar</span>
-                  <span class="pill-count">16</span>
-                </button>
-                <button type="button" class="filter-pill" data-cat="aksara" onclick="filterMateriCatalog('aksara', this)">
-                  <span>Mengenal Aksara</span>
-                  <span class="pill-count">4</span>
-                </button>
-                <button type="button" class="filter-pill" data-cat="percakapan" onclick="filterMateriCatalog('percakapan', this)">
-                  <span>Tata Bahasa &amp; Percakapan</span>
-                  <span class="pill-count">12</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="char-filter-section sub-filter-section">
-              <div class="char-filter-label">Tokoh Cerita Pembelajaran:</div>
-              <div class="char-filter-bar">
-                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
-                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#3B82F6;"></span>
-                  <span>Kenji (Siswa)</span>
-                </span>
-                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
-                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981;"></span>
-                  <span>Kiko (Pemandu)</span>
-                </span>
-                <span class="filter-pill" style="cursor:default; background:var(--card-inner);">
-                  <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#F43F5E;"></span>
-                  <span>Sensei Tanaka</span>
-                </span>
-              </div>
-            </div>
+          <!-- Section Title Identik dengan Hiragana (Gaya Gambar 2) -->
+          <div class="char-group-title" style="margin-top: 8px; margin-bottom: 18px;">
+            <span class="group-dot" style="background:#B55242;"></span>
+            <span class="group-name">Kurikulum Modul N5</span>
+            <span class="group-category-badge cat-tag-dasar" style="background:#FEE2E2; color:#B55242; border-color:#FECACA;">Wajib Dasar</span>
+            <span class="group-count" id="materi-section-count">(16 Pelajaran)</span>
           </div>
 
-          <!-- Section Header (Gaya Gambar 2) -->
-          <div class="char-section-header" style="margin-bottom: 14px;">
-            <div class="section-title-wrap">
-              <span class="section-dot" style="background:#B55242;"></span>
-              <h2 style="font-size:1.15rem; font-weight:800; color:var(--text); margin:0;" id="materi-section-heading">Kurikulum Modul N5</h2>
-              <span class="section-badge" style="background:#FEE2E2; color:#B55242; border:1px solid #FECACA; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:700;">Wajib Dasar</span>
-            </div>
-            <span class="section-count" id="materi-section-count" style="font-size:0.82rem; color:var(--text-soft); font-weight:600;">(16 Pelajaran)</span>
-          </div>
-
-          <!-- Lessons List -->
+          <!-- Lessons List Berurutan (1..16) -->
           <div class="materi-lesson-list" id="materi-lesson-items">
             <!-- Populated dynamically by js/materi.js -->
           </div>
