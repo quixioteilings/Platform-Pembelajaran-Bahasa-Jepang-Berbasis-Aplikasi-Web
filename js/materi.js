@@ -1781,10 +1781,7 @@ let currentLessonQuizScore = 0;
 
 let activeMateriLevel = 'n5';
 let materiLevelsData = [
-  { code: 'n5', name: 'Pengetahuan Umum Jepang', sub: 'Fondasi, Aksara & Budaya', accent_color: '#BA5444' },
-  { code: 'n4', name: 'N4 Menengah', sub: 'Situasi Praktis Traveling', accent_color: '#3E6B89' },
-  { code: 'n3', name: 'N3 Lanjutan', sub: 'Tata Bahasa & Dialog Kompleks', accent_color: '#059669' },
-  { code: 'all', name: 'Semua Level', sub: 'Seluruh Kurikulum', accent_color: '#2D2520' }
+  { code: 'n5', name: 'Pengetahuan Umum Jepang', sub: 'Fondasi, Aksara & Budaya', accent_color: '#BA5444' }
 ];
 
 // Daftar Modul Katalog Utama (Sesuai Kurikulum Resmi Nihongo to Japan N5)
@@ -1837,13 +1834,20 @@ function syncLevelsFromDatabase() {
 function applyDbLevels(dbLevels) {
   const list = Array.isArray(dbLevels) ? dbLevels : Object.values(dbLevels);
   if (!list || list.length === 0) return;
-  const mapped = list.map(l => ({
+  const activeLevels = list.filter(l => l.is_active === true || l.is_active === 1 || l.is_active === '1');
+  if (activeLevels.length === 0) {
+    materiLevelsData = [
+      { code: 'n5', name: 'Pengetahuan Umum Jepang', sub: 'Fondasi, Aksara & Budaya', accent_color: '#BA5444' }
+    ];
+    return;
+  }
+  const mapped = activeLevels.map(l => ({
     code: (l.code || '').toLowerCase(),
-    name: l.name || (l.code || '').toUpperCase(),
+    name: l.name || (l.code === 'n5' ? 'Pengetahuan Umum Jepang' : (l.code || '').toUpperCase()),
     sub: l.sub || '',
     accent_color: l.accent_color || '#BA5444'
   }));
-  if (!mapped.some(l => l.code === 'all')) {
+  if (mapped.length > 1 && !mapped.some(l => l.code === 'all')) {
     mapped.push({ code: 'all', name: 'Semua Level', sub: 'Seluruh Kurikulum', accent_color: '#2D2520' });
   }
   materiLevelsData = mapped;
@@ -1902,7 +1906,7 @@ function applyDbLessons(dbLessons) {
   list.forEach(dbLes => {
     if (!dbLes || !dbLes.id) return;
     const lesId = Number(dbLes.id);
-    const lvlCode = dbLes.level ? (dbLes.level.code || 'n5') : (dbLes.level_id === 2 ? 'n4' : 'n5');
+    const lvlCode = dbLes.level ? (dbLes.level.code || 'n5') : 'n5';
     if (LESSON_DETAIL_DATA[lesId]) {
       LESSON_DETAIL_DATA[lesId].comic_image = dbLes.comic_image;
       LESSON_DETAIL_DATA[lesId].audio_text = dbLes.audio_text;

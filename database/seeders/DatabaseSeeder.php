@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 'sub' => 'Situasi Praktis Traveling Sehari-hari',
                 'accent_color' => '#2563EB',
                 'order' => 2,
-                'is_active' => true,
+                'is_active' => false,
             ]
         );
 
@@ -753,8 +753,8 @@ class DatabaseSeeder extends Seeder
         },
         {
                 "id": 5,
-                "level_id": 2,
-                "lesson_number": 1,
+                "level_id": 1,
+                "lesson_number": 5,
                 "title": "Navigasi Stasiun Kereta & Bertanya Arah Wisata",
                 "subtitle": "Membaca jalur Yamanote Line, nomor peron, dan bertanya jalan",
                 "badge": "Transportasi",
@@ -859,8 +859,8 @@ class DatabaseSeeder extends Seeder
         },
         {
                 "id": 6,
-                "level_id": 2,
-                "lesson_number": 2,
+                "level_id": 1,
+                "lesson_number": 6,
                 "title": "Belanja Suvenir (Omiyage) & Toko Bebas Pajak",
                 "subtitle": "Trik berbelanja oleh-oleh di Asakusa, meminta bungkus kado, & tax-free",
                 "badge": "Belanja",
@@ -965,8 +965,8 @@ class DatabaseSeeder extends Seeder
         },
         {
                 "id": 7,
-                "level_id": 2,
-                "lesson_number": 3,
+                "level_id": 1,
+                "lesson_number": 7,
                 "title": "Check-in Hotel / Ryokan & Bertanya Fasilitas",
                 "subtitle": "Prosedur resepsionis, menitipkan koper bagasi, dan sandi Wi-Fi",
                 "badge": "Penginapan",
@@ -1071,8 +1071,8 @@ class DatabaseSeeder extends Seeder
         },
         {
                 "id": 8,
-                "level_id": 2,
-                "lesson_number": 4,
+                "level_id": 1,
+                "lesson_number": 8,
                 "title": "Situasi Darurat & Ungkapan Penyelamat Traveling",
                 "subtitle": "Mencari toilet darurat, klinik dokter, apotek, dan pos polisi Koban",
                 "badge": "Penting",
