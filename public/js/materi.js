@@ -3885,6 +3885,7 @@ function handleLessonQuizAnswer(qIdx, selectedOptIdx) {
   });
 
   if (isCorrect) {
+    if (typeof playPositiveChime === 'function') playPositiveChime();
     if (card) card.classList.add('answered-correct');
     if (clickedBtn) clickedBtn.classList.add('correct');
     if (feedbackEl) {
@@ -3892,6 +3893,7 @@ function handleLessonQuizAnswer(qIdx, selectedOptIdx) {
       feedbackEl.innerHTML = `<strong>Jawaban Benar (+25 Poin).</strong> ${escapeHtml(qItem.explanation)}`;
     }
   } else {
+    if (typeof playNegativeTone === 'function') playNegativeTone();
     if (card) card.classList.add('answered-wrong');
     if (clickedBtn) clickedBtn.classList.add('wrong');
     if (correctBtn) correctBtn.classList.add('correct');
@@ -3920,6 +3922,10 @@ function handleLessonQuizAnswer(qIdx, selectedOptIdx) {
 function finishLessonQuiz(lesson, correctCount, totalQuestions, score) {
   const wrongCount = Math.max(0, totalQuestions - correctCount);
   const pointsEarned = correctCount * 25;
+
+  if (score >= 60 && typeof playPositiveChime === 'function') {
+    playPositiveChime();
+  }
 
   // Catat lesson selesai di localStorage
   try {

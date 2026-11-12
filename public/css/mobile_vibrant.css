@@ -145,6 +145,12 @@ body {
     user-select: none !important;
   }
 
+  /* Toast Notification melayang nyaman di atas mobile bottom dock navigation */
+  .toast {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 2200 !important;
+  }
+
   /* ===== FOOTER ON MOBILE (SEAMLESS & DOWN AT BOTTOM) ===== */
   .site-footer {
     background: transparent !important;
@@ -356,7 +362,7 @@ body {
     }
   }
 
-  /* Tab-specific vibrant colors */
+  /* Tab-specific vibrant colors diselaraskan dengan header halaman */
   .mob-nav-btn[data-page="home"].active {
     color: var(--pop-pink) !important;
   }
@@ -365,10 +371,10 @@ body {
   }
 
   .mob-nav-btn[data-page="materi"].active {
-    color: var(--pop-cyan) !important;
+    color: var(--pop-pink) !important;
   }
   .mob-nav-btn[data-page="materi"].active .svg-icon {
-    stroke: var(--pop-cyan) !important;
+    stroke: var(--pop-pink) !important;
   }
 
   .mob-nav-btn[data-page="hiragana"].active {
@@ -388,17 +394,17 @@ body {
   }
 
   .mob-nav-btn[data-page="vocabulary"].active {
-    color: var(--pop-green) !important;
+    color: var(--pop-cyan) !important;
   }
   .mob-nav-btn[data-page="vocabulary"].active .svg-icon {
-    stroke: var(--pop-green) !important;
+    stroke: var(--pop-cyan) !important;
   }
 
   .mob-nav-btn[data-page="games"].active {
-    color: var(--pop-orange) !important;
+    color: var(--pop-pink) !important;
   }
   .mob-nav-btn[data-page="games"].active .svg-icon {
-    stroke: var(--pop-orange) !important;
+    stroke: var(--pop-pink) !important;
   }
 
   /* ===== HERO & BERANDA ON MOBILE ===== */

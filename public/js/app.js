@@ -435,6 +435,61 @@ function playChimeTone(freq = 440) {
   } catch (e) {}
 }
 
+// Chime positif untuk jawaban kuis benar (E5 -> G5)
+function playPositiveChime() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(659.25, now);
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(783.99, now + 0.08);
+
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc1.start(now);
+    osc1.stop(now + 0.2);
+    osc2.start(now + 0.08);
+    osc2.stop(now + 0.35);
+  } catch (e) {}
+}
+window.playPositiveChime = playPositiveChime;
+
+// Nada lembut untuk jawaban kuis yang salah
+function playNegativeTone() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(175, now + 0.25);
+
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.25);
+  } catch (e) {}
+}
+window.playNegativeTone = playNegativeTone;
+
 window.speakJapanese = speakJapanese;
 window.unlockAudioEngine = unlockAudioEngine;
 
@@ -925,6 +980,40 @@ function handleKanaBack(type) {
 }
 window.handleKanaBack = handleKanaBack;
 
+// Tombol kembali di header kosakata: jika di mode flashcard/kuis, kembali ke kamus; jika di kamus, kembali ke beranda
+function handleVocabBack() {
+  if (typeof activeVocabMode !== 'undefined' && activeVocabMode !== 'explore') {
+    switchVocabMode('explore');
+    return;
+  }
+  showPage('home');
+}
+window.handleVocabBack = handleVocabBack;
+
+// Tombol kembali di header materi: jika sedang membaca modul pelajaran, tutup dan kembali ke katalog; jika di katalog, kembali ke beranda
+function handleMateriBack() {
+  const lessonView = document.getElementById('materi-lesson-view');
+  if (lessonView && (lessonView.classList.contains('active') || lessonView.style.display === 'block')) {
+    if (typeof closeLessonToCatalog === 'function') {
+      closeLessonToCatalog();
+      return;
+    }
+  }
+  showPage('home');
+}
+window.handleMateriBack = handleMateriBack;
+
+// Tombol kembali di header mini games: jika sedang bermain game, kembali ke menu game; jika di menu game, kembali ke beranda
+function handleGamesBack() {
+  const screen = document.getElementById('game-screen');
+  if (screen && !screen.classList.contains('hidden') && screen.style.display !== 'none') {
+    showGameMenu();
+    return;
+  }
+  showPage('home');
+}
+window.handleGamesBack = handleGamesBack;
+
 function setMode(type, mode) {
   const learnBtn = document.getElementById(type + '-mode-learn');
   const quizBtn = document.getElementById(type + '-mode-quiz');
@@ -1000,8 +1089,10 @@ function answerQuiz(type, chosen, correct, btnId) {
   if (isCorrect) {
     qs.correct++;
     addScore(3);
+    playPositiveChime();
     showToast('Tepat sekali! +3 Poin (' + correct + ')', 'success');
   } else {
+    playNegativeTone();
     showToast('Kurang tepat. Jawaban yang benar: ' + correct, 'error');
   }
 
@@ -2139,6 +2230,7 @@ function handleVocabQuizAnswer(btn) {
     btn.classList.add('correct');
     vocabQuizCorrectCount++;
     vocabQuizLiveScore += 10;
+    playPositiveChime();
     if (liveScoreEl) liveScoreEl.textContent = vocabQuizLiveScore;
     if (feedbackBox) {
       feedbackBox.className = 'vocab-quiz-feedback-box correct';
@@ -2147,6 +2239,7 @@ function handleVocabQuizAnswer(btn) {
   } else {
     btn.classList.add('wrong');
     vocabQuizWrongCount++;
+    playNegativeTone();
     if (q && q.target && !vocabQuizMissedQuestions.some(m => m.jp === q.target.jp)) {
       vocabQuizMissedQuestions.push(q.target);
     }
@@ -3118,7 +3211,7 @@ function showGameMenu() {
   if (sub) sub.textContent = 'Uji pemahaman dan kecepatan refleks membaca aksara Jepang';
 
   const backBtn = document.getElementById('games-back-btn');
-  if (backBtn) backBtn.onclick = () => showPage('home');
+  if (backBtn) backBtn.onclick = () => handleGamesBack();
 
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   document.documentElement.scrollTop = 0;
@@ -3165,7 +3258,7 @@ function startGame(type) {
   }
 
   const backBtn = document.getElementById('games-back-btn');
-  if (backBtn) backBtn.onclick = showGameMenu;
+  if (backBtn) backBtn.onclick = () => handleGamesBack();
 
   currentGame = type;
 

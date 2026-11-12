@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css?v=20261112_unified_headers" />
   <link rel="stylesheet" href="css/materi.css?v=20261030_v3" />
   <link rel="stylesheet" href="css/auth.css" />
-  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_unified_headers" />
+  <link rel="stylesheet" href="css/mobile_vibrant.css?v=20261112_polished_v1" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <style>
     html, body {
@@ -412,7 +412,7 @@
     <div id="page-vocabulary" class="page">
       <div class="page-header blue-header">
         <div class="page-header-content">
-          <button class="back-btn" onclick="showPage('home')">
+          <button class="back-btn" onclick="handleVocabBack()">
             <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             <span>Kembali</span>
           </button>
@@ -825,7 +825,7 @@
         <!-- HEADER IDENTIK DENGAN HIRAGANA / KATAKANA / KOSAKATA (GAMBAR 2) -->
         <div class="page-header red-header">
           <div class="page-header-content">
-            <button class="back-btn" onclick="showPage('home')">
+            <button class="back-btn" onclick="handleMateriBack()">
               <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
               <span>Kembali</span>
             </button>
@@ -2055,7 +2055,7 @@
     <div id="page-games" class="page">
       <div class="page-header red-header">
         <div class="page-header-content">
-          <button class="back-btn" id="games-back-btn" onclick="showPage('home')">
+          <button class="back-btn" id="games-back-btn" onclick="handleGamesBack()">
             <svg viewBox="0 0 24 24" class="svg-icon-mini"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             <span>Kembali</span>
           </button>
@@ -2676,8 +2676,8 @@
   </script>
 
   <script src="js/data.js"></script>
-  <script src="js/app.js?v=20261112_unified_headers"></script>
-  <script src="js/materi.js?v=20261030_v3"></script>
+  <script src="js/app.js?v=20261112_polished_v1"></script>
+  <script src="js/materi.js?v=20261112_polished_v1"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>
