@@ -404,8 +404,8 @@ body {
   /* ===== HERO & BERANDA ON MOBILE ===== */
   .hero {
     min-height: auto !important;
-    padding: 20px 16px 14px !important;
-    gap: 12px !important;
+    padding: 28px 20px 24px !important;
+    gap: 18px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -422,8 +422,8 @@ body {
   }
 
   .hero-badge {
-    margin-bottom: 10px !important;
-    padding: 5px 14px !important;
+    margin-bottom: 14px !important;
+    padding: 6px 16px !important;
     font-size: 0.82rem !important;
     font-weight: 700 !important;
   }
@@ -431,7 +431,7 @@ body {
   .hero-title {
     font-size: 1.68rem !important;
     line-height: 1.28 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 12px !important;
     letter-spacing: -0.01em !important;
     font-weight: 800 !important;
   }
@@ -439,8 +439,8 @@ body {
   .hero-subtitle {
     font-size: 0.92rem !important;
     line-height: 1.5 !important;
-    margin-bottom: 16px !important;
-    max-width: 420px !important;
+    margin-bottom: 22px !important;
+    max-width: 440px !important;
     color: #5A4D44 !important;
   }
 
@@ -449,8 +449,8 @@ body {
     flex-direction: row !important;
     width: 100% !important;
     max-width: 380px !important;
-    gap: 10px !important;
-    margin: 0 auto !important;
+    gap: 12px !important;
+    margin: 0 auto 10px !important;
   }
 
   .hero-cta button,
@@ -493,8 +493,8 @@ body {
     justify-content: space-around !important;
     width: 100% !important;
     max-width: 380px !important;
-    margin: 14px auto 0 !important;
-    padding: 10px 12px !important;
+    margin: 22px auto 0 !important;
+    padding: 12px 16px !important;
     background: rgba(255, 255, 255, 0.92) !important;
     border: 1.5px solid var(--border-light, #EBE4D8) !important;
     border-radius: 16px !important;
@@ -532,7 +532,7 @@ body {
 
   /* HERO VISUAL & FLOATING CARDS (UKURAN BESAR, PROPORSIONAL, TIDAK OVERLAP) */
   .hero-visual {
-    margin: 20px auto 14px !important;
+    margin: 36px auto 32px !important;
     width: 100% !important;
     max-width: 330px !important;
     height: 300px !important;
@@ -571,9 +571,9 @@ body {
 
   /* ===== MISI BELAJAR CARD (100% MOBILE THUMB-FRIENDLY) ===== */
   .misi-belajar-card {
-    padding: 16px 14px !important;
+    padding: 18px 16px !important;
     border-radius: 18px !important;
-    margin: 1rem 0 !important;
+    margin: 1.25rem 0 !important;
   }
 
   .mission-header-row {
@@ -595,101 +595,101 @@ body {
   .mission-actions-row {
     flex-direction: column !important;
     width: 100% !important;
-    gap: 8px !important;
-    margin-top: 0.75rem !important;
+    gap: 10px !important;
+    margin-top: 1rem !important;
   }
 
   .btn-mission-shortcut {
     width: 100% !important;
-    min-height: 44px !important;
+    min-height: 46px !important;
     justify-content: flex-start !important;
-    padding: 0.6rem 0.9rem !important;
-    font-size: 0.86rem !important;
-    border-radius: 12px !important;
+    padding: 0.7rem 1rem !important;
+    font-size: 0.88rem !important;
+    border-radius: 14px !important;
   }
 
   /* ===== PROGRESS CARDS (BERANDA) ===== */
   .progress-section {
-    padding: 14px 12px 30px !important;
+    padding: 32px 18px 56px !important;
   }
 
   .progress-section .section-header {
-    margin-bottom: 12px !important;
+    margin-bottom: 22px !important;
     text-align: center !important;
   }
 
   .progress-section .section-header .section-tag {
-    font-size: 0.68rem !important;
-    margin-bottom: 3px !important;
-    padding: 2px 8px !important;
+    font-size: 0.72rem !important;
+    margin-bottom: 6px !important;
+    padding: 4px 12px !important;
   }
 
   .progress-section .section-header h2 {
-    font-size: 1.25rem !important;
+    font-size: 1.35rem !important;
     line-height: 1.25 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 6px !important;
   }
 
   .progress-section .section-header p {
-    font-size: 0.78rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
     margin-bottom: 0 !important;
   }
 
   .progress-cards {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 12px !important;
   }
 
   .progress-card {
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
-    box-shadow: 0 2px 6px rgba(60, 45, 30, 0.04) !important;
+    padding: 14px 16px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 8px rgba(60, 45, 30, 0.05) !important;
   }
 
   .progress-name {
-    font-size: 0.8rem !important;
+    font-size: 0.86rem !important;
     font-weight: 700 !important;
   }
 
   .progress-count {
-    font-size: 0.8rem !important;
+    font-size: 0.86rem !important;
     font-weight: 800 !important;
   }
 
   .progress-bar-wrap {
-    height: 6px !important;
-    margin-top: 6px !important;
-    border-radius: 999px !important;
+    height: 8px !important;
+    margin-top: 10px !important;
+    border-radius: 9999px !important;
   }
 
-  /* ===== MODUL & MATERI PEMBELAJARAN (KOMPAK & ERGONOMIS DI MOBILE) ===== */
+  /* ===== MODUL & MATERI PEMBELAJARAN (LEGA & ERGONOMIS DI MOBILE) ===== */
   .features-section {
-    padding: 16px 12px 24px !important;
+    padding: 36px 18px 48px !important;
   }
 
   .features-section .section-header {
-    margin-bottom: 12px !important;
+    margin-bottom: 24px !important;
     text-align: center !important;
   }
 
   .features-section .section-header .section-tag {
-    font-size: 0.68rem !important;
-    margin-bottom: 3px !important;
-    padding: 2px 8px !important;
+    font-size: 0.72rem !important;
+    margin-bottom: 8px !important;
+    padding: 4px 12px !important;
     letter-spacing: 0.05em !important;
   }
 
   .features-section .section-header h2 {
-    font-size: 1.25rem !important;
+    font-size: 1.35rem !important;
     line-height: 1.25 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 6px !important;
   }
 
   .features-section .section-header p {
-    font-size: 0.78rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.82rem !important;
+    line-height: 1.42 !important;
     margin-bottom: 0 !important;
     color: var(--text-soft, #786C62) !important;
   }
@@ -697,7 +697,7 @@ body {
   .feature-cards {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 9px !important;
+    gap: 14px !important;
     width: 100% !important;
   }
 
@@ -713,12 +713,12 @@ body {
   .feature-card:first-child,
   .feature-card.card-orange {
     grid-column: 1 / -1 !important;
-    padding: 12px 14px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 2px 10px rgba(60, 45, 30, 0.06) !important;
+    padding: 16px 18px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 3px 12px rgba(60, 45, 30, 0.06) !important;
     background: #FFFFFF !important;
     border-top: none !important;
-    border-left: 4.5px solid var(--red, #BA3D27) !important;
+    border-left: 5px solid var(--red, #BA3D27) !important;
     display: flex !important;
     flex-direction: column !important;
   }
@@ -728,43 +728,43 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 10px !important;
   }
 
   .feature-card:first-child .feature-icon-wrap,
   .feature-card.card-orange .feature-icon-wrap {
-    width: 36px !important;
-    height: 36px !important;
+    width: 38px !important;
+    height: 38px !important;
     border-radius: 10px !important;
   }
 
   .feature-card:first-child .feature-icon-wrap .svg-icon-large,
   .feature-card.card-orange .feature-icon-wrap .svg-icon-large {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   .feature-card:first-child .feature-badge,
   .feature-card.card-orange .feature-badge {
-    font-size: 0.7rem !important;
-    padding: 3px 9px !important;
+    font-size: 0.72rem !important;
+    padding: 4px 10px !important;
     border-radius: 9999px !important;
     font-weight: 700 !important;
   }
 
   .feature-card:first-child h3,
   .feature-card.card-orange h3 {
-    font-size: 1rem !important;
+    font-size: 1.05rem !important;
     line-height: 1.25 !important;
-    margin-bottom: 3px !important;
+    margin-bottom: 5px !important;
     font-weight: 800 !important;
   }
 
   .feature-card:first-child p,
   .feature-card.card-orange p {
-    font-size: 0.75rem !important;
-    line-height: 1.38 !important;
-    margin-bottom: 8px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.42 !important;
+    margin-bottom: 12px !important;
     color: #64554B !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
@@ -778,17 +778,17 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding-top: 6px !important;
+    padding-top: 8px !important;
     border-top: 1px dashed var(--border-light, #EBE4D8) !important;
-    font-size: 0.76rem !important;
+    font-size: 0.78rem !important;
     font-weight: 700 !important;
     color: var(--red, #BA3D27) !important;
   }
 
   /* Cards 2-5: 2-column grid items (Hiragana, Katakana, Kosakata, Mini Games) */
   .feature-card:not(:first-child) {
-    padding: 10px 10px !important;
-    border-radius: 14px !important;
+    padding: 14px 14px !important;
+    border-radius: 16px !important;
     box-shadow: 0 2px 8px rgba(60, 45, 30, 0.05) !important;
     background: #FFFFFF !important;
     border-top: 3.5px solid var(--border-light, #EBE4D8) !important;
@@ -814,37 +814,37 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 8px !important;
   }
 
   .feature-card:not(:first-child) .feature-icon-wrap {
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 8px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 9px !important;
   }
 
   .feature-card:not(:first-child) .feature-kana {
-    font-size: 0.95rem !important;
+    font-size: 1rem !important;
     font-weight: 900 !important;
   }
 
   .feature-card:not(:first-child) .feature-icon-wrap .svg-icon-large {
-    width: 17px !important;
-    height: 17px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .feature-card:not(:first-child) .feature-badge {
-    font-size: 0.64rem !important;
-    padding: 2px 6px !important;
+    font-size: 0.66rem !important;
+    padding: 3px 7px !important;
     border-radius: 9999px !important;
     font-weight: 700 !important;
     white-space: nowrap !important;
   }
 
   .feature-card:not(:first-child) h3 {
-    font-size: 0.88rem !important;
+    font-size: 0.92rem !important;
     line-height: 1.22 !important;
-    margin-bottom: 3px !important;
+    margin-bottom: 4px !important;
     font-weight: 800 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -852,9 +852,9 @@ body {
   }
 
   .feature-card:not(:first-child) p {
-    font-size: 0.7rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 6px !important;
+    font-size: 0.72rem !important;
+    line-height: 1.34 !important;
+    margin-bottom: 8px !important;
     color: #64554B !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
@@ -868,9 +868,9 @@ body {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding-top: 5px !important;
+    padding-top: 6px !important;
     border-top: 1px dashed var(--border-light, #EBE4D8) !important;
-    font-size: 0.72rem !important;
+    font-size: 0.74rem !important;
     font-weight: 700 !important;
   }
 
