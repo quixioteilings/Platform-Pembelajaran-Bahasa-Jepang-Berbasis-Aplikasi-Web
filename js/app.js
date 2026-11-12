@@ -501,6 +501,7 @@ function showPage(page) {
     updateProgressBars();
     const sc = document.getElementById('sakura-container');
     if (sc && sc.children.length === 0) createSakura();
+    if (typeof initDailyWordCard === 'function') initDailyWordCard();
   }
   if (page === 'games') showGameMenu();
   if (page === 'monster') initMonsterLobby();
@@ -6818,6 +6819,328 @@ function initFloatingCards() {
   });
 }
 
+// ===== 3D FLIP DAILY WORD ENGINE (KATA & HURUF HARI INI) =====
+const DAILY_WORDS_DATA = [
+  {
+    kanji: '乾杯',
+    kana: 'かんぱい',
+    romaji: 'kanpai',
+    speech: 'かんぱい',
+    category: 'Percakapan Sehari-hari',
+    meaning: 'Bersulang! (Cheers!)',
+    exampleJp: 'みんなで 乾杯しましょう！',
+    exampleRomaji: 'Minna de kanpai shimashou!',
+    exampleId: '"Mari kita bersulang bersama-sama!"'
+  },
+  {
+    kanji: '桜',
+    kana: 'さくら',
+    romaji: 'sakura',
+    speech: 'さくら',
+    category: 'Alam & Budaya Jepang',
+    meaning: 'Bunga Sakura (Cherry Blossom)',
+    exampleJp: '春に 桜が 綺麗に 咲きます。',
+    exampleRomaji: 'Haru ni sakura ga kirei ni sakimasu.',
+    exampleId: '"Di musim semi, bunga sakura mekar dengan indah."'
+  },
+  {
+    kanji: '猫',
+    kana: 'ねこ',
+    romaji: 'neko',
+    speech: 'ねこ',
+    category: 'Hewan & Peliharaan',
+    meaning: 'Kucing',
+    exampleJp: 'この猫は とても かわいいですね。',
+    exampleRomaji: 'Kono neko wa totemo kawaii desu ne.',
+    exampleId: '"Kucing ini sangat lucu dan menggemaskan ya."'
+  },
+  {
+    kanji: 'ありがとう',
+    kana: 'ありがとう',
+    romaji: 'arigatou',
+    speech: 'ありがとう',
+    category: 'Ungkapan Penting',
+    meaning: 'Terima kasih',
+    exampleJp: 'いつも 手伝ってくれて ありがとう！',
+    exampleRomaji: 'Itsumo tetsudatte kurete arigatou!',
+    exampleId: '"Terima kasih sudah selalu membantuku!"'
+  },
+  {
+    kanji: '富士山',
+    kana: 'ふじさん',
+    romaji: 'fujisan',
+    speech: 'ふじさん',
+    category: 'Landmark Jepang',
+    meaning: 'Gunung Fuji',
+    exampleJp: '富士山は 日本で 一番 高い山です。',
+    exampleRomaji: 'Fujisan wa Nihon de ichiban takai yama desu.',
+    exampleId: '"Gunung Fuji adalah gunung tertinggi di Jepang."'
+  },
+  {
+    kanji: '美味しい',
+    kana: 'おいしい',
+    romaji: 'oishii',
+    speech: 'おいしい',
+    category: 'Kuliner & Makanan',
+    meaning: 'Enak / Lezat',
+    exampleJp: 'この ラーメンは 本当に 美味しいです！',
+    exampleRomaji: 'Kono raamen wa hontou ni oishii desu!',
+    exampleId: '"Ramen ini benar-benar sangat lezat!"'
+  },
+  {
+    kanji: '大丈夫',
+    kana: 'だいじょうぶ',
+    romaji: 'daijoubu',
+    speech: 'だいじょうぶ',
+    category: 'Percakapan Penting',
+    meaning: 'Tidak apa-apa / Baik-baik saja',
+    exampleJp: '心配しないで、大丈夫ですよ。',
+    exampleRomaji: 'Shinpai shinaide, daijoubu desu yo.',
+    exampleId: '"Jangan khawatir, semuanya baik-baik saja."'
+  },
+  {
+    kanji: '頑張って',
+    kana: 'がんばって',
+    romaji: 'ganbatte',
+    speech: 'がんばって',
+    category: 'Dukungan & Semangat',
+    meaning: 'Semangat! / Lakukan yang terbaik!',
+    exampleJp: '明日の 試験、頑張ってください！',
+    exampleRomaji: 'Ashita no shiken, ganbatte kudasai!',
+    exampleId: '"Untuk ujian besok, semangat dan berjuanglah!"'
+  },
+  {
+    kanji: '友達',
+    kana: 'ともだち',
+    romaji: 'tomodachi',
+    speech: 'ともだち',
+    category: 'Sosial & Hubungan',
+    meaning: 'Teman / Sahabat',
+    exampleJp: '週末に 友達と 映画を 見に行きます。',
+    exampleRomaji: 'Shuumatsu ni tomodachi to eiga o mini ikimasu.',
+    exampleId: '"Akhir pekan saya akan nonton bioskop bersama teman."'
+  },
+  {
+    kanji: '電車',
+    kana: 'でんしゃ',
+    romaji: 'densha',
+    speech: 'でんしゃ',
+    category: 'Transportasi Wisata',
+    meaning: 'Kereta Listrik',
+    exampleJp: '東京で 山手線の 電車に 乗ります。',
+    exampleRomaji: 'Toukyou de Yamanote-sen no densha ni norimasu.',
+    exampleId: '"Di Tokyo saya naik kereta jalur Yamanote Line."'
+  },
+  {
+    kanji: '可愛い',
+    kana: 'かわいい',
+    romaji: 'kawaii',
+    speech: 'かわいい',
+    category: 'Sifat & Karakter',
+    meaning: 'Imut / Lucu (Cute)',
+    exampleJp: 'その 着物、すごく かわいいね！',
+    exampleRomaji: 'Sono kimono, sugoku kawaii ne!',
+    exampleId: '"Baju kimono itu terlihat sangat lucu ya!"'
+  },
+  {
+    kanji: 'お疲れ様',
+    kana: 'おつかれさま',
+    romaji: 'otsukaresama',
+    speech: 'おつかれさま',
+    category: 'Budaya Kerja & Sekolah',
+    meaning: 'Terima kasih atas kerja kerasnya!',
+    exampleJp: '今日も 一日、お疲れ様でした！',
+    exampleRomaji: 'Kyou mo ichinichi, otsukaresama deshita!',
+    exampleId: '"Terima kasih atas kerja keras dan usahanya hari ini!"'
+  },
+  {
+    kanji: '本',
+    kana: 'ほん',
+    romaji: 'hon',
+    speech: 'ほん',
+    category: 'Benda Sehari-hari',
+    meaning: 'Buku',
+    exampleJp: '毎晩、日本語の 本を 読みます。',
+    exampleRomaji: 'Maiban, Nihongo no hon o yomimasu.',
+    exampleId: '"Setiap malam saya membaca buku bahasa Jepang."'
+  },
+  {
+    kanji: '水',
+    kana: 'みず',
+    romaji: 'mizu',
+    speech: 'みず',
+    category: 'Makanan & Minuman',
+    meaning: 'Air Minum',
+    exampleJp: '冷たい お水を 一杯 ください。',
+    exampleRomaji: 'Tsumetai omizu o ippai kudasai.',
+    exampleId: '"Tolong berikan saya segelas air dingin."'
+  },
+  {
+    kanji: '約束',
+    kana: 'やくそく',
+    romaji: 'yakusoku',
+    speech: 'やくそく',
+    category: 'Percakapan Praktis',
+    meaning: 'Janji (Promise / Appointment)',
+    exampleJp: '先生と 会う 約束が あります。',
+    exampleRomaji: 'Sensei to au yakusoku ga arimasu.',
+    exampleId: '"Saya memiliki janji untuk bertemu dengan guru."'
+  },
+  {
+    kanji: '写真',
+    kana: 'しゃしん',
+    romaji: 'しゃしん',
+    speech: 'しゃしん',
+    category: 'Aktivitas Wisata',
+    meaning: 'Foto',
+    exampleJp: 'ここで 写真を 撮っても いいですか？',
+    exampleRomaji: 'Koko de shashin o tottemo ii desu ka?',
+    exampleId: '"Bolehkah saya mengambil foto di tempat ini?"'
+  },
+  {
+    kanji: '時間',
+    kana: 'じかん',
+    romaji: 'jikan',
+    speech: 'じかん',
+    category: 'Waktu & Jadwal',
+    meaning: 'Waktu / Jam',
+    exampleJp: '楽しい 時間は あっという間ですね。',
+    exampleRomaji: 'Tanoshii jikan wa atto iu ma desu ne.',
+    exampleId: '"Waktu yang menyenangkan berlalu begitu cepat ya."'
+  },
+  {
+    kanji: '先生',
+    kana: 'せんせい',
+    romaji: 'sensei',
+    speech: 'せんせい',
+    category: 'Pendidikan & Profesi',
+    meaning: 'Guru / Pengajar',
+    exampleJp: '田中先生は とても 親切な 先生です。',
+    exampleRomaji: 'Tanaka-sensei wa totemo shinsetsu na sensei desu.',
+    exampleId: '"Sensei Tanaka adalah seorang guru yang sangat ramah."'
+  },
+  {
+    kanji: '音楽',
+    kana: 'おんがく',
+    romaji: 'ongaku',
+    speech: 'おんがく',
+    category: 'Hobi & Hiburan',
+    meaning: 'Musik',
+    exampleJp: '日本の 音楽を 聴くのが 好きです。',
+    exampleRomaji: 'Nihon no ongaku o kiku no ga suki desu.',
+    exampleId: '"Saya suka mendengarkan musik Jepang."'
+  },
+  {
+    kanji: '手紙',
+    kana: 'てがみ',
+    romaji: 'tegami',
+    speech: 'てがみ',
+    category: 'Komunikasi',
+    meaning: 'Surat',
+    exampleJp: '日本の 友達へ 手紙を 書きました。',
+    exampleRomaji: 'Nihon no tomodachi e tegami o kakimashita.',
+    exampleId: '"Saya menulis surat untuk teman saya di Jepang."'
+  }
+];
+
+let currentDailyWordIndex = 0;
+
+function initDailyWordCard() {
+  const container = document.getElementById('daily-word-container');
+  if (!container) return;
+
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 0);
+  const diff = now - startOfYear;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+
+  currentDailyWordIndex = Math.abs(dayOfYear) % DAILY_WORDS_DATA.length;
+  renderDailyWordCard();
+}
+window.initDailyWordCard = initDailyWordCard;
+
+function renderDailyWordCard() {
+  const item = DAILY_WORDS_DATA[currentDailyWordIndex] || DAILY_WORDS_DATA[0];
+  
+  const kanjiEl = document.getElementById('daily-word-kanji');
+  const readingEl = document.getElementById('daily-word-reading');
+  const catEl = document.getElementById('daily-word-category');
+  const meaningEl = document.getElementById('daily-word-meaning');
+  const exJpEl = document.getElementById('daily-example-jp');
+  const exRoEl = document.getElementById('daily-example-romaji');
+  const exIdEl = document.getElementById('daily-example-id');
+
+  if (kanjiEl) kanjiEl.textContent = item.kanji;
+  if (readingEl) readingEl.textContent = `${item.kana} • ${item.romaji}`;
+  if (catEl) catEl.textContent = item.category;
+  if (meaningEl) meaningEl.textContent = item.meaning;
+  if (exJpEl) exJpEl.textContent = item.exampleJp;
+  if (exRoEl) exRoEl.textContent = item.exampleRomaji;
+  if (exIdEl) exIdEl.textContent = item.exampleId;
+}
+window.renderDailyWordCard = renderDailyWordCard;
+
+function flipDailyWordCard(event) {
+  if (event) {
+    if (event.target.closest('.btn-daily-action') || event.target.closest('.btn-example-speak') || event.target.closest('.btn-daily-shuffle')) {
+      return;
+    }
+    event.stopPropagation();
+  }
+  const card = document.getElementById('daily-word-card');
+  if (card) {
+    card.classList.toggle('is-flipped');
+  }
+}
+window.flipDailyWordCard = flipDailyWordCard;
+
+function shuffleDailyWord(event) {
+  if (event) event.stopPropagation();
+  const card = document.getElementById('daily-word-card');
+  
+  let nextIdx = Math.floor(Math.random() * DAILY_WORDS_DATA.length);
+  if (nextIdx === currentDailyWordIndex) {
+    nextIdx = (nextIdx + 1) % DAILY_WORDS_DATA.length;
+  }
+  currentDailyWordIndex = nextIdx;
+
+  if (card) {
+    card.classList.remove('is-flipped');
+    card.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      renderDailyWordCard();
+      card.style.transform = '';
+      if (typeof showToast === 'function') {
+        showToast('Kata baru dimuat!', 'info');
+      }
+    }, 200);
+  } else {
+    renderDailyWordCard();
+  }
+}
+window.shuffleDailyWord = shuffleDailyWord;
+
+function speakCurrentDailyWord(event) {
+  if (event) event.stopPropagation();
+  const item = DAILY_WORDS_DATA[currentDailyWordIndex];
+  if (!item) return;
+  if (typeof speakJapanese === 'function') {
+    speakJapanese(item.speech || item.kana || item.kanji);
+  }
+}
+window.speakCurrentDailyWord = speakCurrentDailyWord;
+
+function speakCurrentDailyExample(event) {
+  if (event) event.stopPropagation();
+  const item = DAILY_WORDS_DATA[currentDailyWordIndex];
+  if (!item || !item.exampleJp) return;
+  if (typeof speakJapanese === 'function') {
+    speakJapanese(item.exampleJp);
+  }
+}
+window.speakCurrentDailyExample = speakCurrentDailyExample;
+
 // ===== DOM INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
   try {
@@ -6846,6 +7169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateScoreDisplay();
   createSakura();
   updateProgressBars();
+  initDailyWordCard();
   initFloatingCards();
   renderCharGrid('hiragana', 'Semua');
   renderCharGrid('katakana', 'Semua');

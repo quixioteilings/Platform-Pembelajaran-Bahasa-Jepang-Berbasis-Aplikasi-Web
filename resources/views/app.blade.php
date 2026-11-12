@@ -145,26 +145,85 @@
         </div>
 
         <div class="hero-visual">
-          <div class="floating-cards" id="hero-floating-cards">
-            <div class="float-card card-a" data-kana="あ" style="--delay:0s"><span class="card-jp">あ</span><span class="card-ro">a</span></div>
-            <div class="float-card card-b" data-kana="か" style="--delay:0.5s"><span class="card-jp">か</span><span class="card-ro">ka</span></div>
-            <div class="float-card card-c" data-kana="さ" style="--delay:1s"><span class="card-jp">さ</span><span class="card-ro">sa</span></div>
-            <div class="float-card card-d" data-kana="ア" style="--delay:1.5s"><span class="card-jp">ア</span><span class="card-ro">a</span></div>
-            <div class="float-card card-e" data-kana="な" style="--delay:0.3s"><span class="card-jp">な</span><span class="card-ro">na</span></div>
-          </div>
-          <div class="hero-mascot-art" onclick="speakJapanese('にほんご')" title="SIJapanese - にほんご" style="cursor:pointer">
-            <svg class="mascot-emblem-svg" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="54" fill="#BE5544" opacity="0.95"/>
-              <circle cx="60" cy="60" r="46" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
-              <!-- Torii Gate Silhouette -->
-              <path d="M30 46Q60 41 90 46" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-              <line x1="36" y1="52" x2="84" y2="52" stroke="#FFFFFF" stroke-width="2.5"/>
-              <line x1="42" y1="46" x2="42" y2="86" stroke="#FFFFFF" stroke-width="3.5"/>
-              <line x1="78" y1="46" x2="78" y2="86" stroke="#FFFFFF" stroke-width="3.5"/>
-              <rect x="55" y="47" width="10" height="9" fill="#FFFFFF"/>
-              <!-- Sun / Cloud Accent -->
-              <path d="M26 86h68" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
-            </svg>
+          <div class="daily-word-container" id="daily-word-container">
+            <div class="daily-word-card" id="daily-word-card" onclick="flipDailyWordCard(event)">
+              <!-- MUKA DEPAN (FRONT) -->
+              <div class="daily-word-face face-front">
+                <div class="daily-card-header">
+                  <div class="daily-card-badge">
+                    <span class="daily-badge-dot"></span>
+                    <span class="daily-badge-text">KATA HARI INI</span>
+                  </div>
+                  <div class="daily-card-actions">
+                    <button type="button" class="btn-daily-action" onclick="speakCurrentDailyWord(event)" title="Dengarkan Pelafalan">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                    </button>
+                    <button type="button" class="btn-daily-action" onclick="shuffleDailyWord(event)" title="Acak Kata Lain">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="daily-card-body">
+                  <div class="daily-kanji-wrap">
+                    <span class="daily-kanji" id="daily-word-kanji">乾杯</span>
+                  </div>
+                  <div class="daily-reading-pill" id="daily-word-reading">
+                    かんぱい • kanpai
+                  </div>
+                  <div class="daily-category-tag" id="daily-word-category">
+                    Percakapan Sehari-hari
+                  </div>
+                </div>
+
+                <div class="daily-card-footer">
+                  <div class="daily-flip-hint">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                    <span>Ketuk kartu untuk lihat arti &amp; contoh kalimat</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MUKA BELAKANG (BACK) -->
+              <div class="daily-word-face face-back">
+                <div class="daily-card-header">
+                  <div class="daily-card-badge">
+                    <span class="daily-badge-dot green"></span>
+                    <span class="daily-badge-text">Arti &amp; Contoh Kalimat</span>
+                  </div>
+                  <button type="button" class="btn-daily-action" onclick="flipDailyWordCard(event)" title="Balik ke Depan">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                  </button>
+                </div>
+
+                <div class="daily-back-body">
+                  <div class="daily-meaning-box">
+                    <span class="daily-meaning-label">Arti Bahasa Indonesia</span>
+                    <h3 class="daily-meaning-text" id="daily-word-meaning">Bersulang! (Cheers!)</h3>
+                  </div>
+
+                  <div class="daily-example-box">
+                    <div class="daily-example-header">
+                      <span class="daily-example-label">Contoh Kalimat:</span>
+                      <button type="button" class="btn-example-speak" onclick="speakCurrentDailyExample(event)" title="Dengarkan Kalimat">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        <span>Putar Suara</span>
+                      </button>
+                    </div>
+                    <p class="daily-example-jp" id="daily-example-jp">みんなで 乾杯しましょう！</p>
+                    <p class="daily-example-romaji" id="daily-example-romaji">Minna de kanpai shimashou!</p>
+                    <p class="daily-example-id" id="daily-example-id">"Mari kita bersulang bersama-sama!"</p>
+                  </div>
+                </div>
+
+                <div class="daily-back-actions">
+                  <button type="button" class="btn-daily-shuffle" onclick="shuffleDailyWord(event)">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                    <span>Acak Kata Baru</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

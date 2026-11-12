@@ -6645,3 +6645,295 @@ body {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+/* ==========================================================================
+   3D FLIP DAILY WORD CARD (HERO WIDGET - KATA & HURUF HARI INI)
+   ========================================================================== */
+.daily-word-container {
+  width: 100%;
+  max-width: 360px;
+  perspective: 1200px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.daily-word-card {
+  width: 100%;
+  min-height: 295px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  border-radius: 24px;
+}
+
+.daily-word-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.daily-word-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
+  background: #FFFFFF;
+  border: 2px solid #F1E7DD;
+  box-shadow: 0 12px 32px rgba(60, 45, 30, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.15rem 1.25rem;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.daily-word-card:hover .daily-word-face {
+  border-color: #E28F83;
+  box-shadow: 0 16px 40px rgba(186, 84, 68, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.daily-word-face.face-back {
+  transform: rotateY(180deg);
+  background: #FFFAF7;
+}
+
+/* Header */
+.daily-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.daily-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FAF1EE;
+  color: #BA5444;
+  border: 1px solid #F5D5CE;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.daily-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #BA5444;
+}
+
+.daily-badge-dot.green {
+  background: #10B981;
+}
+
+.daily-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-daily-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #FAF1EE;
+  border: 1px solid #F5D5CE;
+  color: #BA5444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-daily-action:hover {
+  background: #BA5444;
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+/* Front Body */
+.daily-card-body {
+  text-align: center;
+  padding: 0.6rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.daily-kanji {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 2.85rem;
+  font-weight: 900;
+  color: #1E293B;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.daily-reading-pill {
+  display: inline-block;
+  background: #FAF8F5;
+  border: 1px solid #EBE3D9;
+  color: #78350F;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+
+.daily-category-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #94A3B8;
+  margin-top: 6px;
+}
+
+/* Front Footer */
+.daily-card-footer {
+  text-align: center;
+  border-top: 1px dashed #EBE3D9;
+  padding-top: 10px;
+}
+
+.daily-flip-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #BA5444;
+}
+
+/* Back Body */
+.daily-back-body {
+  padding: 0.4rem 0;
+}
+
+.daily-meaning-box {
+  margin-bottom: 10px;
+}
+
+.daily-meaning-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.daily-meaning-text {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.daily-example-box {
+  background: #FFFFFF;
+  border: 1px solid #F1E7DD;
+  border-radius: 14px;
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.daily-example-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.daily-example-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.btn-example-speak {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #2563EB;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-example-speak:hover {
+  background: #2563EB;
+  color: #FFFFFF;
+}
+
+.daily-example-jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 2px 0;
+  line-height: 1.4;
+}
+
+.daily-example-romaji {
+  font-size: 0.78rem;
+  color: #64748B;
+  margin: 0 0 3px 0;
+  font-style: italic;
+}
+
+.daily-example-id {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #059669;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Back Actions */
+.daily-back-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-top: 1px dashed #EBE3D9;
+  padding-top: 9px;
+}
+
+.btn-daily-shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FAF1EE;
+  border: 1px solid #F5D5CE;
+  color: #BA5444;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-daily-shuffle:hover {
+  background: #BA5444;
+  color: #FFFFFF;
+}

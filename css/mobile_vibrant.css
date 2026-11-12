@@ -523,20 +523,20 @@ body {
   }
 
   .hero-visual {
-    margin-top: 10px !important;
+    margin-top: 18px !important;
     width: 100% !important;
-    max-width: 300px !important;
-    height: 140px !important;
-    min-height: 140px !important;
+    max-width: 350px !important;
+    height: auto !important;
+    min-height: 295px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     position: relative !important;
   }
 
-  .floating-cards {
-    transform: scale(0.68) !important;
-    transform-origin: center center !important;
+  .daily-word-container {
+    max-width: 340px !important;
+    width: 100% !important;
   }
 
   /* ===== MISI BELAJAR CARD (100% MOBILE THUMB-FRIENDLY) ===== */
