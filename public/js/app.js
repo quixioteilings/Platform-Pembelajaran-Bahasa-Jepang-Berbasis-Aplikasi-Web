@@ -509,6 +509,9 @@ function showPage(page) {
   if (msState && msState.running && page !== 'monster') {
     toggleMonsterPause(true);
   }
+  if (page !== 'monster' && page !== 'games') {
+    if (typeof unlockGameViewport === 'function') unlockGameViewport();
+  }
 
   // Clear any running game timer
   if (page !== 'games') {
@@ -3213,7 +3216,80 @@ if (typeof window !== 'undefined') {
 let currentGame = null;
 let gameTimer = null;
 
+// ====================================================
+// MOBILE GAME VIEWPORT LOCK & KEYBOARD SYNCHRONIZER
+// Mengunci viewport mobile di game arcade agar layar tidak scroll
+// sendiri dan mengaitkan posisi tepat di atas keyboard virtual HP.
+// ====================================================
+let activeGameViewportType = null;
+let activeVpResizeHandler = null;
+
+function lockGameViewport(gameType) {
+  activeGameViewportType = gameType;
+  document.documentElement.classList.add('game-locked');
+  document.body.classList.add('game-locked', 'active-game-' + gameType);
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+  // Sinkronkan ketinggian arena dengan VisualViewport saat keyboard HP aktif
+  if (window.visualViewport) {
+    if (activeVpResizeHandler) {
+      window.visualViewport.removeEventListener('resize', activeVpResizeHandler);
+      window.visualViewport.removeEventListener('scroll', activeVpResizeHandler);
+    }
+
+    activeVpResizeHandler = () => {
+      if (!document.body.classList.contains('game-locked')) return;
+      const vpHeight = window.visualViewport.height;
+      const vpOffsetTop = window.visualViewport.offsetTop || 0;
+
+      if (activeGameViewportType === 'samurai') {
+        const battleEl = document.getElementById('ms-battle');
+        if (battleEl && !battleEl.classList.contains('hidden')) {
+          battleEl.style.height = vpHeight + 'px';
+          battleEl.style.top = vpOffsetTop + 'px';
+        }
+      } else if (activeGameViewportType === 'kana-blast') {
+        const blastEl = document.querySelector('.blast-game-container');
+        if (blastEl) {
+          blastEl.style.height = vpHeight + 'px';
+          blastEl.style.top = vpOffsetTop + 'px';
+        }
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    };
+
+    window.visualViewport.addEventListener('resize', activeVpResizeHandler);
+    window.visualViewport.addEventListener('scroll', activeVpResizeHandler);
+  }
+}
+
+function unlockGameViewport() {
+  activeGameViewportType = null;
+  document.documentElement.classList.remove('game-locked');
+  document.body.classList.remove('game-locked', 'active-game-samurai', 'active-game-kana-blast');
+  
+  if (window.visualViewport && activeVpResizeHandler) {
+    window.visualViewport.removeEventListener('resize', activeVpResizeHandler);
+    window.visualViewport.removeEventListener('scroll', activeVpResizeHandler);
+    activeVpResizeHandler = null;
+  }
+
+  const battleEl = document.getElementById('ms-battle');
+  if (battleEl) {
+    battleEl.style.height = '';
+    battleEl.style.top = '';
+  }
+  const blastEl = document.querySelector('.blast-game-container');
+  if (blastEl) {
+    blastEl.style.height = '';
+    blastEl.style.top = '';
+  }
+}
+window.lockGameViewport = lockGameViewport;
+window.unlockGameViewport = unlockGameViewport;
+
 function showGameMenu() {
+  unlockGameViewport();
   clearInterval(gameTimer);
   stopBlastGame();
   if (typeof stopSushiConveyor === 'function') stopSushiConveyor();
@@ -5065,6 +5141,7 @@ function startKanaBlast() {
 }
 
 function renderBlastLobby() {
+  unlockGameViewport();
   stopBlastGame();
   const screen = document.getElementById('game-screen');
   if (!screen) return;
@@ -5229,6 +5306,7 @@ function getBlastPool() {
 }
 
 function initBlastBattle() {
+  lockGameViewport('kana-blast');
   blastState.score = 0;
   blastState.combo = 0;
   blastState.maxCombo = 0;
@@ -5351,6 +5429,10 @@ function initBlastBattle() {
   // Dynamic Pointer Aiming Tracker
   const arenaEl = document.getElementById('blast-arena');
   if (arenaEl) {
+    arenaEl.style.touchAction = 'none';
+    arenaEl.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
     arenaEl.onpointermove = (e) => {
       if (!blastState.running || blastState.paused) return;
       updateBlastAimAngle(e.clientX, e.clientY);
@@ -5875,7 +5957,7 @@ function triggerBlastGameOver() {
       <div class="blast-score-banner">
         <span class="score-banner-label">SKOR TOTAL AKHIR</span>
         <span class="score-banner-num">${blastState.score}</span>
-        <span class="score-banner-sub">+${Math.floor(blastState.score / 10)} Poin Pembelajaran Tersimpan</span>
+        <span class="score-banner-sub">Skor Refleks Arcade</span>
       </div>
 
       <div class="blast-stats-grid">
@@ -5918,6 +6000,7 @@ function stopBlastGame() {
   blastState.running = false;
   if (blastState.animId) cancelAnimationFrame(blastState.animId);
   if (blastState.timerInterval) clearInterval(blastState.timerInterval);
+  unlockGameViewport();
 }
 
 // ===== UTILITIES =====
@@ -6262,6 +6345,7 @@ function getRandomKanaItem() {
 
 function startMonsterGame() {
   getAudioContext();
+  lockGameViewport('samurai');
   stopMonsterLoop(); // Clear any existing animation frames and timeouts to prevent stacking
   msState.running = true;
   msState.paused = false;
@@ -6289,6 +6373,14 @@ function startMonsterGame() {
   const inp = document.getElementById('ms-input');
   if (inp) {
     inp.focus();
+    inp.addEventListener('focus', () => {
+      window.scrollTo(0, 0);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }, 50);
+    });
     inp.oninput = (e) => handleMonsterInput(e.target.value);
     inp.onkeydown = (e) => {
       if (e.key === 'Backspace') {
@@ -6297,9 +6389,13 @@ function startMonsterGame() {
     };
   }
 
-  // Klik arena untuk selalu fokus ke input fisik
+  // Klik atau sentuh arena untuk selalu fokus ke input tanpa scroll layar
   const arena = document.getElementById('ms-arena');
   if (arena) {
+    arena.style.touchAction = 'none';
+    arena.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
     arena.onclick = () => {
       const inputEl = document.getElementById('ms-input');
       if (inputEl) inputEl.focus();
@@ -6412,20 +6508,29 @@ function spawnMonster() {
   if (!msState.running || msState.paused) return;
 
   // 5 vertical lanes across the sky (X positions in %)
-  const lanes = [14, 32, 50, 68, 86];
+  const lanes = [15, 32, 50, 68, 85];
 
-  // Prevent monsters from spawning on top of each other in the same lane:
-  // Check which lanes have an active monster near the spawn entry (progress < 26%)
-  const busyLanes = new Set(
-    msState.monsters
-      .filter(m => !m.dead && m.progress < 26)
-      .map(m => m.xPercent)
-  );
+  // Prevent monsters from spawning on top of each other in the same lane or adjacent lanes:
+  // Cek jalur mana saja yang sedang ada monster di area atas (progress < 28%)
+  const busyLanes = new Set();
+  msState.monsters.filter(m => !m.dead).forEach(m => {
+    if (m.progress < 28) {
+      busyLanes.add(m.xPercent);
+    }
+    // Jika ada monster di area sangat atas (progress < 22%), hindari spawn di jalur bersebelahan
+    if (m.progress < 22) {
+      lanes.forEach(l => {
+        if (Math.abs(l - m.xPercent) < 22) {
+          busyLanes.add(l);
+        }
+      });
+    }
+  });
 
   const availableLanes = lanes.filter(l => !busyLanes.has(l));
   if (availableLanes.length === 0) {
-    // If all lanes currently have a monster near the top, delay spawn by 600ms
-    setTimeout(spawnMonster, 600);
+    // Jika semua jalur terdekat sedang penuh di area atas, tunda spawn sedikit agar tidak bertumpukan
+    setTimeout(spawnMonster, 500);
     return;
   }
 
@@ -6537,16 +6642,28 @@ function monsterGameLoop(now) {
       // Drop down vertically from top (0%) towards the gate (78%)
       m.progress += m.speed * dt * 100;
 
-      // Prevent same-lane overlapping: keep minimum 15% vertical gap
+      // Algoritma anti-tabrakan 2D (mencegah monster & badge teks bertumpuk atau menutupi satu sama lain)
       for (let j = i + 1; j < msState.monsters.length; j++) {
         const m2 = msState.monsters[j];
-        if (!m2 || m2.dead || m2.xPercent !== m.xPercent) continue;
-        const diff = Math.abs(m.progress - m2.progress);
-        if (diff < 15) {
+        if (!m2 || m2.dead) continue;
+
+        const dx = Math.abs(m.xPercent - m2.xPercent);
+        const dy = Math.abs(m.progress - m2.progress);
+
+        // Jalur sama (dx < 6): jaga jarak vertikal minimal 18%
+        if (dx < 6 && dy < 18) {
           if (m.progress < m2.progress) {
-            m.progress = Math.max(0, m2.progress - 15);
+            m.progress = Math.max(0, m2.progress - 18);
           } else {
-            m2.progress = Math.max(0, m.progress - 15);
+            m2.progress = Math.max(0, m.progress - 18);
+          }
+        }
+        // Jalur bersebelahan (dx < 22): jaga stagger vertikal minimal 14% agar badge teks tidak saling menimpa
+        else if (dx < 22 && dy < 14) {
+          if (m.progress < m2.progress) {
+            m.progress = Math.max(0, m2.progress - 14);
+          } else {
+            m2.progress = Math.max(0, m.progress - 14);
           }
         }
       }
@@ -6554,6 +6671,7 @@ function monsterGameLoop(now) {
       const el = document.getElementById(m.id);
       if (el) {
         el.style.top = m.progress + '%';
+        el.style.zIndex = Math.floor(m.progress) + 15;
         if (m.progress > 58) {
           el.classList.add('danger-zone');
         }
@@ -6859,6 +6977,7 @@ async function exitMonsterGame() {
     }
   }
   stopMonsterLoop();
+  unlockGameViewport();
   msState.monsters = [];
   const track = document.getElementById('ms-monsters-track');
   if (track) track.innerHTML = '';
