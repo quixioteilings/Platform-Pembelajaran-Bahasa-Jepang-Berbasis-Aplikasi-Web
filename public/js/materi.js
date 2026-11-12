@@ -2158,7 +2158,7 @@ function renderStepMulai(lesson) {
 
     <div class="nihongo-study-card">
       <div class="nihongo-meta-row" style="margin-bottom:1.2rem;">
-        <span class="nihongo-tag-chip">${escapeHtml(lesson.level || 'N5')} Dasar</span>
+        <span class="nihongo-tag-chip">Modul Pembelajaran</span>
         <span class="nihongo-time-chip">${lesson.estMinutes || 15} Menit Pelajaran</span>
         <span class="nihongo-points-chip">Reward Kuis: +${lesson.rewardPoints || 50} Poin</span>
       </div>
