@@ -3529,6 +3529,428 @@ body {
   height: 38px;
 }
 
+/* ========================================================
+   SUSHI CONVEYOR RUSH (KAITENZUSHI MODE)
+   ======================================================== */
+.sushi-game-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.sushi-hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  background: var(--card);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+
+.sushi-hud-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sushi-hud-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-soft);
+  margin-bottom: 2px;
+}
+
+.sushi-hud-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.sushi-hud-timer {
+  color: #DC2626;
+  font-variant-numeric: tabular-nums;
+}
+
+.sushi-hud-streak {
+  color: #D97706;
+}
+
+.sushi-hud-streak.fever {
+  color: #E11D48;
+  animation: sushiFeverGlow 0.8s infinite alternate;
+}
+
+@keyframes sushiFeverGlow {
+  0% { transform: scale(1); text-shadow: 0 0 4px rgba(225, 29, 72, 0.4); }
+  100% { transform: scale(1.08); text-shadow: 0 0 12px rgba(225, 29, 72, 0.8); }
+}
+
+/* Customer & Kitchen Counter */
+.sushi-restaurant-stage {
+  position: relative;
+  background: linear-gradient(180deg, #FFFDF9 0%, #FBF6EE 100%);
+  border: 2px solid #E2D9CC;
+  border-radius: 16px;
+  padding: 18px 20px 24px;
+  box-shadow: 0 8px 24px rgba(78, 52, 46, 0.08);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.sushi-noren-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: repeating-linear-gradient(90deg, #B91C1C 0, #B91C1C 24px, #991B1B 24px, #991B1B 48px);
+  border-bottom: 2px solid #7F1D1D;
+  z-index: 2;
+}
+
+.sushi-customer-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+.sushi-chef-customer {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #FFF;
+  border: 3px solid #F59E0B;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sushi-chef-customer.happy {
+  animation: sushiChefHappy 0.45s ease-out;
+}
+
+@keyframes sushiChefHappy {
+  0% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.15) translateY(-8px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.sushi-order-bubble {
+  position: relative;
+  flex: 1;
+  background: #FFFFFF;
+  border: 2px solid #E2D9CC;
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sushi-order-bubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid #FFFFFF;
+  z-index: 2;
+}
+
+.sushi-order-bubble::after {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 12px solid #E2D9CC;
+  z-index: 1;
+}
+
+.sushi-order-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sushi-order-lead {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #B45309;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.sushi-order-target {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.sushi-order-target .target-highlight {
+  color: #B91C1C;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.sushi-order-audio-btn {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1.5px solid #FDE68A;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.sushi-order-audio-btn:hover {
+  background: #FDE68A;
+  transform: scale(1.08);
+}
+
+/* Kaitenzushi Conveyor Belt Track */
+.sushi-conveyor-outer {
+  position: relative;
+  background: #3E2723;
+  border: 4px solid #271612;
+  border-radius: 18px;
+  padding: 10px 0;
+  box-shadow: inset 0 6px 16px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+
+.sushi-conveyor-belt {
+  position: relative;
+  width: 100%;
+  height: 145px;
+  background: repeating-linear-gradient(90deg, #1F2937 0px, #1F2937 28px, #374151 28px, #374151 32px);
+  background-size: 64px 100%;
+  animation: sushiBeltScroll 3s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes sushiBeltScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: -64px 0; }
+}
+
+.sushi-belt-rail-top,
+.sushi-belt-rail-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(180deg, #D4AF37 0%, #AA820A 100%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 3;
+}
+.sushi-belt-rail-top { top: 0; }
+.sushi-belt-rail-bottom { bottom: 0; }
+
+/* Sushi Plate Component */
+.sushi-plate-node {
+  position: absolute;
+  top: 10px;
+  width: 120px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  z-index: 4;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.15s ease-out;
+}
+
+.sushi-plate-node:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.sushi-dish-base {
+  position: absolute;
+  bottom: 12px;
+  width: 96px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #FFFFFF 0%, #F1F5F9 70%, #CBD5E1 100%);
+  border: 3px solid #E2E8F0;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.sushi-food-visual {
+  position: absolute;
+  bottom: 24px;
+  z-index: 2;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+  pointer-events: none;
+}
+
+/* Wood Stand Tag for Japanese Word */
+.sushi-tag-placard {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 2px;
+  background: #FFFBEB;
+  border: 1.5px solid #D97706;
+  border-radius: 8px;
+  padding: 4px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  min-width: 82px;
+  max-width: 110px;
+}
+
+.sushi-tag-char {
+  font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #1E293B;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.sushi-tag-romaji {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.02em;
+  margin-top: 1px;
+}
+
+/* Plate Feedback Animations */
+.sushi-plate-node.served {
+  animation: sushiPlateServed 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sushiPlateServed {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  50% { transform: scale(1.3) translateY(-40px); opacity: 0.9; }
+  100% { transform: scale(1.6) translateY(-80px); opacity: 0; }
+}
+
+.sushi-plate-node.wobble {
+  animation: sushiPlateWobble 0.4s ease-in-out;
+}
+
+@keyframes sushiPlateWobble {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px) rotate(-6deg); }
+  40%, 80% { transform: translateX(8px) rotate(6deg); }
+}
+
+.sushi-hint-pill {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.85);
+  color: #F8FAFC;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Final Receipt Card */
+.sushi-receipt-card {
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-top: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.sushi-plates-stack {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 12px 0 16px;
+}
+
+.sushi-mini-plate {
+  width: 36px;
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #F87171, #DC2626);
+  border: 1px solid #B91C1C;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 640px) {
+  .sushi-hud {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .sushi-conveyor-belt {
+    height: 135px;
+  }
+  .sushi-plate-node {
+    width: 100px;
+    height: 115px;
+  }
+  .sushi-dish-base {
+    width: 84px;
+    height: 32px;
+  }
+  .sushi-tag-placard {
+    min-width: 72px;
+    padding: 3px 6px;
+  }
+  .sushi-tag-char {
+    font-size: 1.1rem;
+  }
+}
+
 /* Speed Quiz */
 .speed-header {
   display: flex;

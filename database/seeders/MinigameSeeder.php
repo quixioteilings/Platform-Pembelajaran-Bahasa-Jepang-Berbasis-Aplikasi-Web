@@ -212,13 +212,13 @@ class MinigameSeeder extends Seeder
                 ],
             ],
             'memory-match' => [
-                'title' => 'Memory Match',
+                'title' => 'Sushi Conveyor Rush (Kaitenzushi)',
                 'duration' => 60,
                 'sub_modes' => [
-                    ['id' => 'all', 'name' => 'Semua Kosakata (Hiragana & Katakana)', 'active' => true],
-                    ['id' => 'vocab-hiragana', 'name' => 'Kosakata Hiragana Saja (かさ, ねこ)', 'active' => true],
-                    ['id' => 'vocab-katakana', 'name' => 'Kosakata Katakana Saja (パン, テレビ)', 'active' => true],
-                    ['id' => 'kanji-n5', 'name' => 'Kanji N5 Dasar', 'active' => true],
+                    ['id' => 'all', 'name' => 'Semua Kosakata & Kanji', 'active' => true],
+                    ['id' => 'vocab-hiragana', 'name' => 'Kosakata Hiragana (かさ, ねこ)', 'active' => true],
+                    ['id' => 'vocab-katakana', 'name' => 'Kosakata Katakana (パン, テレビ)', 'active' => true],
+                    ['id' => 'kanji-n5', 'name' => 'Kanji N5 Dasar (87 Kanji)', 'active' => true],
                 ],
             ],
             'speed-quiz' => [

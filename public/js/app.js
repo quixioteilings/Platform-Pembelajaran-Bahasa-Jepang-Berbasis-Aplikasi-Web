@@ -2690,8 +2690,19 @@ const DEFAULT_GAME_CONFIG = {
     customQuestions: buildDefaultQuestions('flash-card')
   },
   'memory-match': {
-    title: 'Memory Match',
-    pairsCount: 8,
+    title: 'Sushi Conveyor Rush',
+    duration: 60,
+    subModes: [
+      { id: 'all', name: 'Semua', active: true },
+      { id: 'vocab-hiragana', name: 'Hiragana (かさ...)', active: true },
+      { id: 'vocab-katakana', name: 'Katakana (パン...)', active: true },
+      { id: 'kanji-n5', name: 'Kanji N5', active: true }
+    ],
+    customQuestions: buildDefaultQuestions('memory-match')
+  },
+  'sushi-conveyor': {
+    title: 'Sushi Conveyor Rush',
+    duration: 60,
     subModes: [
       { id: 'all', name: 'Semua', active: true },
       { id: 'vocab-hiragana', name: 'Hiragana (かさ...)', active: true },
@@ -3085,6 +3096,7 @@ let gameTimer = null;
 function showGameMenu() {
   clearInterval(gameTimer);
   stopBlastGame();
+  if (typeof stopSushiConveyor === 'function') stopSushiConveyor();
   const menu = document.getElementById('game-menu');
   const screen = document.getElementById('game-screen');
   const pageHeader = document.querySelector('#page-games .page-header');
@@ -3115,6 +3127,7 @@ function showGameMenu() {
 function startGame(type) {
   clearInterval(gameTimer);
   stopBlastGame();
+  if (typeof stopSushiConveyor === 'function') stopSushiConveyor();
   const menu = document.getElementById('game-menu');
   const screen = document.getElementById('game-screen');
   const pageHeader = document.querySelector('#page-games .page-header');
@@ -3140,7 +3153,7 @@ function startGame(type) {
   document.body.scrollTop = 0;
 
   if (type === 'flash-card') startFlashCard();
-  else if (type === 'memory-match') startMemoryMatch();
+  else if (type === 'memory-match' || type === 'sushi-conveyor') startSushiConveyor();
   else if (type === 'speed-quiz') startSpeedQuiz();
   else if (type === 'word-builder') startWordBuilder();
   else if (type === 'kana-blast') startKanaBlast();
@@ -3685,77 +3698,441 @@ function flashAnswer(know) {
   renderFlashCard();
 }
 
-// ==== 2. MEMORY MATCH GAME ====
-let memState = {};
+// ==== 2. SUSHI CONVEYOR RUSH (KAITENZUSHI GAME) ====
+let sushiState = {
+  running: false,
+  timer: 60,
+  intervalId: null,
+  animId: null,
+  mode: 'all',
+  score: 0,
+  served: 0,
+  streak: 0,
+  maxStreak: 0,
+  targetItem: null,
+  customerIndex: 0,
+  plates: [],
+  pool: [],
+  speed: 0.17
+};
 
+function escapeSushiHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+const SUSHI_CUSTOMERS = [
+  { name: 'Kenji', emoji: '👦', title: 'Kenji (Siswa)', phrase: 'Tolong ambilkan piring:' },
+  { name: 'Kiko', emoji: '👧', title: 'Kiko (Pemandu)', phrase: 'Saya mau pesan sushi:' },
+  { name: 'Sensei Tanaka', emoji: '👨‍🏫', title: 'Sensei Tanaka', phrase: 'Sensei mau santap:' },
+  { name: 'Neko Chef', emoji: '🐱', title: 'Neko Chef', phrase: 'Pesanan meja 1:' }
+];
+
+const SUSHI_TYPES = [
+  {
+    name: 'salmon',
+    svg: `<svg viewBox="0 0 70 38" width="70" height="38">
+      <ellipse cx="35" cy="24" rx="28" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <path d="M10 20 Q35 6 60 20 Q55 28 35 28 Q15 28 10 20 Z" fill="#FB923C"/>
+      <path d="M22 14 Q32 23 42 16" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.8"/>
+      <path d="M30 11 Q40 21 52 14" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.8"/>
+    </svg>`
+  },
+  {
+    name: 'tamago',
+    svg: `<svg viewBox="0 0 70 38" width="70" height="38">
+      <ellipse cx="35" cy="24" rx="28" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <rect x="12" y="10" width="46" height="15" rx="7" fill="#FBBF24"/>
+      <rect x="31" y="8" width="8" height="21" rx="2" fill="#1E293B"/>
+    </svg>`
+  },
+  {
+    name: 'maguro',
+    svg: `<svg viewBox="0 0 70 38" width="70" height="38">
+      <ellipse cx="35" cy="24" rx="28" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <path d="M10 20 Q35 6 60 20 Q55 28 35 28 Q15 28 10 20 Z" fill="#E11D48"/>
+      <path d="M25 15 Q35 23 48 16" stroke="#FDA4AF" stroke-width="1.5" fill="none" opacity="0.7"/>
+    </svg>`
+  },
+  {
+    name: 'ebi',
+    svg: `<svg viewBox="0 0 70 38" width="70" height="38">
+      <ellipse cx="35" cy="24" rx="28" ry="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <path d="M8 22 Q16 12 36 12 Q56 12 64 22" fill="#FDA4AF" stroke="#F43F5E" stroke-width="2"/>
+      <polygon points="62,20 68,14 66,24" fill="#F43F5E"/>
+      <line x1="24" y1="12" x2="24" y2="24" stroke="#F43F5E" stroke-width="2"/>
+      <line x1="36" y1="12" x2="36" y2="25" stroke="#F43F5E" stroke-width="2"/>
+      <line x1="48" y1="12" x2="48" y2="24" stroke="#F43F5E" stroke-width="2"/>
+    </svg>`
+  },
+  {
+    name: 'onigiri',
+    svg: `<svg viewBox="0 0 70 42" width="70" height="42">
+      <path d="M35 6 Q48 6 56 30 Q54 36 35 36 Q16 36 14 30 Q22 6 35 6 Z" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+      <path d="M26 24 H44 V36 H26 Z" fill="#0F172A"/>
+    </svg>`
+  }
+];
+
+function stopSushiConveyor() {
+  sushiState.running = false;
+  if (sushiState.intervalId) {
+    clearInterval(sushiState.intervalId);
+    sushiState.intervalId = null;
+  }
+  if (sushiState.animId) {
+    cancelAnimationFrame(sushiState.animId);
+    sushiState.animId = null;
+  }
+}
+
+// Backward compatible alias
+let memState = { mode: 'all' };
 function startMemoryMatch(mode = null) {
+  startSushiConveyor(mode);
+}
+
+function startSushiConveyor(mode = null) {
+  stopSushiConveyor();
+
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
 
   const title = document.getElementById('game-page-title');
-  if (title) title.textContent = 'Memory Match Mode';
+  if (title) title.textContent = 'Sushi Conveyor Rush';
 
-  if (mode) memState.mode = mode;
-  else if (!memState.mode) memState.mode = 'hiragana';
+  if (mode) sushiState.mode = mode;
+  else if (!sushiState.mode) sushiState.mode = 'all';
 
-  const m = memState.mode;
-  let poolSource = [];
+  const m = sushiState.mode;
+  let pool = [];
 
   if (typeof GameConfigManager !== 'undefined') {
     const q = GameConfigManager.getQuestions('memory-match', m);
     if (q && q.length > 0) {
-      poolSource = q.map(item => ({ char: item.char, romaji: item.romaji }));
+      pool = q.map(item => ({
+        char: item.char,
+        romaji: item.romaji,
+        mean: item.mean || item.meaning || item.romaji
+      }));
     }
   }
 
-  if (!poolSource || poolSource.length === 0) {
-    if (m === 'katakana') {
-      poolSource = KATAKANA.map(k => ({ char: k.char, romaji: k.romaji }));
-    } else if (m === 'all') {
-      poolSource = [
-        ...HIRAGANA.map(h => ({ char: h.char, romaji: h.romaji })),
-        ...KATAKANA.map(k => ({ char: k.char, romaji: k.romaji }))
-      ];
+  if (!pool || pool.length === 0) {
+    if (m === 'vocab-hiragana' || m === 'hiragana') {
+      pool = PRESET_VOCAB_HIRAGANA.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean }));
+    } else if (m === 'vocab-katakana' || m === 'katakana') {
+      pool = PRESET_VOCAB_KATAKANA.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean }));
     } else if (m === 'kanji-n5' || m.includes('kanji')) {
-      poolSource = PRESET_KANJI_N5.map(k => ({ char: k.char, romaji: k.romaji }));
+      pool = PRESET_KANJI_N5.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean }));
     } else {
-      poolSource = HIRAGANA.map(h => ({ char: h.char, romaji: h.romaji }));
+      pool = [
+        ...PRESET_VOCAB_HIRAGANA.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean })),
+        ...PRESET_VOCAB_KATAKANA.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean })),
+        ...PRESET_KANJI_N5.map(item => ({ char: item.char, romaji: item.romaji, mean: item.mean }))
+      ];
     }
   }
 
-  const pool = shuffle(poolSource).slice(0, 8);
-  const pairs = shuffle([
-    ...pool.map((c, i) => ({ id: i, type: 'jp', val: c.char, match: i, audio: c.char })),
-    ...pool.map((c, i) => ({ id: i + 8, type: 'ro', val: c.romaji, match: i, audio: c.char })),
-  ]);
+  pool = shuffle(pool);
+  if (pool.length < 5) {
+    pool = [...pool, ...PRESET_VOCAB_HIRAGANA];
+  }
 
-  memState = {
+  const duration = (typeof GameConfigManager !== 'undefined')
+    ? GameConfigManager.getDuration('memory-match', 60)
+    : 60;
+
+  sushiState = {
+    running: true,
+    timer: duration,
+    intervalId: null,
+    animId: null,
     mode: m,
-    cards: pairs,
-    flipped: [],
-    matched: new Set(),
-    moves: 0,
-    waiting: false,
+    score: 0,
+    served: 0,
+    streak: 0,
+    maxStreak: 0,
+    targetItem: null,
+    customerIndex: Math.floor(Math.random() * SUSHI_CUSTOMERS.length),
+    plates: [],
+    pool: pool,
+    speed: 0.17
   };
-  renderMemoryGrid();
+
+  sushiNextTarget();
+
+  sushiState.plates = [];
+  const initialPositions = [15, 42, 68, 95];
+  initialPositions.forEach((posX, idx) => {
+    const isTargetPlate = (idx === 2);
+    let item;
+    if (isTargetPlate) {
+      item = sushiState.targetItem;
+    } else {
+      const targetChar = sushiState.targetItem ? sushiState.targetItem.char : '';
+      const distractors = sushiState.pool.filter(p => p.char !== targetChar);
+      item = (distractors.length > 0)
+        ? distractors[Math.floor(Math.random() * distractors.length)]
+        : sushiState.pool[0];
+    }
+    const sushiVisual = SUSHI_TYPES[Math.floor(Math.random() * SUSHI_TYPES.length)];
+    sushiState.plates.push({
+      id: 'plate_' + Math.random().toString(36).substr(2, 8),
+      x: posX,
+      item: item,
+      isTarget: isTargetPlate,
+      visual: sushiVisual,
+      served: false,
+      wobbling: false
+    });
+  });
+
+  renderSushiScreen();
+
+  sushiState.intervalId = setInterval(() => {
+    if (!sushiState.running) return;
+    sushiState.timer--;
+    updateSushiHud();
+
+    if (sushiState.timer <= 0) {
+      endSushiConveyor();
+    }
+  }, 1000);
+
+  let lastTimestamp = performance.now();
+  function loop(now) {
+    if (!sushiState.running) return;
+    const delta = Math.min((now - lastTimestamp) / 16.66, 2.0);
+    lastTimestamp = now;
+
+    updateSushiPlates(delta);
+    sushiState.animId = requestAnimationFrame(loop);
+  }
+  sushiState.animId = requestAnimationFrame(loop);
 }
 
-function renderMemoryGrid() {
+function createSushiPlate(posX, forceTarget = false) {
+  let item;
+  let isTarget = false;
+
+  const hasActiveTarget = sushiState.plates.some(p => p.isTarget && !p.served);
+
+  if (forceTarget || (!hasActiveTarget && sushiState.targetItem)) {
+    item = sushiState.targetItem;
+    isTarget = true;
+  } else {
+    const targetChar = sushiState.targetItem ? sushiState.targetItem.char : '';
+    const distractors = sushiState.pool.filter(p => p.char !== targetChar);
+    item = (distractors.length > 0)
+      ? distractors[Math.floor(Math.random() * distractors.length)]
+      : sushiState.pool[0];
+    isTarget = false;
+  }
+
+  const sushiVisual = SUSHI_TYPES[Math.floor(Math.random() * SUSHI_TYPES.length)];
+
+  return {
+    id: 'plate_' + Math.random().toString(36).substr(2, 8),
+    x: posX,
+    item: item,
+    isTarget: isTarget,
+    visual: sushiVisual,
+    served: false,
+    wobbling: false
+  };
+}
+
+function sushiNextTarget() {
+  if (!sushiState.pool || sushiState.pool.length === 0) return;
+  const currentTargetChar = sushiState.targetItem ? sushiState.targetItem.char : null;
+  const candidates = sushiState.pool.filter(p => p.char !== currentTargetChar);
+  sushiState.targetItem = candidates[Math.floor(Math.random() * candidates.length)] || sushiState.pool[0];
+  sushiState.customerIndex = (sushiState.customerIndex + 1) % SUSHI_CUSTOMERS.length;
+}
+
+function updateSushiPlates(delta) {
+  const plates = sushiState.plates;
+  const speed = (sushiState.speed || 0.17) * delta;
+  let hasActiveTarget = false;
+
+  plates.forEach(p => {
+    if (p.served) return;
+    p.x -= speed;
+    if (p.isTarget && p.x > -10 && p.x < 110) {
+      hasActiveTarget = true;
+    }
+  });
+
+  plates.forEach(p => {
+    if (p.x < -15 || p.served) {
+      let maxX = 85;
+      plates.forEach(other => {
+        if (!other.served && other.x > maxX) maxX = other.x;
+      });
+      p.x = Math.max(105, maxX + 28);
+      p.served = false;
+      p.wobbling = false;
+
+      if (!hasActiveTarget) {
+        p.item = sushiState.targetItem;
+        p.isTarget = true;
+        hasActiveTarget = true;
+      } else {
+        const distractors = sushiState.pool.filter(item => item.char !== sushiState.targetItem.char);
+        p.item = distractors[Math.floor(Math.random() * distractors.length)] || sushiState.pool[0];
+        p.isTarget = false;
+      }
+      p.visual = SUSHI_TYPES[Math.floor(Math.random() * SUSHI_TYPES.length)];
+    }
+  });
+
+  renderPlateElements();
+}
+
+function renderPlateElements() {
+  const container = document.getElementById('sushi-plates-container');
+  if (!container) return;
+
+  const plates = sushiState.plates;
+  plates.forEach((p, idx) => {
+    let el = document.getElementById(p.id);
+    if (!el) {
+      el = document.createElement('div');
+      el.id = p.id;
+      el.className = 'sushi-plate-node';
+      el.onclick = () => onSushiPlateClick(idx);
+      container.appendChild(el);
+    }
+
+    el.style.left = `${p.x}%`;
+    if (p.served) {
+      el.classList.add('served');
+    } else {
+      el.classList.remove('served');
+    }
+
+    if (p.wobbling) {
+      el.classList.add('wobble');
+    } else {
+      el.classList.remove('wobble');
+    }
+
+    if (el.dataset.char !== p.item.char) {
+      el.dataset.char = p.item.char;
+      el.innerHTML = `
+        <div class="sushi-food-visual">${p.visual.svg}</div>
+        <div class="sushi-dish-base"></div>
+        <div class="sushi-tag-placard">
+          <span class="sushi-tag-char">${escapeSushiHtml(p.item.char)}</span>
+          <span class="sushi-tag-romaji">${escapeSushiHtml(p.item.romaji)}</span>
+        </div>
+      `;
+    }
+  });
+}
+
+function onSushiPlateClick(plateIndex) {
+  if (!sushiState.running) return;
+  const plate = sushiState.plates[plateIndex];
+  if (!plate || plate.served) return;
+
+  if (plate.isTarget) {
+    plate.served = true;
+    sushiState.served++;
+    sushiState.streak++;
+    if (sushiState.streak > sushiState.maxStreak) {
+      sushiState.maxStreak = sushiState.streak;
+    }
+
+    const bonusPoints = Math.min(sushiState.streak * 5, 30);
+    const totalGained = 15 + bonusPoints;
+    sushiState.score += totalGained;
+    addScore(totalGained);
+
+    try {
+      speakJapanese(plate.item.char);
+    } catch (e) {}
+
+    const chefEl = document.getElementById('sushi-customer-avatar');
+    if (chefEl) {
+      chefEl.classList.remove('happy');
+      void chefEl.offsetWidth;
+      chefEl.classList.add('happy');
+    }
+
+    showToast(`Oishii! ✨ +${totalGained} Poin (${plate.item.char})`, 'success');
+
+    sushiNextTarget();
+    updateSushiOrderBox();
+    updateSushiHud();
+
+    setTimeout(() => {
+      if (!sushiState.running) return;
+      const unserved = sushiState.plates.filter(p => !p.served && p.x > 30);
+      if (unserved.length > 0) {
+        const candidate = unserved[unserved.length - 1];
+        candidate.item = sushiState.targetItem;
+        candidate.isTarget = true;
+      }
+    }, 100);
+
+  } else {
+    plate.wobbling = true;
+    sushiState.streak = 0;
+    updateSushiHud();
+
+    showToast(`Bukan ini! Pesanan: ${sushiState.targetItem.mean}`, 'error');
+    setTimeout(() => {
+      plate.wobbling = false;
+    }, 450);
+  }
+}
+
+function updateSushiHud() {
+  const timerEl = document.getElementById('sushi-timer-val');
+  const scoreEl = document.getElementById('sushi-score-val');
+  const servedEl = document.getElementById('sushi-served-val');
+  const streakEl = document.getElementById('sushi-streak-val');
+
+  if (timerEl) timerEl.textContent = `${sushiState.timer}s`;
+  if (scoreEl) scoreEl.textContent = sushiState.score;
+  if (servedEl) servedEl.textContent = sushiState.served;
+  if (streakEl) {
+    streakEl.textContent = `${sushiState.streak}x`;
+    if (sushiState.streak >= 4) {
+      streakEl.classList.add('fever');
+    } else {
+      streakEl.classList.remove('fever');
+    }
+  }
+}
+
+function updateSushiOrderBox() {
+  const cust = SUSHI_CUSTOMERS[sushiState.customerIndex] || SUSHI_CUSTOMERS[0];
+  const target = sushiState.targetItem;
+  if (!target) return;
+
+  const leadEl = document.getElementById('sushi-order-lead');
+  const targetEl = document.getElementById('sushi-order-target');
+  const avatarEl = document.getElementById('sushi-customer-avatar');
+
+  if (avatarEl) avatarEl.textContent = cust.emoji;
+  if (leadEl) leadEl.textContent = `${cust.name}: "${cust.phrase}"`;
+  if (targetEl) {
+    targetEl.innerHTML = `<span class="target-highlight">${escapeSushiHtml(target.mean)}</span> <span style="font-size:0.85rem; color:var(--text-soft); font-weight:600;">(${escapeSushiHtml(target.romaji)})</span>`;
+  }
+}
+
+function renderSushiScreen() {
   const screen = document.getElementById('game-screen');
   if (!screen) return;
-  const ms = memState;
-  const allMatched = ms.matched.size === (ms.cards.length / 2);
-
-  const topBarHtml = `
-    <div class="game-top-bar">
-      <button class="btn-game-back" onclick="showGameMenu()">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        <span>Kembali ke Menu Game</span>
-      </button>
-      <span class="game-top-title">Memory Match Mode</span>
-    </div>
-  `;
 
   const activeSubModes = (typeof GameConfigManager !== 'undefined')
     ? GameConfigManager.getSubModes('memory-match')
@@ -3766,11 +4143,21 @@ function renderMemoryGrid() {
         { id: 'kanji-n5', name: 'Kanji N5' }
       ];
 
+  const topBarHtml = `
+    <div class="game-top-bar">
+      <button class="btn-game-back" onclick="showGameMenu()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Kembali ke Menu Game</span>
+      </button>
+      <span class="game-top-title">Sushi Conveyor Rush (回転寿司)</span>
+    </div>
+  `;
+
   const subChipsHtml = `
     <div class="flash-filter-container" style="margin-bottom:14px;">
       <div class="flash-filter-scroll">
         ${activeSubModes.map(sm => `
-          <button class="flash-filter-chip ${ms.mode === sm.id ? 'active' : ''}" onclick="startMemoryMatch('${sm.id}')" title="${sm.name}">
+          <button class="flash-filter-chip ${sushiState.mode === sm.id ? 'active' : ''}" onclick="startSushiConveyor('${sm.id}')" title="${sm.name}">
             <span>${formatShortSubModeName(sm.name)}</span>
           </button>
         `).join('')}
@@ -3778,89 +4165,141 @@ function renderMemoryGrid() {
     </div>
   `;
 
+  const cust = SUSHI_CUSTOMERS[sushiState.customerIndex] || SUSHI_CUSTOMERS[0];
+  const target = sushiState.targetItem || { mean: 'Air', romaji: 'mizu', char: 'みず' };
+
   screen.innerHTML = `
     ${topBarHtml}
     ${subChipsHtml}
-    <div class="memory-stats">
-      <div class="mem-stat">Langkah: ${ms.moves}</div>
-      <div class="mem-stat">Cocok: ${ms.matched.size} / ${ms.cards.length / 2}</div>
-      <div class="mem-stat">Total Skor: ${state.score} poin</div>
-    </div>
-    <div class="memory-grid" id="memory-grid">
-      ${ms.cards.map((c, idx) => {
-        const isFlipped = ms.flipped.includes(idx) || ms.matched.has(c.match);
-        const isMatched = ms.matched.has(c.match);
-        return `
-          <div class="memory-card ${isFlipped ? 'flipped' : ''} ${isMatched ? 'matched' : ''}"
-               id="mc-${idx}" onclick="flipMemory(${idx})">
-            ${isFlipped ? `
-              <span class="memory-card-inner ${c.type === 'jp' ? 'jp-char' : 'ro-char'}">${c.val}</span>
-            ` : `
-              <svg viewBox="0 0 40 40" class="card-back-pattern">
-                <rect width="40" height="40" rx="6" fill="#1E293B"/>
-                <circle cx="20" cy="20" r="10" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
-                <path d="M20 14v12M14 20h12" stroke="#475569" stroke-width="1.5"/>
-              </svg>
-            `}
-          </div>
-        `;
-      }).join('')}
-    </div>
-    ${allMatched ? `
-      <div class="quiz-result-card" style="margin-top:24px;">
-        <div class="quiz-result-crest">
-          <svg viewBox="0 0 64 64" class="svg-crest-large">
-            <circle cx="32" cy="32" r="28" fill="#1E293B"/>
-            <polygon points="32 12 37 23 49 24 40 33 43 45 32 39 21 45 24 33 15 24 27 23" fill="#F59E0B"/>
-          </svg>
+
+    <div class="sushi-game-wrap">
+      <!-- HUD Stats -->
+      <div class="sushi-hud">
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Sisa Waktu</span>
+          <span class="sushi-hud-val sushi-hud-timer" id="sushi-timer-val">${sushiState.timer}s</span>
         </div>
-        <div class="quiz-result-title">Selesai! Seluruh Kartu Cocok!</div>
-        <p style="color:var(--text-soft);">Berhasil diselesaikan dalam ${ms.moves} kali tebakan.</p>
-        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
-          <button class="quiz-result-restart" onclick="startMemoryMatch(memState.mode)">
-            <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-            <span>Mainkan Lagi</span>
-          </button>
-          <button class="quiz-result-restart" style="background:#F1F5F9; color:#334155;" onclick="showGameMenu()">
-            <span>Kembali ke Menu Game</span>
-          </button>
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Piring Disajikan</span>
+          <span class="sushi-hud-val" id="sushi-served-val">${sushiState.served}</span>
+        </div>
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Combo Streak</span>
+          <span class="sushi-hud-val sushi-hud-streak" id="sushi-streak-val">${sushiState.streak}x</span>
+        </div>
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Skor Resto</span>
+          <span class="sushi-hud-val" id="sushi-score-val">${sushiState.score}</span>
         </div>
       </div>
-    ` : ''}
+
+      <!-- Restaurant Kitchen Counter -->
+      <div class="sushi-restaurant-stage">
+        <div class="sushi-noren-banner"></div>
+
+        <div class="sushi-customer-row">
+          <div class="sushi-chef-customer" id="sushi-customer-avatar">${cust.emoji}</div>
+          <div class="sushi-order-bubble">
+            <div class="sushi-order-info">
+              <span class="sushi-order-lead" id="sushi-order-lead">${cust.name}: "${cust.phrase}"</span>
+              <div class="sushi-order-target" id="sushi-order-target">
+                <span class="target-highlight">${escapeSushiHtml(target.mean)}</span>
+                <span style="font-size:0.85rem; color:var(--text-soft); font-weight:600;">(${escapeSushiHtml(target.romaji)})</span>
+              </div>
+            </div>
+            <button type="button" class="sushi-order-audio-btn" onclick="speakJapanese(sushiState.targetItem ? sushiState.targetItem.char : '')" title="Dengarkan Pelafalan">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Conveyor Belt -->
+        <div class="sushi-conveyor-outer">
+          <div class="sushi-belt-rail-top"></div>
+          <div class="sushi-conveyor-belt">
+            <div id="sushi-plates-container" style="position:relative; width:100%; height:100%;"></div>
+            <div class="sushi-hint-pill">🥢 Klik piring yang tepat sebelum lewat!</div>
+          </div>
+          <div class="sushi-belt-rail-bottom"></div>
+        </div>
+      </div>
+    </div>
   `;
 }
 
-function flipMemory(idx) {
-  const ms = memState;
-  if (ms.waiting) return;
-  if (ms.flipped.includes(idx)) return;
-  if (ms.matched.has(ms.cards[idx].match)) return;
-  if (ms.flipped.length >= 2) return;
+function endSushiConveyor() {
+  stopSushiConveyor();
 
-  ms.flipped.push(idx);
-  renderMemoryGrid();
+  const screen = document.getElementById('game-screen');
+  if (!screen) return;
 
-  if (ms.flipped.length === 2) {
-    ms.moves++;
-    ms.waiting = true;
-    const [a, b] = ms.flipped;
-
-    if (ms.cards[a].match === ms.cards[b].match) {
-      ms.matched.add(ms.cards[a].match);
-      addScore(10);
-      showToast('Pasangan Cocok! +10 Poin', 'success');
-      speakJapanese(ms.cards[a].audio);
-      ms.flipped = [];
-      ms.waiting = false;
-      setTimeout(renderMemoryGrid, 350);
-    } else {
-      setTimeout(() => {
-        ms.flipped = [];
-        ms.waiting = false;
-        renderMemoryGrid();
-      }, 900);
-    }
+  const served = sushiState.served;
+  let stars = 1;
+  let titleMsg = 'Latihan Bagus!';
+  if (served >= 10) {
+    stars = 3;
+    titleMsg = 'Luar Biasa! Master Koki Sushi!';
+  } else if (served >= 6) {
+    stars = 2;
+    titleMsg = 'Hebat! Pelayanan Cepat & Akurat!';
   }
+
+  const stackHtml = Array.from({ length: Math.min(served, 12) }).map(() => `
+    <div class="sushi-mini-plate"></div>
+  `).join('');
+
+  screen.innerHTML = `
+    <div class="game-top-bar">
+      <button class="btn-game-back" onclick="showGameMenu()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Kembali ke Menu Game</span>
+      </button>
+      <span class="game-top-title">Sesi Selesai (閉店)</span>
+    </div>
+
+    <div class="sushi-receipt-card">
+      <div style="font-size:2.8rem; margin-bottom:8px;">🍣</div>
+      <h2 style="font-size:1.4rem; font-weight:900; margin-bottom:4px; color:var(--text);">${titleMsg}</h2>
+      <p style="color:var(--text-soft); font-size:0.9rem; margin-bottom:14px;">Kedai Kaitenzushi SI tutup untuk sesi ini. Arigatou Gozaimashita!</p>
+
+      <div style="font-size:1.6rem; color:#F59E0B; margin-bottom:12px;">
+        ${'⭐'.repeat(stars)}${'☆'.repeat(3 - stars)}
+      </div>
+
+      <div class="sushi-plates-stack">
+        ${stackHtml || '<span style="font-size:0.8rem; color:var(--text-soft);">Belum ada piring disajikan</span>'}
+      </div>
+
+      <div class="sushi-hud" style="max-width:500px; margin:0 auto 20px;">
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Piring Disajikan</span>
+          <span class="sushi-hud-val">${served}</span>
+        </div>
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Max Combo</span>
+          <span class="sushi-hud-val sushi-hud-streak">${sushiState.maxStreak}x</span>
+        </div>
+        <div class="sushi-hud-stat">
+          <span class="sushi-hud-label">Total Skor</span>
+          <span class="sushi-hud-val" style="color:var(--green);">${sushiState.score}</span>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="quiz-result-restart" onclick="startSushiConveyor('${sushiState.mode}')">
+          <svg viewBox="0 0 24 24" class="svg-icon-mini"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+          <span>Buka Kedai Lagi (Main Ulang)</span>
+        </button>
+        <button class="quiz-result-restart" style="background:#F1F5F9; color:#334155;" onclick="showGameMenu()">
+          <span>Kembali ke Menu Game</span>
+        </button>
+      </div>
+    </div>
+  `;
 }
 
 // ==== 3. SPEED QUIZ GAME ====

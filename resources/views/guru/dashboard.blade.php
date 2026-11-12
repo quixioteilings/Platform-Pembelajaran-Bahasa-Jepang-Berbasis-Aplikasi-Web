@@ -2741,7 +2741,7 @@
               <span>Flash Card</span>
             </button>
             <button type="button" class="admin-game-chip" id="chip-game-memory-match" onclick="switchAdminGameTab('memory-match')">
-              <span>Memory Match</span>
+              <span>Sushi Conveyor Rush</span>
             </button>
             <button type="button" class="admin-game-chip" id="chip-game-speed-quiz" onclick="switchAdminGameTab('speed-quiz')">
               <span>Speed Quiz</span>
@@ -3585,7 +3585,7 @@
             <option value="kana-blast">Kana Blast (Turret Blaster)</option>
             <option value="sky-defense">Sky Atk Defense (Gerbang Desa)</option>
             <option value="flash-card">Flash Card</option>
-            <option value="memory-match">Memory Match</option>
+            <option value="memory-match">Sushi Conveyor Rush</option>
             <option value="speed-quiz">Speed Quiz</option>
             <option value="word-builder">Word Builder</option>
           </select>
